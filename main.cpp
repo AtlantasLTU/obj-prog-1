@@ -40,7 +40,7 @@ int main(){
     cout << "Pavarde" << std::setw(10) <<  "Vardas" << std::setw(40) << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
     cout << std::setfill('-') << std::setw(59) << "-" << std::endl;
     for(int i = 0; i < 2; i++){
-        cout << A
+        cout << A.vardas << A.pavarde;
     }
 
     return 0;
