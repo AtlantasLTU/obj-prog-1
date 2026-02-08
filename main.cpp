@@ -49,22 +49,43 @@ int main(){
     cin >> A.vardas >> A.pavarde;
     
     int ndPaz;
-    cout << "Įveskite namų darbų pažymį: ";
-    cin >> ndPaz;
-    do{
-        A.nd.push_back(ndPaz);
-        cout << A.nd.size() << " " << std::endl;
+    while (A.nd.size() < 10){
         cout << "Įveskite namų darbų pažymį: ";
-    }while(cin >> ndPaz && A.nd.size() < 9);
+
+        if (!(cin >> ndPaz)) // tikrina ar ivestas sveikas skaicius, kadangi ndPaz - int kintamasis
+        {
+            cin.clear(); // atstato console input flag'a, jei ivestis buvo bloga.
+            cin.ignore(10000,'\n'); // isvalo console ivesti, iki 10000 simboliu arba naujos eilutes simbolio
+            continue; // pradeda nauja ciklo iteracija
+        }
+
+        if (ndPaz < 1 || ndPaz > 10) // tikrina ar ivestas skaicius maziau uz 1 arba daugiau uz 10, jei salyga tenkinama, pradedama nauja ciklo iteracija
+            continue;
+
+        A.nd.push_back(ndPaz); // prideda ivesta pazymi prie vektoriaus.
+    }
+
     cout << "Įveskite egzamino rezultatą: ";
     cin >> A.rez;
     cout << std::endl;
-    //A.rez = A.paz.
 
-    cout << "Pavarde" << std::setw(10) <<  "Vardas" << std::setw(40) << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
-    cout << std::setfill('-') << std::setw(59) << "-" << std::endl;
+    cout << std::left << std::setw(15) << "Pavarde" << std::setw(15) <<  "Vardas" << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
+    cout << std::setfill('-') << std::setw(65) << "-" << std::endl << std::setfill(' ');
     for(int i = 0; i < 1; i++){
-        cout << A.vardas << " " <<  A.pavarde;
+        cout << std::setw(15) << A.vardas << std::setw(14) <<  A.pavarde << " ";
+        float galutinis=0;
+        if(medianos){
+
+        } else {
+            int sum = 0;
+            float ndVid;
+            for(int i = 0; i < A.nd.size(); i++){
+                sum += A.nd.at(i);
+            }
+            ndVid = (float)sum/(float)A.nd.size();
+            galutinis = 0.4*ndVid + 0.6 * A.rez;
+        }
+        cout << std::setprecision(2) << std::fixed << galutinis << std::endl;
     }
 
     return 0;
