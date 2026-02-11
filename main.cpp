@@ -15,9 +15,6 @@ using std::cout;
 // galutinio rez skaiciavimas
 // ivedimo patikslinimas
 
-std::ifstream in("duom.txt");
-std::ofstream out("rez.txt");
-
 struct Studentas{
     std::string vardas = "R", pavarde = "R";
     //int *paz; // nuspresti kiek pazymiu tures studentas galu gale
@@ -25,9 +22,35 @@ struct Studentas{
     int rez;
 };
 
-int main(){
+float Galutinis(bool medianos, Studentas A)
+{
+    float galutinis = 0;
+    int size = A.nd.size();
+    if(medianos){
+        float med = 0;
+        if(size%2==0){
+            med = (A.nd.at(size/2) + A.nd.at((size/2) - 1)) / 2.0;
+        } else {
+            med = A.nd.at(size/2);
+        }
+        galutinis = 0.4 * med + 0.6 * A.rez;
+        return galutinis;
+    } else {
+        int sum = 0;
+        float ndVid;
+        for (int i = 0; i < size; i++){
+            sum += A.nd.at(i);
+        }
+        ndVid = (float)sum / (float)size;
+        galutinis = 0.4 * ndVid + 0.6 * A.rez;
+        return galutinis;
+    }
+}
 
-    #ifdef _WIN32 // Jei kompiliuojama Windows operacinei sistemai nustatyti konsoles įvestį ir išvestį UTF-8 užkodavimui.
+int main()
+{
+
+#ifdef _WIN32 // Jei kompiliuojama Windows operacinei sistemai nustatyti konsoles įvestį ir išvestį UTF-8 užkodavimui.
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     #endif
@@ -73,18 +96,7 @@ int main(){
     cout << std::setfill('-') << std::setw(65) << "-" << std::endl << std::setfill(' ');
     for(int i = 0; i < 1; i++){
         cout << std::setw(15) << A.vardas << std::setw(14) <<  A.pavarde << " ";
-        float galutinis=0;
-        if(medianos){
-
-        } else {
-            int sum = 0;
-            float ndVid;
-            for(int i = 0; i < A.nd.size(); i++){
-                sum += A.nd.at(i);
-            }
-            ndVid = (float)sum/(float)A.nd.size();
-            galutinis = 0.4*ndVid + 0.6 * A.rez;
-        }
+        float galutinis=Galutinis(medianos, A);
         cout << std::setprecision(2) << std::fixed << galutinis << std::endl;
     }
 
