@@ -79,12 +79,16 @@ int main()
         {
             cin.clear(); // atstato console input flag'a, jei ivestis buvo bloga.
             cin.ignore(10000,'\n'); // isvalo console ivesti, iki 10000 simboliu arba naujos eilutes simbolio
+            cout << "Įvestas namų darbų rezultatas turi būti sveikasis skaičius nuo 1 iki 10!" << std::endl;
             continue; // pradeda nauja ciklo iteracija
         }
-
         if (ndPaz < 1 || ndPaz > 10) // tikrina ar ivestas skaicius maziau uz 1 arba daugiau uz 10, jei salyga tenkinama, pradedama nauja ciklo iteracija
+        {    
+            cin.clear(); // atstato console input flag'a, jei ivestis buvo bloga.
+            cin.ignore(10000,'\n'); // isvalo console ivesti, iki 10000 simboliu arba naujos eilutes simbolio
+            cout << "Įvestas namų darbų rezultatas turi būti nuo 1 iki 10!" << std::endl;
             continue;
-
+        }
         A.nd.push_back(ndPaz); // prideda ivesta pazymi prie vektoriaus.
     }
 
@@ -94,11 +98,15 @@ int main()
 
     cout << std::left << std::setw(15) << "Pavarde" << std::setw(15) <<  "Vardas" << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
     cout << std::setfill('-') << std::setw(65) << "-" << std::endl << std::setfill(' ');
-    for(int i = 0; i < 1; i++){
+    //for(int i = 0; i < 1; i++){
         cout << std::setw(15) << A.vardas << std::setw(14) <<  A.pavarde << " ";
         float galutinis=Galutinis(medianos, A);
-        cout << std::setprecision(2) << std::fixed << galutinis << std::endl;
-    }
+        if(medianos == true){
+            cout << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinis << std::endl;
+        } else {
+            cout << std::setprecision(2) << std::fixed << std::setw(19) << galutinis << "y.yy" << std::endl;
+        }
+    //}
 
     return 0;
 }
