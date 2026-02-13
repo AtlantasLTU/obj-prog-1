@@ -6,6 +6,7 @@
 using std::vector;
 using std::cin;
 using std::cout;
+#include <algorithm>
 
 #ifdef _WIN32 // naudojame preprocesorių, kad kompiliatorius, naudojant Windows, pridėtų windows.h antraščių failą, kad vėliau galėtume pakeistį terminalo išvesties ir įvesties užkodavimą į UTF-8
 #include <windows.h> // windows antraščių failas
@@ -26,6 +27,7 @@ float Galutinis(bool medianos, Studentas A)
 {
     float galutinis = 0;
     int size = A.nd.size();
+    sort(A.nd.begin(), A.nd.end());
     if(medianos){
         float med = 0;
         if(size%2==0){
