@@ -6,7 +6,6 @@
 #include <vector>
 
 //Header file includes
-#include "calc.h"
 #include "io.h"
 
 //namespaces
@@ -44,20 +43,7 @@ int main()
     cout << "Pradedama studentų bei jų rezultatų įvestis. Tuščiame įvedimo lauke paspaudus klavišą ENTER - įvedimas nutraukiamas" << std::endl;
 
     Studentas A = skaitymas();
-
-    cout << std::left << std::setw(15) << "Pavarde" << std::setw(15) <<  "Vardas" << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
-    cout << std::setfill('-') << std::setw(65) << "-" << std::endl << std::setfill(' ');
-    //for(int i = 0; i < 1; i++){
-        cout << std::setw(15) << A.vardas << std::setw(14) <<  A.pavarde << " ";
-
-        if(medianos){
-            float galutinis = galutinisMed(A);
-            cout << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinis << std::endl;
-        } else {
-            float galutinis = galutinisVid(A);
-            cout << std::setprecision(2) << std::fixed << std::setw(19) << galutinis << "y.yy" << std::endl;
-        }
-    //}
+    isvestis(A, medianos);
 
     return 0;
 }

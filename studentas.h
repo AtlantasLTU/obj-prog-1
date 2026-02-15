@@ -5,7 +5,7 @@
 #include <vector>
 
 struct Studentas {
-    std::string vardas = "R", pavarde = "R";
+    std::string vardas, pavarde;
     std::vector<int> nd;
     int rez = 0;
 };
