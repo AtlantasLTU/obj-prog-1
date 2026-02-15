@@ -2,48 +2,64 @@
 #include <iostream>
 using std::cout;
 using std::cin;
+using std::endl;
 
 Studentas skaitymas(){
-    cout << "Įveskite studento vardą bei pavardę" << std::endl;
     Studentas A;
+    cout << "Įveskite studento vardą bei pavardę: ";
     cin >> A.vardas >> A.pavarde;
     
-    int ndPaz;
-    while (!cin.eof()){
-        cout << "Įveskite namų darbų pažymį: ";
+    // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        if (!(cin >> ndPaz)) // tikrina ar ivestas sveikas skaicius, kadangi ndPaz - int kintamasis
+    std::string eilute;
+    while (true)
+    {
+        cout << "Įveskite namų darbų pažymį: ";
+        std::getline(cin, eilute); // perskaito visa eilute
+
+        // patikrina ar eilute tuscia, jei taip, nutraukia namu darbu rezultatu ivesti (eilute tuscia, jei vartotojas paspaudzia ENTER, kai ji tuscia)
+        if (eilute.empty())
         {
-            cin.clear(); // atstato console input flag'a, jei ivestis buvo bloga.
-            cin.ignore(10000,'\n'); // isvalo console ivesti, iki 10000 simboliu arba naujos eilutes simbolio
-            cout << "Įvestas namų darbų rezultatas turi būti sveikasis skaičius nuo 1 iki 10!" << std::endl;
-            continue; // pradeda nauja ciklo iteracija
+            break;
         }
-        if (ndPaz < 1 || ndPaz > 10) // tikrina ar ivestas skaicius maziau uz 1 arba daugiau uz 10, jei salyga tenkinama, pradedama nauja ciklo iteracija
-        {    
-            cin.clear(); // atstato console input flag'a, jei ivestis buvo bloga.
-            cin.ignore(10000,'\n'); // isvalo console ivesti, iki 10000 simboliu arba naujos eilutes simbolio
-            cout << "Įvestas namų darbų rezultatas turi būti nuo 1 iki 10!" << std::endl;
-            continue;
+
+        // eilute verciama is string i sveikaji skaiciu (int) ir tikrinama ar gautas sveikasis skaicius > 1 ir < 10
+        try
+        {
+            int ndPaz = std::stoi(eilute); // stoi - "string to integer"
+
+            if (ndPaz < 1 || ndPaz > 10) {
+                cout << "Įvestas namų darbų rezultatas turi būti nuo 1 iki 10! Bandykite dar kartą arba spauskite ENTER, kad baigti." << endl;
+            } else {
+                A.nd.push_back(ndPaz);
+            }
+        } 
+        catch (...)
+        {
+            // jei ivyksta klaida, prasoma per naujo ivesti skaiciu
+            cout << "Įvestas namų darbų rezultatas turi būti sveikasis skaičius nuo 1 iki 10! Bandykite dar kartą arba spauskite ENTER, kad baigti." << endl;
         }
-        A.nd.push_back(ndPaz); // prideda ivesta pazymi prie vektoriaus.
     }
 
     cout << "Įveskite egzamino rezultatą: ";
-    while(A.rez==0 && !cin.eof())
+    while(true)
     {
-        if (!(cin >> A.rez)) // tikrina ar ivestas sveikas skaicius, kadangi ndPaz - int kintamasis
+        if (!(cin >> A.rez)) // tikrina ar ivestas sveikas skaicius, kadangi A.rez - int kintamasis
         {
             cin.clear(); // atstato console input flag'a, jei ivestis buvo bloga.
-            cin.ignore(10000,'\n'); // isvalo console ivesti, iki 10000 simboliu arba naujos eilutes simbolio
-            cout << "Įvestas namų darbų rezultatas turi būti sveikasis skaičius nuo 1 iki 10!" << std::endl;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
+            cout << "Įvestas egzamino rezultatas turi būti sveikasis skaičius nuo 1 iki 10!" << std::endl;
+            continue;
         }
         if (A.rez < 1 || A.rez > 10) // tikrina ar ivestas skaicius maziau uz 1 arba daugiau uz 10, jei salyga tenkinama, pradedama nauja ciklo iteracija
         {    
-            cin.clear(); // atstato console input flag'a, jei ivestis buvo bloga.
-            cin.ignore(10000,'\n'); // isvalo console ivesti, iki 10000 simboliu arba naujos eilutes simbolio
-            cout << "Įvestas namų darbų rezultatas turi būti nuo 1 iki 10!" << std::endl;
+            A.rez=0;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
+            cout << "Įvestas egzamino rezultatas turi būti nuo 1 iki 10!" << std::endl;
+            continue;
         }
+        break;
     }
     cout << std::endl;
     return A;

@@ -2,7 +2,7 @@
 #include <algorithm>
 
 float galutinisVid(Studentas &A){
-    if(A.nd.empty()) return 0;
+    if(A.nd.empty()) return 0.6f*A.rez;
 
     int sum = 0;
     for(int x : A.nd) // for_each X in vector A.nd, sum+=x

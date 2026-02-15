@@ -14,8 +14,6 @@ using std::vector;
 using std::cin;
 using std::cout;
 
-//ivesty CTRL+D sukuria EOF, how to avoid? (isspresk sita beda ATLANTAI!)
-
 #ifdef _WIN32 // naudojame preprocesorių, kad kompiliatorius, naudojant Windows, pridėtų windows.h antraščių failą, kad vėliau galėtume pakeistį terminalo išvesties ir įvesties užkodavimą į UTF-8
 #include <windows.h> // windows antraščių failas
 #endif
@@ -43,7 +41,7 @@ int main()
     } else if(t == 'N' || t == 'n'){
         medianos = false;
     }
-    cout << "Pradedama studentų bei jų rezultatų įvestis. CTRL-D, kad nutraukti įvestį";
+    cout << "Pradedama studentų bei jų rezultatų įvestis. Tuščiame įvedimo lauke paspaudus klavišą ENTER - įvedimas nutraukiamas" << std::endl;
 
     Studentas A = skaitymas();
 
