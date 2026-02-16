@@ -5,6 +5,32 @@ void menu(){
     
 }
 
+bool medianosUzklausa()
+{
+    char t;
+
+    while (true)
+    {
+        cout << "Išvesti medianas? (y/n): ";
+
+        if(!(cin >> t))
+        {
+            cin.clear();
+            cin.ignore(10000,'\n');
+            continue;
+        }
+
+        t = std::tolower(t);
+
+        if(t=='y') return true;
+        if(t=='n') return false;
+
+        cout << "Neteisinga įvestis" << std::endl;
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+}
+
 Studentas skaitymas(){
     Studentas A;
     std::string eilute;

@@ -29,17 +29,8 @@ int main()
     SetConsoleCP(CP_UTF8);
     #endif
 
-    bool medianos;
-    char t;
-    cout << "Išvesti medianas? (N, y)" << std::endl;
-    do {
-        cin >> t;
-    } while(t!='N' && t!='Y' && t!='n' && t!='y');
-    if(t == 'Y' || t == 'y'){
-        medianos = true;
-    } else if(t == 'N' || t == 'n'){
-        medianos = false;
-    }
+    bool medianos = medianosUzklausa();
+    
     cout << "Pradedama studentų bei jų rezultatų įvestis. Tuščiame įvedimo lauke paspaudus klavišą ENTER - įvedimas nutraukiamas" << std::endl;
 
     Studentas A = skaitymas();

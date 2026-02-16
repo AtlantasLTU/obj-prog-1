@@ -18,3 +18,5 @@ void namuDarbuRezultatuIvestis(std::string &eilute, Studentas &A);
 void egzaminoRezultatoIvestis(Studentas &A);
 
 void isvestis(Studentas &A, bool medianos);
+
+bool medianosUzklausa();
