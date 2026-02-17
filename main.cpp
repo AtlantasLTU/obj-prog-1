@@ -43,13 +43,15 @@ int main()
         case 2: // tik pazymiu generavimas.
         {
             bool medianos = medianosUzklausa();
-            std::vector<Studentas> studentai = ivestiStudentusRandom();
+            std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
             isvestis(studentai, medianos);
             break;
         }
         case 3: // studentu ir pazymiu generavimas;
         {
             bool medianos = medianosUzklausa();
+            std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
+            isvestis(studentai, medianos);
             break;
         }
         case 4: // darbo baigtis

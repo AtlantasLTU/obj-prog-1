@@ -1,12 +1,14 @@
 #include "studentas.h"
 #include "io.h"
 
-Studentas skaitymasRandom(/* const int &pasirinkimas */);
+Studentas skaitymasRandom(const int &pasirinkimas);
 
-void studentoVardoPavardesIvestisRandom(Studentas &A);
+void studentoVardoPavardesIvestisRandom(Studentas &A, const int &pasirinkimas);
 
 int namuDarbuRezultataiIvestisRandom();
 
 void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis);
 
-std::vector<Studentas> ivestiStudentusRandom();
+int randomStudentuKiekis();
+
+std::vector<Studentas> ivestiStudentusRandom(const int &pasirinkimas);
