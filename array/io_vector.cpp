@@ -42,7 +42,7 @@ bool medianosUzklausa()
         if(!(cin >> t))
         {
             cin.clear();
-            cin.ignore(10000,'\n');
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
         }
 
@@ -68,7 +68,7 @@ bool studentoUzklausa()
         if(!(cin >> t))
         {
             cin.clear();
-            cin.ignore(10000,'\n');
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
         }
 
@@ -174,7 +174,6 @@ void studentoVardoPavardesIvestis(Studentas &A)
 void namuDarbuRezultatuIvestis(Studentas &A)
 {    // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio  
     std::string eilute;  
-    //cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); <- sitas buvo iskomentuotas?!
     while (true)
     {
         cout << "Įveskite namų darbų pažymį (ENTER tuščiame laukelyje, kad nutraukti įvestį): ";

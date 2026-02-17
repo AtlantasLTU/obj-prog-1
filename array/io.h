@@ -8,8 +8,6 @@
 #include <iomanip>
 #include <vector>
 
-
-
 Studentas skaitymas();
 
 void studentoVardoPavardesIvestis(Studentas &A);

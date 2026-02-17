@@ -5,51 +5,13 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-void studentoVardoPavardesIvestisRandom(Studentas &A, const int &pasirinkimas)
+void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas)
 {
     switch(pasirinkimas)
     {
         case 2:
         {
-            // the reference pass will still be used here, just haven't written the code yet
-            std::string eilute;
-            // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            while (true)
-            {
-                cout << "Įveskite studento vardą bei pavardę: ";
-                std::getline(cin, eilute); // perskaito visa eilute
-            
-                // jei eilutė tuščia, nutraukiama studento įvestis
-                if (eilute.empty())
-                {   
-                    cout << "Turi būti įvesta studento vardas bei pavardė" << std::endl;
-                    continue;
-                }
-            
-                std::istringstream iss(eilute);
-                std::string vardas, pavarde;
-            
-                // įvestį skaidome į du žodžius
-                if (!(iss >> vardas >> pavarde))
-                {
-                    cout << "Įveskite vardą ir pavardę (du žodžiai)." << endl;
-                    continue;
-                }
-            
-                // tikriname ar po vardo ir pavardės yra dar žodžių
-                std::string ekstra;
-                if (iss >> ekstra)
-                {
-                    cout << "Įvesta per daug žodžių — reikia tik vardo ir pavardės." << endl;
-                    continue;
-                }
-            
-                // Jei viskas gerai — saugom
-                A.vardas = vardas;
-                A.pavarde = pavarde;
-                break;
-            }
+            studentoVardoPavardesIvestis(A);
             break;
         }
         case 3:
@@ -66,7 +28,7 @@ void studentoVardoPavardesIvestisRandom(Studentas &A, const int &pasirinkimas)
     }
 }
 
-Studentas skaitymasRandom(const int &pasirinkimas)
+Studentas skaitymasRandom(int pasirinkimas)
 {
     Studentas A;
     switch(pasirinkimas)
@@ -152,7 +114,7 @@ void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis)
     }
 }
 
-std::vector<Studentas> ivestiStudentusRandom(const int &pasirinkimas)
+std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas)
 {
     std::vector<Studentas> studentai;
     switch(pasirinkimas)
@@ -176,6 +138,7 @@ std::vector<Studentas> ivestiStudentusRandom(const int &pasirinkimas)
         case 3:
         {
             int studKiekis = randomStudentuKiekis();
+            studentai.reserve(studKiekis);
             for(int i = 0; i < studKiekis; i++)
             {
                 studentai.push_back(skaitymasRandom(pasirinkimas));

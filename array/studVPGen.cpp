@@ -1,5 +1,17 @@
 #include "studVPGen.h"
 
+using std::string;
+using std::cout;
+using std::endl;
+using std::setw;
+using std::left;
+using std::right;
+using std::vector;
+using std::map;
+using std::mt19937;
+
+using hrClock = std::chrono::high_resolution_clock; 
+
 void gen_map(Studentas &A){
 
   mt19937 mt(static_cast<long unsigned int>(hrClock::now().time_since_epoch().count()));
