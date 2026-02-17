@@ -1,3 +1,5 @@
+#ifndef IO_H
+#define IO_H
 #include "studentas.h"
 #include <limits>
 #include "calc.h"
@@ -5,16 +7,14 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
-using std::cout;
-using std::cin;
-using std::endl;
+
 
 
 Studentas skaitymas();
 
-void studentoVardoPavardesIvestis(std::string &eilute, Studentas &A);
+void studentoVardoPavardesIvestis(Studentas &A);
 
-void namuDarbuRezultatuIvestis(std::string &eilute, Studentas &A);
+void namuDarbuRezultatuIvestis(Studentas &A);
 
 void egzaminoRezultatoIvestis(Studentas &A);
 
@@ -27,3 +27,5 @@ std::vector<Studentas> ivestiStudentus();
 bool studentoUzklausa();
 
 int menu();
+
+#endif

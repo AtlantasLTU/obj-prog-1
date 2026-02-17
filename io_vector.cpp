@@ -1,6 +1,11 @@
 #include "io.h"
 
-int menu(){
+using std::cout;
+using std::cin;
+using std::endl;
+
+int menu()
+{
     cout << "Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą): " << std::endl;
 
     int pasirinkimas=0;
@@ -52,7 +57,8 @@ bool medianosUzklausa()
     }
 }
 
-bool studentoUzklausa(){
+bool studentoUzklausa()
+{
     char t;
 
     while (true)
@@ -77,7 +83,8 @@ bool studentoUzklausa(){
     }
 }
 
-std::vector<Studentas> ivestiStudentus(){
+std::vector<Studentas> ivestiStudentus()
+{
     std::vector<Studentas> studentai;
     while(true)
     {
@@ -94,11 +101,11 @@ std::vector<Studentas> ivestiStudentus(){
     return studentai;
 } 
 
-Studentas skaitymas(){
+Studentas skaitymas()
+{
     Studentas A;
-    std::string eilute;
-    studentoVardoPavardesIvestis(eilute, A);
-    namuDarbuRezultatuIvestis(eilute, A);
+    studentoVardoPavardesIvestis(A);
+    namuDarbuRezultatuIvestis(A);
     egzaminoRezultatoIvestis(A);
     return A;
 }
@@ -122,9 +129,9 @@ void isvestis(const std::vector<Studentas> &A, bool medianos)
     }
 }
 
-void studentoVardoPavardesIvestis(std::string &eilute, Studentas &A)
+void studentoVardoPavardesIvestis(Studentas &A)
 {
-    //std::string eilute;
+    std::string eilute;
     // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     while (true)
@@ -164,9 +171,9 @@ void studentoVardoPavardesIvestis(std::string &eilute, Studentas &A)
     }
 }
 
-void namuDarbuRezultatuIvestis(std::string &eilute, Studentas &A)
+void namuDarbuRezultatuIvestis(Studentas &A)
 {    // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio  
-    //std::string eilute;  
+    std::string eilute;  
     //cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); <- sitas buvo iskomentuotas?!
     while (true)
     {
