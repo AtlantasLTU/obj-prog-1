@@ -1,4 +1,4 @@
 #include "studentas.h"
 
-float galutinisVid(Studentas &A);
-float galutinisMed(Studentas &A);
+float galutinisVid(const Studentas &A);
+float galutinisMed(const Studentas &A);

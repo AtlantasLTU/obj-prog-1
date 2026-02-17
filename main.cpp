@@ -29,12 +29,37 @@ int main()
     SetConsoleCP(CP_UTF8);
     #endif
 
-    bool medianos = medianosUzklausa();
-    
-    cout << "Pradedama studentų bei jų rezultatų įvestis. Tuščiame įvedimo lauke paspaudus klavišą ENTER - įvedimas nutraukiamas" << std::endl;
-
-    Studentas A = skaitymas();
-    isvestis(A, medianos);
+    //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
+    int pasirinkimas = menu();
+    switch(pasirinkimas){
+        case 1:
+        {
+            bool medianos = medianosUzklausa();
+            std::vector<Studentas> studentai = ivestiStudentus();
+            isvestis(studentai, medianos);
+            break;
+        }
+        case 2:
+        {
+            bool medianos = medianosUzklausa();
+            break;
+        }
+        case 3:
+        {
+            bool medianos = medianosUzklausa();
+            break;
+        }
+        case 4:
+        {
+            bool medianos = medianosUzklausa();
+            break;
+        }
+        default:
+        {
+            std::cout << "How did we get here?" << std::endl; // https://minecraft.wiki/w/Tutorial:Advancement_guide/How_Did_We_Get_Here%3F
+        }
+    }
+//    cout << "Pradedama studentų bei jų rezultatų įvestis. Tuščiame įvedimo lauke paspaudus klavišą ENTER - įvedimas nutraukiamas" << std::endl;
 
     return 0;
 }

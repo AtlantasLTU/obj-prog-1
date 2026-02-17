@@ -1,7 +1,7 @@
 #include "calc.h"
 #include <algorithm>
 
-float galutinisVid(Studentas &A){
+float galutinisVid(const Studentas &A){
     if(A.nd.empty()) return 0.6f*A.rez;
 
     int sum = 0;
@@ -13,7 +13,7 @@ float galutinisVid(Studentas &A){
 }
 
 
-float galutinisMed(Studentas &A){
+float galutinisMed(const Studentas &A){
     if(A.nd.empty()) return 0;
 
     std::vector<int> nd = A.nd;

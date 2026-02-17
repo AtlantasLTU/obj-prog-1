@@ -1,8 +1,29 @@
 #include "io.h"
 
-void menu(){
+int menu(){
     cout << "Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą): " << std::endl;
-    
+
+    int pasirinkimas=0;
+    while (true)
+    {
+        if (!(cin >> pasirinkimas)) // tikrina ar ivestas sveikas skaicius, kadangi t - int kintamasis
+        {
+            cin.clear();                                                   // atstato console input flag'a, jei ivestis buvo bloga.
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
+            cout << "Įvestas pasirinkimas turi būti sveikasis skaičius (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą)!:" << std::endl;
+            continue;
+        }
+        if (pasirinkimas < 1 || pasirinkimas > 4) // tikrina ar ivestas skaicius maziau uz 1 arba daugiau uz 10, jei salyga tenkinama, pradedama nauja ciklo iteracija
+        {
+            pasirinkimas = 0;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
+            cout << "Įvestas pasirinkimas turi būti sveikasis skaičius (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą)!:" << std::endl;
+            continue;
+        }
+        break;
+    }
+    cout << std::endl;
+    return pasirinkimas;
 }
 
 bool medianosUzklausa()
@@ -11,7 +32,7 @@ bool medianosUzklausa()
 
     while (true)
     {
-        cout << "Išvesti medianas? (y/n): ";
+        cout << "Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu (y/n): ";
 
         if(!(cin >> t))
         {
@@ -31,6 +52,48 @@ bool medianosUzklausa()
     }
 }
 
+bool studentoUzklausa(){
+    char t;
+
+    while (true)
+    {
+        cout << "Ar norite įvesti studentą? (y/n)";
+
+        if(!(cin >> t))
+        {
+            cin.clear();
+            cin.ignore(10000,'\n');
+            continue;
+        }
+
+        t = std::tolower(t);
+
+        if(t=='y') return true;
+        if(t=='n') return false;
+
+        cout << "Neteisinga įvestis" << std::endl;
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+}
+
+std::vector<Studentas> ivestiStudentus(){
+    std::vector<Studentas> studentai;
+    while(true)
+    {
+        bool ivestiStudenta = studentoUzklausa();
+        if(ivestiStudenta)
+        {
+            studentai.push_back(skaitymas());
+        } 
+        else 
+        {
+                break;
+        }
+    }
+    return studentai;
+} 
+
 Studentas skaitymas(){
     Studentas A;
     std::string eilute;
@@ -40,29 +103,28 @@ Studentas skaitymas(){
     return A;
 }
 
-void isvestis(Studentas &A, bool medianos)
+void isvestis(const std::vector<Studentas> &A, bool medianos)
 {
     cout << std::left << std::setw(15) << "Pavarde" << std::setw(15) << "Vardas" << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
     cout << std::setfill('-') << std::setw(65) << "-" << std::endl
          << std::setfill(' ');
-    // for(int i = 0; i < 1; i++){
-    cout << std::setw(15) << A.vardas << std::setw(14) << A.pavarde << " ";
-
-    if (medianos)
+    for(const Studentas &X : A)
     {
-        float galutinis = galutinisMed(A);
-        cout << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinis << std::endl;
+        cout << std::setw(15) << X.vardas << std::setw(14) << X.pavarde << " ";
+        if (medianos)
+        {
+            cout << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(X) << std::endl;
+        }
+        else
+        {
+            cout << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(X) << "y.yy" << std::endl;
+        }
     }
-    else
-    {
-        float galutinis = galutinisVid(A);
-        cout << std::setprecision(2) << std::fixed << std::setw(19) << galutinis << "y.yy" << std::endl;
-    }
-    //}
 }
 
 void studentoVardoPavardesIvestis(std::string &eilute, Studentas &A)
 {
+    //std::string eilute;
     // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     while (true)
@@ -103,7 +165,9 @@ void studentoVardoPavardesIvestis(std::string &eilute, Studentas &A)
 }
 
 void namuDarbuRezultatuIvestis(std::string &eilute, Studentas &A)
-{    // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+{    // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio  
+    //std::string eilute;  
+    //cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); <- sitas buvo iskomentuotas?!
     while (true)
     {
         cout << "Įveskite namų darbų pažymį (ENTER tuščiame laukelyje, kad nutraukti įvestį): ";
