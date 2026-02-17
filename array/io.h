@@ -6,7 +6,6 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <vector>
 
 Studentas skaitymas();
 
@@ -14,13 +13,17 @@ void studentoVardoPavardesIvestis(Studentas &A);
 
 void namuDarbuRezultatuIvestis(Studentas &A);
 
+void pridetiNd(Studentas &A, int paz);
+
 void egzaminoRezultatoIvestis(Studentas &A);
 
-void isvestis(const std::vector<Studentas> &A, bool medianos);
+void isvestis(const Studentas *A, int kiekis, bool medianos);
 
 bool medianosUzklausa();
 
-std::vector<Studentas> ivestiStudentus();
+Studentas *ivestiStudentus(int &kiekis);
+
+void padidintiStudentasMasyva(int &kiekis, int &vieta, Studentas *&studentai);
 
 bool studentoUzklausa();
 

@@ -2,6 +2,8 @@
 #define RANDOM_H
 #include "studentas.h"
 #include "io.h"
+#include <random>
+#include <ctime>
 
 Studentas skaitymasRandom(int pasirinkimas);
 
@@ -13,6 +15,8 @@ void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis);
 
 int randomStudentuKiekis();
 
-std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas);
+Studentas* ivestiStudentusRandom(int pasirinkimas, int &kiekis);
+
+void egzaminoRezultatasRandom(Studentas &A);
 
 #endif

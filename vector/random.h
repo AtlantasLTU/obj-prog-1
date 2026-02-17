@@ -15,4 +15,6 @@ int randomStudentuKiekis();
 
 std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas);
 
+void egzaminoRezultatasRandom(Studentas &A);
+
 #endif

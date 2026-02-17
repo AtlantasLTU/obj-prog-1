@@ -37,14 +37,14 @@ Studentas skaitymasRandom(int pasirinkimas)
         {
             studentoVardoPavardesIvestisRandom(A, pasirinkimas);
             namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
-            egzaminoRezultatoIvestis(A);
+            egzaminoRezultatasRandom(A);
             return A;
         }
         case 3:
         {
             studentoVardoPavardesIvestisRandom(A, pasirinkimas);
             namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
-            egzaminoRezultatoIvestis(A);
+            egzaminoRezultatasRandom(A);
             return A;
         }
         default:
@@ -53,6 +53,13 @@ Studentas skaitymasRandom(int pasirinkimas)
             return A;
         }
     }
+}
+
+void egzaminoRezultatasRandom(Studentas &A)
+{
+    static std::mt19937 rng(std::random_device{}());
+    std::uniform_int_distribution<int> dist(1,10);
+    A.rez = dist(rng);
 }
 
 int namuDarbuRezultataiIvestisRandom()
@@ -109,46 +116,43 @@ int randomStudentuKiekis()
 
 void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis)
 {
+    static std::mt19937 rng(std::random_device{}());
+    std::uniform_int_distribution<int> dist(1,10);
     for(int i = 0; i < ndKiekis; i++){
-        A.nd.push_back(1 + (double) rand() / RAND_MAX * (10 - 1));
+        pridetiNd(A, dist(rng));
     }
 }
 
-std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas)
+Studentas* ivestiStudentusRandom(int pasirinkimas, int &kiekis)
 {
-    std::vector<Studentas> studentai;
+    int vieta = 2;
+    kiekis = 0;
+    Studentas *studentai = new Studentas[vieta];
     switch(pasirinkimas)
     {
         case 2:
         {
-            while(true)
+            while(studentoUzklausa())
             {
-                bool ivestiStudenta = studentoUzklausa();
-                if(ivestiStudenta)
-                {
-                    studentai.push_back(skaitymasRandom(pasirinkimas));
-                } 
-                else 
-                {
-                    break;
-                }
+                padidintiStudentasMasyva(kiekis, vieta, studentai);
+                studentai[kiekis++] = skaitymasRandom(pasirinkimas);
             }
             break;
         }
         case 3:
         {
-            int studKiekis = randomStudentuKiekis();
-            studentai.reserve(studKiekis);
-            for(int i = 0; i < studKiekis; i++)
+            kiekis = randomStudentuKiekis();
+            delete[] studentai;
+            studentai = new Studentas[kiekis];
+            for(int i = 0; i < kiekis; i++)
             {
-                studentai.push_back(skaitymasRandom(pasirinkimas));
+                studentai[i] = skaitymasRandom(pasirinkimas);
             }
             break;
         }
         default:
         {
             cout << "ivestiStudentusRandom default atvejis" << std::endl;
-            return studentai;
         }
     }
     return studentai;

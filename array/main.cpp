@@ -1,13 +1,11 @@
 #include <iostream>
 #include <string>
-#include <vector>
 
 //Header file includes
 #include "io.h"
 #include "random.h"
 
 //namespaces
-using std::vector;
 using std::cin;
 using std::cout;
 
@@ -22,29 +20,44 @@ int main()
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     #endif
-    srand(time(NULL));
+    srand(time(nullptr));
     //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
     int pasirinkimas = menu();
     switch(pasirinkimas){
         case 1: // rankinis ivedimas
         {
             bool medianos = medianosUzklausa();
-            std::vector<Studentas> studentai = ivestiStudentus();
-            isvestis(studentai, medianos);
+            int kiekis;
+            Studentas *studentai = ivestiStudentus(kiekis);
+            isvestis(studentai, kiekis, medianos);
+            for(int i = 0; i < kiekis; i++){
+                delete[] studentai[i].nd;
+            }
+            delete[] studentai;
             break;
         }
         case 2: // tik pazymiu generavimas.
         {
             bool medianos = medianosUzklausa();
-            std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
-            isvestis(studentai, medianos);
+            int kiekis;
+            Studentas *studentai = ivestiStudentusRandom(pasirinkimas, kiekis);
+            isvestis(studentai, kiekis, medianos);
+            for(int i = 0; i < kiekis; i++){
+                delete[] studentai[i].nd;
+            }
+            delete[] studentai;
             break;
         }
         case 3: // studentu ir pazymiu generavimas;
         {
             bool medianos = medianosUzklausa();
-            std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
-            isvestis(studentai, medianos);
+            int kiekis;
+            Studentas *studentai = ivestiStudentusRandom(pasirinkimas, kiekis);
+            isvestis(studentai, kiekis, medianos);
+            for(int i = 0; i < kiekis; i++){
+                delete[] studentai[i].nd;
+            }
+            delete[] studentai;
             break;
         }
         case 4: // darbo baigtis

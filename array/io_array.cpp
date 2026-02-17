@@ -83,23 +83,36 @@ bool studentoUzklausa()
     }
 }
 
-std::vector<Studentas> ivestiStudentus()
+Studentas* ivestiStudentus(int &kiekis)
 {
-    std::vector<Studentas> studentai;
-    while(true)
+    int vieta = 1;
+    kiekis = 0;
+    Studentas *studentai = new Studentas[vieta];
+    while(studentoUzklausa())
     {
-        bool ivestiStudenta = studentoUzklausa();
-        if(ivestiStudenta)
-        {
-            studentai.push_back(skaitymas());
-        } 
-        else 
-        {
-                break;
-        }
+        padidintiStudentasMasyva(kiekis, vieta, studentai);
+        studentai[kiekis++] = skaitymas();
     }
     return studentai;
-} 
+}
+
+void padidintiStudentasMasyva(int &kiekis, int &vieta, Studentas *&studentai)
+{
+    if (kiekis >= vieta)
+    {
+        vieta = (vieta == 0) ? 1 : vieta * 2;
+
+        Studentas *naujas = new Studentas[vieta];
+
+        for (int i = 0; i < kiekis; i++)
+        {
+            naujas[i] = studentai[i];
+        }
+
+        delete[] studentai;
+        studentai = naujas;
+    }
+}
 
 Studentas skaitymas()
 {
@@ -110,13 +123,14 @@ Studentas skaitymas()
     return A;
 }
 
-void isvestis(const std::vector<Studentas> &A, bool medianos)
+void isvestis(const Studentas *A, int kiekis, bool medianos)
 {
     cout << std::left << std::setw(15) << "Pavarde" << std::setw(15) << "Vardas" << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
     cout << std::setfill('-') << std::setw(65) << "-" << std::endl
          << std::setfill(' ');
-    for(const Studentas &X : A)
+    for(int i = 0; i < kiekis; i++)
     {
+        const Studentas &X = A[i];
         cout << std::setw(15) << X.vardas << std::setw(14) << X.pavarde << " ";
         if (medianos)
         {
@@ -196,7 +210,7 @@ void namuDarbuRezultatuIvestis(Studentas &A)
             }
             else
             {
-                A.nd.push_back(ndPaz);
+                pridetiNd(A, ndPaz);
             }
         }
         catch (...)
@@ -206,6 +220,24 @@ void namuDarbuRezultatuIvestis(Studentas &A)
         }
     }
 }
+
+void pridetiNd(Studentas &A, int paz)
+{
+    if (A.ndKiekis == A.ndVieta)
+    {
+        A.ndVieta = (A.ndVieta == 0) ? 1 : A.ndVieta * 2;
+
+        int* naujas = new int[A.ndVieta];
+        for(int i=0;i<A.ndKiekis;i++)
+            naujas[i] = A.nd[i];
+
+        delete[] A.nd;
+        A.nd = naujas;
+    }
+
+    A.nd[A.ndKiekis++] = paz;
+}
+
 
 void egzaminoRezultatoIvestis(Studentas &A)
 {

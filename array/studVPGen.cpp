@@ -6,7 +6,6 @@ using std::endl;
 using std::setw;
 using std::left;
 using std::right;
-using std::vector;
 using std::map;
 using std::mt19937;
 

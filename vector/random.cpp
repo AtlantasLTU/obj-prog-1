@@ -37,14 +37,14 @@ Studentas skaitymasRandom(int pasirinkimas)
         {
             studentoVardoPavardesIvestisRandom(A, pasirinkimas);
             namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
-            egzaminoRezultatoIvestis(A);
+            egzaminoRezultatasRandom(A);
             return A;
         }
         case 3:
         {
             studentoVardoPavardesIvestisRandom(A, pasirinkimas);
             namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
-            egzaminoRezultatoIvestis(A);
+            egzaminoRezultatasRandom(A);
             return A;
         }
         default:
@@ -53,6 +53,13 @@ Studentas skaitymasRandom(int pasirinkimas)
             return A;
         }
     }
+}
+
+void egzaminoRezultatasRandom(Studentas &A)
+{
+    static std::mt19937 rng(std::random_device{}());
+    std::uniform_int_distribution<int> dist(1,10);
+    A.rez = dist(rng);
 }
 
 int namuDarbuRezultataiIvestisRandom()
