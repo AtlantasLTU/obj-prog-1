@@ -2,6 +2,8 @@
 #define RANDOM_H
 #include "studentas.h"
 #include "io.h"
+#include <random>
+#include <ctime>
 
 Studentas skaitymasRandom(int pasirinkimas);
 

@@ -51,7 +51,7 @@ bool medianosUzklausa()
         if(t=='y') return true;
         if(t=='n') return false;
 
-        cout << "Neteisinga įvestis" << std::endl;
+        cout << "Neteisinga įvestis! Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu (y/n): ";
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
@@ -63,7 +63,7 @@ bool studentoUzklausa()
 
     while (true)
     {
-        cout << "Ar norite įvesti studentą? (y/n)";
+        cout << "Ar norite įvesti studentą? (y/n): ";
 
         if(!(cin >> t))
         {
@@ -77,7 +77,7 @@ bool studentoUzklausa()
         if(t=='y') return true;
         if(t=='n') return false;
 
-        cout << "Neteisinga įvestis" << std::endl;
+        cout << "Neteisinga įvestis! Ar norite įvesti studentą? (y/n): ";
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
@@ -130,15 +130,14 @@ void isvestis(const Studentas *A, int kiekis, bool medianos)
          << std::setfill(' ');
     for(int i = 0; i < kiekis; i++)
     {
-        const Studentas &X = A[i];
-        cout << std::setw(15) << X.vardas << std::setw(14) << X.pavarde << " ";
+        cout << std::setw(15) << A[i].vardas << std::setw(14) << A[i].pavarde << " ";
         if (medianos)
         {
-            cout << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(X) << std::endl;
+            cout << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(A[i]) << std::endl;
         }
         else
         {
-            cout << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(X) << "y.yy" << std::endl;
+            cout << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(A[i]) << "y.yy" << std::endl;
         }
     }
 }

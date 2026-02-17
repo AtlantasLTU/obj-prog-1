@@ -16,7 +16,6 @@ void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas)
         }
         case 3:
         {   
-            cout << "Sugeneruotas vardas!" << std::endl;
             gen_map(A);
             break;
         }
@@ -116,8 +115,10 @@ int randomStudentuKiekis()
 
 void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis)
 {
+    static std::mt19937 rng(std::random_device{}());
+    std::uniform_int_distribution<int> dist(1,10);
     for(int i = 0; i < ndKiekis; i++){
-        A.nd.push_back(1 + (double) rand() / RAND_MAX * (10 - 1));
+        A.nd.push_back(dist(rng));
     }
 }
 
@@ -128,17 +129,9 @@ std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas)
     {
         case 2:
         {
-            while(true)
+            while(studentoUzklausa())
             {
-                bool ivestiStudenta = studentoUzklausa();
-                if(ivestiStudenta)
-                {
                     studentai.push_back(skaitymasRandom(pasirinkimas));
-                } 
-                else 
-                {
-                    break;
-                }
             }
             break;
         }
@@ -155,7 +148,6 @@ std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas)
         default:
         {
             cout << "ivestiStudentusRandom default atvejis" << std::endl;
-            return studentai;
         }
     }
     return studentai;

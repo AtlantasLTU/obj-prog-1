@@ -16,7 +16,6 @@ void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas)
         }
         case 3:
         {   
-            cout << "Sugeneruotas vardas!" << std::endl;
             gen_map(A);
             break;
         }

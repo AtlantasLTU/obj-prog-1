@@ -51,7 +51,7 @@ bool medianosUzklausa()
         if(t=='y') return true;
         if(t=='n') return false;
 
-        cout << "Neteisinga įvestis" << std::endl;
+        cout << "Neteisinga įvestis! Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu (y/n): ";
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
@@ -63,7 +63,7 @@ bool studentoUzklausa()
 
     while (true)
     {
-        cout << "Ar norite įvesti studentą? (y/n)";
+        cout << "Ar norite įvesti studentą? (y/n): ";
 
         if(!(cin >> t))
         {
@@ -77,7 +77,7 @@ bool studentoUzklausa()
         if(t=='y') return true;
         if(t=='n') return false;
 
-        cout << "Neteisinga įvestis" << std::endl;
+        cout << "Neteisinga įvestis! Ar norite įvesti studentą? (y/n): ";
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
@@ -86,17 +86,9 @@ bool studentoUzklausa()
 std::vector<Studentas> ivestiStudentus()
 {
     std::vector<Studentas> studentai;
-    while(true)
+    while(studentoUzklausa())
     {
-        bool ivestiStudenta = studentoUzklausa();
-        if(ivestiStudenta)
-        {
             studentai.push_back(skaitymas());
-        } 
-        else 
-        {
-                break;
-        }
     }
     return studentai;
 } 
