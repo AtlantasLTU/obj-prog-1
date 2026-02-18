@@ -7,7 +7,21 @@
 #include <sstream>
 #include <iomanip>
 
+int menu();
+
+bool medianosUzklausa();
+
+bool studentoUzklausa();
+
+bool gautiPatvirtinima(std::string pranesimas);
+
+Studentas *ivestiStudentus(int &kiekis);
+
+void padidintiStudentasMasyva(int &kiekis, int &vieta, Studentas *&studentai);
+
 Studentas skaitymas();
+
+void isvestis(const Studentas *A, int kiekis, bool medianos);
 
 void studentoVardoPavardesIvestis(Studentas &A);
 
@@ -17,16 +31,8 @@ void pridetiNd(Studentas &A, int paz);
 
 void egzaminoRezultatoIvestis(Studentas &A);
 
-void isvestis(const Studentas *A, int kiekis, bool medianos);
+int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia = false);
 
-bool medianosUzklausa();
-
-Studentas *ivestiStudentus(int &kiekis);
-
-void padidintiStudentasMasyva(int &kiekis, int &vieta, Studentas *&studentai);
-
-bool studentoUzklausa();
-
-int menu();
+bool arTikSkaicius(const std::string& eilute);
 
 #endif

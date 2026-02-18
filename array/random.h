@@ -5,18 +5,18 @@
 #include <random>
 #include <ctime>
 
+void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas);
+
 Studentas skaitymasRandom(int pasirinkimas);
 
-void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas);
+void egzaminoRezultatasRandom(Studentas &A);
 
 int namuDarbuRezultataiIvestisRandom();
 
-void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis);
-
 int randomStudentuKiekis();
 
-Studentas* ivestiStudentusRandom(int pasirinkimas, int &kiekis);
+void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis);
 
-void egzaminoRezultatasRandom(Studentas &A);
+Studentas* ivestiStudentusRandom(int pasirinkimas, int &kiekis);
 
 #endif
