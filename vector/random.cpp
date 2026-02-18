@@ -53,7 +53,7 @@ void egzaminoRezultatasRandom(Studentas &A)
 
 int namuDarbuRezultataiIvestisRandom()
 {    
-    int N = 100;
+    int N = maxNdKiekis;
     return gautiSkaiciu("Įveskite norimą generuoti namų darbų rezultatų kiekį: ", 0, N);
 }
 

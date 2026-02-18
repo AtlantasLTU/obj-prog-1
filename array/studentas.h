@@ -2,6 +2,7 @@
 #define STUDENTAS_H
 
 #include <string>
+#define maxNdKiekis 10
 
 struct Studentas {
     std::string vardas, pavarde;

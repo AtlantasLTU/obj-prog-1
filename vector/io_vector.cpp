@@ -97,7 +97,7 @@ void isvestis(const std::vector<Studentas> &A, bool medianos)
          << std::setfill(' ');
     for(const Studentas &X : A)
     {
-        cout << std::setw(15) << X.vardas << std::setw(14) << X.pavarde << " ";
+        cout << std::setw(15) << X.vardas << std::setw(15) << X.pavarde << " ";
         if (medianos)
         {
             cout << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(X) << std::endl;
@@ -109,7 +109,7 @@ void isvestis(const std::vector<Studentas> &A, bool medianos)
     }
 }
 
-bool studentoVardoPavardesIvestis(Studentas &A, std::string eilute)
+bool studentoVardoPavardesIvestis(Studentas &A, std::string& eilute)
 {
     std::istringstream iss(eilute);
     std::string vardas, pavarde;
@@ -134,10 +134,17 @@ bool studentoVardoPavardesIvestis(Studentas &A, std::string eilute)
 
 void namuDarbuRezultatuIvestis(Studentas &A)
 {
-    while (true) {
+    cout << "Įveskite " << maxNdKiekis << " namų darbų rezultatų." << std::endl;
+    while (A.nd.size()<maxNdKiekis)
+    {
         int balas = gautiSkaiciu("Įveskite namų darbų rezultatą nuo 1 iki 10 (ENTER - baigti): ", 1, 10, true);
         if (balas == -1) break; 
         A.nd.push_back(balas);
+    }
+
+    if(A.nd.size()==maxNdKiekis)
+    {
+        cout << "Įvestas didžiausias namų darbų rezultatų kiekis" << std::endl;
     }
 }
 

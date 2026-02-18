@@ -24,7 +24,6 @@ int main()
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     #endif
-    srand(time(NULL));
     //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
     int pasirinkimas = menu();
     switch(pasirinkimas){

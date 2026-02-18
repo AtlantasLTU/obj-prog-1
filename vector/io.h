@@ -21,7 +21,7 @@ bool skaitymas(Studentas &A);
 
 void isvestis(const std::vector<Studentas> &A, bool medianos);
 
-bool studentoVardoPavardesIvestis(Studentas &A, std::string eilute);
+bool studentoVardoPavardesIvestis(Studentas &A, std::string& eilute);
 
 void namuDarbuRezultatuIvestis(Studentas &A);
 
