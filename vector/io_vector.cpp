@@ -11,53 +11,42 @@ int menu()
 
 bool medianosUzklausa()
 {
-    char t;
-
-    while (true)
-    {
-        cout << "Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu (y/n): ";
-
-        if(!(cin >> t))
-        {
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
-        }
-
-        t = std::tolower(t);
-
-        if(t=='y') return true;
-        if(t=='n') return false;
-
-        cout << "Neteisinga įvestis! Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu (y/n): ";
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
+    return gautiPatvirtinima("Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu");
 }
 
 bool studentoUzklausa()
 {
-    char t;
+    return gautiPatvirtinima("Ar norite įvesti studentą?");
+}
 
-    while (true)
-    {
-        cout << "Ar norite įvesti studentą? (y/n): ";
-
-        if(!(cin >> t))
-        {
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+bool gautiPatvirtinima(std::string pranesimas)
+{
+    std::string ivestis;
+    while (true) {
+        cout << pranesimas << " (y/n): ";
+        
+        if (!std::getline(cin, ivestis)) {
+            if (cin.eof())
+            { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+                cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+                exit(0); // sustabdoma programa
+            }
+            cin.clear(); // atstatome cin fail flag'a
             continue;
         }
 
-        t = std::tolower(t);
+        ivestis.erase(0, ivestis.find_first_not_of(" \t")); // randa pirma simboli kuris nera tarpas arba tabuliacija, tada trina nuo 0-inio indekso iki rasto simbolio.
+        ivestis.erase(ivestis.find_last_not_of(" \t") + 1); // randa pirma simboli kuris nera tarpas arba tabuliacija nuo galo ir istrina viska po to
 
-        if(t=='y') return true;
-        if(t=='n') return false;
+        // ivesties ilgio patikrinimas ir konvertavimas
+        if (ivestis.length() == 1) {
+            char t = std::tolower(static_cast<unsigned char>(ivestis[0]));
+            if (t == 'y') return true;
+            if (t == 'n') return false;
+        }
 
-        cout << "Neteisinga įvestis! Ar norite įvesti studentą? (y/n): ";
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        // jei ivestis neteisinga, t.y. nieko nebuvo returninta, tai prompt'ina vartotoja vel ivesti y ar n!
+        cout << "Neteisinga įvestis! Prašome įvesti tik 'y' arba 'n'." << endl;
     }
 }
 
@@ -102,8 +91,6 @@ void isvestis(const std::vector<Studentas> &A, bool medianos)
 void studentoVardoPavardesIvestis(Studentas &A)
 {
     std::string eilute;
-    // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     while (true)
     {
         cout << "Įveskite studento vardą bei pavardę: ";
@@ -163,7 +150,8 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
         cout << pranešimas;
 
         if (!std::getline(cin, ivestis)) {
-            if (cin.eof()) { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+            if (cin.eof()) 
+            { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
                 cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
                 exit(0); // sustabdoma programa
             }
@@ -171,7 +159,7 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
             continue;
         }
 
-        // programos nutraukimas su ENTER
+        // ivesties nutraukimas su ENTER
         if (galiButiTuscia && ivestis.empty()) return -1;
 
         try {
@@ -195,8 +183,8 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
 bool arTikSkaicius(const std::string& eilute)
 { // jei eilute tuscia grazinama false, std::all_of pereina nuo eilutes.begin() pradzios iki galo eilutes.end() per kiekviena simboli, kiekvienam simboliui jei jis skaicius ar tarpas grazina true, jei tai tiesiog raide - grazinama false ir toliau eilute nebetikrinama
     return !eilute.empty() && 
-    std::all_of(eilute.begin(), eilute.end(), [](unsigned char simbolis)
-    {
+    std::all_of(eilute.begin(), eilute.end(), [](unsigned char simbolis) 
+    { // geriau paaiskint lambda
         return std::isdigit(simbolis) || std::isspace(simbolis);
     });
 }

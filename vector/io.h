@@ -21,6 +21,8 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
 
 bool arTikSkaicius(const std::string& s);
 
+bool gautiPatvirtinima(std::string pranesimas);
+
 void isvestis(const std::vector<Studentas> &A, bool medianos);
 
 bool medianosUzklausa();
