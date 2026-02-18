@@ -6,29 +6,7 @@ using std::endl;
 
 int menu()
 {
-    cout << "Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą): " << std::endl;
-
-    int pasirinkimas=0;
-    while (true)
-    {
-        if (!(cin >> pasirinkimas)) // tikrina ar ivestas sveikas skaicius, kadangi t - int kintamasis
-        {
-            cin.clear();                                                   // atstato console input flag'a, jei ivestis buvo bloga.
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
-            cout << "Įvestas pasirinkimas turi būti sveikasis skaičius (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą)!:" << std::endl;
-            continue;
-        }
-        if (pasirinkimas < 1 || pasirinkimas > 4) // tikrina ar ivestas skaicius maziau uz 1 arba daugiau uz 10, jei salyga tenkinama, pradedama nauja ciklo iteracija
-        {
-            pasirinkimas = 0;
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
-            cout << "Įvestas pasirinkimas turi būti sveikasis skaičius (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą)!:" << std::endl;
-            continue;
-        }
-        break;
-    }
-    cout << std::endl;
-    return pasirinkimas;
+    return gautiSkaiciu("Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą): ", 1, 4);
 }
 
 bool medianosUzklausa()
@@ -164,61 +142,61 @@ void studentoVardoPavardesIvestis(Studentas &A)
 }
 
 void namuDarbuRezultatuIvestis(Studentas &A)
-{    // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio  
-    std::string eilute;  
-    while (true)
-    {
-        cout << "Įveskite namų darbų pažymį (ENTER tuščiame laukelyje, kad nutraukti įvestį): ";
-        std::getline(cin, eilute); // perskaito visa eilute
-
-        // patikrina ar eilute tuscia, jei taip, nutraukia namu darbu rezultatu ivesti (eilute tuscia, jei vartotojas paspaudzia ENTER, kai ji tuscia)
-        if (eilute.empty())
-        {
-            break;
-        }
-
-        // eilute verciama is string i sveikaji skaiciu (int) ir tikrinama ar gautas sveikasis skaicius > 1 ir < 10
-        try
-        {
-            int ndPaz = std::stoi(eilute); // stoi - "string to integer"
-
-            if (ndPaz < 1 || ndPaz > 10)
-            {
-                cout << "Įvestas namų darbų rezultatas turi būti nuo 1 iki 10!" << endl;
-            }
-            else
-            {
-                A.nd.push_back(ndPaz);
-            }
-        }
-        catch (...)
-        {
-            // jei ivyksta klaida, prasoma per naujo ivesti skaiciu
-            cout << "Įvestas namų darbų rezultatas turi būti sveikasis skaičius nuo 1 iki 10!" << endl;
-        }
+{
+    while (true) {
+        int balas = gautiSkaiciu("Įveskite namų darbų rezultatą nuo 1 iki 10 (ENTER - baigti): ", 1, 10, true);
+        if (balas == -1) break; 
+        A.nd.push_back(balas);
     }
 }
 
 void egzaminoRezultatoIvestis(Studentas &A)
 {
-    cout << "Įveskite egzamino rezultatą: ";
-    while (true)
-    {
-        if (!(cin >> A.rez)) // tikrina ar ivestas sveikas skaicius, kadangi A.rez - int kintamasis
-        {
-            cin.clear();                                                   // atstato console input flag'a, jei ivestis buvo bloga.
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
-            cout << "Įvestas egzamino rezultatas turi būti sveikasis skaičius nuo 1 iki 10!" << std::endl;
+    int balas = gautiSkaiciu("Įveskite egzamino rezultatą (1-10): ", 1, 10);
+    A.rez = balas;
+}
+
+int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia /* = false */)
+{
+    std::string ivestis;
+    while (true) {
+        cout << pranešimas;
+
+        if (!std::getline(cin, ivestis)) {
+            if (cin.eof()) { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+                cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+                exit(0); // sustabdoma programa
+            }
+            cin.clear(); // atstato cin veliavele is fail
             continue;
         }
-        if (A.rez < 1 || A.rez > 10) // tikrina ar ivestas skaicius maziau uz 1 arba daugiau uz 10, jei salyga tenkinama, pradedama nauja ciklo iteracija
-        {
-            A.rez = 0;
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // isvalo console ivesti, iki ivesties didziausio simboliu skaiciaus streamsize max is numeric limits funkcijos is limits bibliotekos arba naujos eilutes simbolio
-            cout << "Įvestas egzamino rezultatas turi būti nuo 1 iki 10!" << std::endl;
-            continue;
+
+        // programos nutraukimas su ENTER
+        if (galiButiTuscia && ivestis.empty()) return -1;
+
+        try {
+            // 
+            if (!arTikSkaicius(ivestis)) throw std::invalid_argument("Ne skaičius");
+
+            int skaicius = std::stoi(ivestis);
+
+            //tikriname ar ivestas skaicius atitinka nuo maziausio leistino iki didziausio leistino
+            if (skaicius >= min && skaicius <= max) {
+                return skaicius;
+            } else {
+                cout << "Klaida, skaičius turi būti tarp " << min << " ir " << max << "!" << endl;
+            }
+        } catch (...) {
+            cout << "Klaida, įveskite sveikąjį skaičių!" << endl;
         }
-        break;
     }
-    cout << std::endl;
+}
+
+bool arTikSkaicius(const std::string& eilute)
+{ // jei eilute tuscia grazinama false, std::all_of pereina nuo eilutes.begin() pradzios iki galo eilutes.end() per kiekviena simboli, kiekvienam simboliui jei jis skaicius ar tarpas grazina true, jei tai tiesiog raide - grazinama false ir toliau eilute nebetikrinama
+    return !eilute.empty() && 
+    std::all_of(eilute.begin(), eilute.end(), [](unsigned char simbolis)
+    {
+        return std::isdigit(simbolis) || std::isspace(simbolis);
+    });
 }

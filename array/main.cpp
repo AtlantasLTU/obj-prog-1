@@ -13,6 +13,7 @@ using std::cout;
 #include <windows.h> // windows antraščių failas
 #endif
 
+//apsaugot nuo CTRL+D, Enter, padaryti UX geresni tsg
 int main()
 {
 

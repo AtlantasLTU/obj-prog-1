@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 
 Studentas skaitymas();
 
@@ -15,6 +16,10 @@ void studentoVardoPavardesIvestis(Studentas &A);
 void namuDarbuRezultatuIvestis(Studentas &A);
 
 void egzaminoRezultatoIvestis(Studentas &A);
+
+int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia = false);
+
+bool arTikSkaicius(const std::string& s);
 
 void isvestis(const std::vector<Studentas> &A, bool medianos);
 
