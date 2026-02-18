@@ -5,18 +5,18 @@
 #include <random>
 #include <ctime>
 
+void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas);
+
 Studentas skaitymasRandom(int pasirinkimas);
 
-void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas);
+void egzaminoRezultatasRandom(Studentas &A);
 
 int namuDarbuRezultataiIvestisRandom();
 
-void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis);
-
 int randomStudentuKiekis();
 
-std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas);
+void namuDarbuRezultataiRandom(Studentas &A, int ndKiekis);
 
-void egzaminoRezultatasRandom(Studentas &A);
+std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas);
 
 #endif

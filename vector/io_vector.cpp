@@ -94,12 +94,15 @@ void studentoVardoPavardesIvestis(Studentas &A)
     while (true)
     {
         cout << "Įveskite studento vardą bei pavardę: ";
-        std::getline(cin, eilute); // perskaito visa eilute
 
-        // jei eilutė tuščia, nutraukiama studento įvestis
-        if (eilute.empty())
-        {   
-            cout << "Turi būti įvesta studento vardas bei pavardė" << std::endl;
+        // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
+        if (!std::getline(cin, eilute)) {
+            if (cin.eof())
+            { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+                cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+                exit(0); // sustabdoma programa
+            }
+            cin.clear(); // atstatome cin fail flag'a
             continue;
         }
 

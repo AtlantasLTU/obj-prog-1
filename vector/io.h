@@ -9,7 +9,19 @@
 #include <vector>
 #include <algorithm>
 
+int menu();
+
+bool medianosUzklausa();
+
+bool studentoUzklausa();
+
+bool gautiPatvirtinima(std::string pranesimas);
+
+std::vector<Studentas> ivestiStudentus();
+
 Studentas skaitymas();
+
+void isvestis(const std::vector<Studentas> &A, bool medianos);
 
 void studentoVardoPavardesIvestis(Studentas &A);
 
@@ -20,17 +32,5 @@ void egzaminoRezultatoIvestis(Studentas &A);
 int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia = false);
 
 bool arTikSkaicius(const std::string& s);
-
-bool gautiPatvirtinima(std::string pranesimas);
-
-void isvestis(const std::vector<Studentas> &A, bool medianos);
-
-bool medianosUzklausa();
-
-std::vector<Studentas> ivestiStudentus();
-
-bool studentoUzklausa();
-
-int menu();
 
 #endif
