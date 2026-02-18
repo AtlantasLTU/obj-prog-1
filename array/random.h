@@ -7,7 +7,7 @@
 
 void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas);
 
-Studentas skaitymasRandom(int pasirinkimas);
+Studentas skaitymasRandom();
 
 void egzaminoRezultatasRandom(Studentas &A);
 

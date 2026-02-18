@@ -1,4 +1,8 @@
+#ifndef CALC_H
+#define CALC_h
 #include "studentas.h"
 
-float galutinisVid(const Studentas &A);
-float galutinisMed(const Studentas &A);
+double galutinisVid(const Studentas &A);
+double galutinisMed(const Studentas &A);
+
+#endif

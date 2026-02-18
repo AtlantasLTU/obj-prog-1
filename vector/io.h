@@ -13,17 +13,15 @@ int menu();
 
 bool medianosUzklausa();
 
-bool studentoUzklausa();
-
 bool gautiPatvirtinima(std::string pranesimas);
 
 std::vector<Studentas> ivestiStudentus();
 
-Studentas skaitymas();
+bool skaitymas(Studentas &A);
 
 void isvestis(const std::vector<Studentas> &A, bool medianos);
 
-void studentoVardoPavardesIvestis(Studentas &A);
+bool studentoVardoPavardesIvestis(Studentas &A, std::string eilute);
 
 void namuDarbuRezultatuIvestis(Studentas &A);
 

@@ -11,19 +11,17 @@ int menu();
 
 bool medianosUzklausa();
 
-bool studentoUzklausa();
-
 bool gautiPatvirtinima(std::string pranesimas);
 
 Studentas *ivestiStudentus(int &kiekis);
 
 void padidintiStudentasMasyva(int &kiekis, int &vieta, Studentas *&studentai);
 
-Studentas skaitymas();
+bool skaitymas(Studentas &A);
 
 void isvestis(const Studentas *A, int kiekis, bool medianos);
 
-void studentoVardoPavardesIvestis(Studentas &A);
+bool studentoVardoPavardesIvestis(Studentas &A, std::string eilute);
 
 void namuDarbuRezultatuIvestis(Studentas &A);
 

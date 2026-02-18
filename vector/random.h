@@ -5,9 +5,9 @@
 #include <random>
 #include <ctime>
 
-void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas);
+Studentas skaitymasRandom();
 
-Studentas skaitymasRandom(int pasirinkimas);
+bool skaitymasRandom(Studentas &A);
 
 void egzaminoRezultatasRandom(Studentas &A);
 

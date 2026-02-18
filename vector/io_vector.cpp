@@ -14,11 +14,6 @@ bool medianosUzklausa()
     return gautiPatvirtinima("Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu");
 }
 
-bool studentoUzklausa()
-{
-    return gautiPatvirtinima("Ar norite įvesti studentą?");
-}
-
 bool gautiPatvirtinima(std::string pranesimas)
 {
     std::string ivestis;
@@ -53,20 +48,46 @@ bool gautiPatvirtinima(std::string pranesimas)
 std::vector<Studentas> ivestiStudentus()
 {
     std::vector<Studentas> studentai;
-    while(studentoUzklausa())
+    while(true)
     {
-            studentai.push_back(skaitymas());
+        Studentas A;
+        if(!skaitymas(A))
+        {
+            break;
+        }
+        studentai.push_back(A);
     }
     return studentai;
 } 
 
-Studentas skaitymas()
+bool skaitymas(Studentas &A)
 {
-    Studentas A;
-    studentoVardoPavardesIvestis(A);
+    std::string eilute;
+    cout << "Įveskite studento vardą bei pavardę (ENTER - nutraukti įvedimą): ";
+
+        // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
+    if (!std::getline(cin, eilute))
+    {
+        if (cin.eof())
+        { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+            cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+            exit(0); // sustabdoma programa
+        }
+        cin.clear(); // atstatome cin fail flag'a
+        return false;
+    } // jei enter - iseina
+    if(eilute.empty())
+    {
+        return false;
+    }
+    while(!studentoVardoPavardesIvestis(A, eilute))
+    {
+        cout << "Įveskite studento vardą bei pavardę (ENTER - baigti): ";
+        if(!std::getline(cin, eilute) || eilute.empty()) return false;
+    }
     namuDarbuRezultatuIvestis(A);
     egzaminoRezultatoIvestis(A);
-    return A;
+    return true;
 }
 
 void isvestis(const std::vector<Studentas> &A, bool medianos)
@@ -88,47 +109,27 @@ void isvestis(const std::vector<Studentas> &A, bool medianos)
     }
 }
 
-void studentoVardoPavardesIvestis(Studentas &A)
+bool studentoVardoPavardesIvestis(Studentas &A, std::string eilute)
 {
-    std::string eilute;
-    while (true)
+    std::istringstream iss(eilute);
+    std::string vardas, pavarde;
+    // įvestį skaidome į du žodžius
+    if (!(iss >> vardas >> pavarde))
     {
-        cout << "Įveskite studento vardą bei pavardę: ";
-
-        // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
-        if (!std::getline(cin, eilute)) {
-            if (cin.eof())
-            { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-                cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
-                exit(0); // sustabdoma programa
-            }
-            cin.clear(); // atstatome cin fail flag'a
-            continue;
-        }
-
-        std::istringstream iss(eilute);
-        std::string vardas, pavarde;
-
-        // įvestį skaidome į du žodžius
-        if (!(iss >> vardas >> pavarde))
-        {
-            cout << "Įveskite vardą ir pavardę (du žodžiai)." << endl;
-            continue;
-        }
-
-        // tikriname ar po vardo ir pavardės yra dar žodžių
-        std::string ekstra;
-        if (iss >> ekstra)
-        {
-            cout << "Įvesta per daug žodžių — reikia tik vardo ir pavardės." << endl;
-            continue;
-        }
-
-        // Jei viskas gerai — saugom
-        A.vardas = vardas;
-        A.pavarde = pavarde;
-        break;
+        cout << "Įveskite vardą ir pavardę (du žodžiai)!" << endl;
+        return false;
     }
+    // tikriname ar po vardo ir pavardės yra dar žodžių
+    std::string ekstra;
+    if (iss >> ekstra)
+    {
+        cout << "Įvesta per daug žodžių — reikia tik vardo ir pavardės!" << endl;
+        return false;
+    }
+    // Jei viskas gerai — saugom
+    A.vardas = vardas;
+    A.pavarde = pavarde;
+    return true;
 }
 
 void namuDarbuRezultatuIvestis(Studentas &A)

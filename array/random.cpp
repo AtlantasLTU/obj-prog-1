@@ -5,53 +5,43 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-void studentoVardoPavardesIvestisRandom(Studentas &A, int pasirinkimas)
-{
-    switch(pasirinkimas)
-    {
-        case 2:
-        {
-            studentoVardoPavardesIvestis(A);
-            break;
-        }
-        case 3:
-        {   
-            gen_map(A);
-            break;
-        }
-        default:
-        {
-            cout << "studentoVardoPavardesIvestisRandom default atvejis";
-            break;
-        }
-    }
-}
-
-Studentas skaitymasRandom(int pasirinkimas)
+Studentas skaitymasRandom()
 {
     Studentas A;
-    switch(pasirinkimas)
+    gen_map(A);
+    namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
+    egzaminoRezultatasRandom(A);
+    return A;
+}
+
+bool skaitymasRandom(Studentas &A)
+{
+    std::string eilute;
+    cout << "Įveskite studento vardą bei pavardę (ENTER - nutraukti įvedimą): ";
+
+        // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
+    if (!std::getline(cin, eilute))
     {
-        case 2:
-        {
-            studentoVardoPavardesIvestisRandom(A, pasirinkimas);
-            namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
-            egzaminoRezultatasRandom(A);
-            return A;
+        if (cin.eof())
+        { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+            cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+            exit(0); // sustabdoma programa
         }
-        case 3:
-        {
-            studentoVardoPavardesIvestisRandom(A, pasirinkimas);
-            namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
-            egzaminoRezultatasRandom(A);
-            return A;
-        }
-        default:
-        {
-            cout << "skaitymasRandom default atvejis" << std::endl;
-            return A;
-        }
+        cin.clear(); // atstatome cin fail flag'a
+        return false;
+    } // jei enter - iseina
+    if(eilute.empty())
+    {
+        return false;
     }
+    while(!studentoVardoPavardesIvestis(A, eilute))
+    {
+        cout << "Įveskite studento vardą bei pavardę (ENTER - baigti): ";
+        if(!std::getline(cin, eilute) || eilute.empty()) return false;
+    }
+    namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
+    egzaminoRezultatasRandom(A);
+    return true;
 }
 
 void egzaminoRezultatasRandom(Studentas &A)
@@ -91,12 +81,17 @@ Studentas* ivestiStudentusRandom(int pasirinkimas, int &kiekis)
     {
         case 2:
         {
-            while(studentoUzklausa())
+            while(true)
             {
+                Studentas A;
+                if(!skaitymasRandom(A))
+                {
+                    break;
+                }
                 padidintiStudentasMasyva(kiekis, vieta, studentai);
-                studentai[kiekis++] = skaitymasRandom(pasirinkimas);
+                studentai[kiekis++] = A;
             }
-            break;
+            return studentai;
         }
         case 3:
         {
@@ -105,7 +100,7 @@ Studentas* ivestiStudentusRandom(int pasirinkimas, int &kiekis)
             studentai = new Studentas[kiekis];
             for(int i = 0; i < kiekis; i++)
             {
-                studentai[i] = skaitymasRandom(pasirinkimas);
+                studentai[i] = skaitymasRandom();
             }
             break;
         }
@@ -115,4 +110,4 @@ Studentas* ivestiStudentusRandom(int pasirinkimas, int &kiekis)
         }
     }
     return studentai;
-} 
+}
