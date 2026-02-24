@@ -14,6 +14,11 @@ int failoPasirinkimas()
     return gautiSkaiciu("Pasirinkite failą, iš kurio skaityti\n1 - kursiokai.txt,\n2 - studentai10000.txt,\n3 - studentai100000.txt,\n4 - studentai1000000.txt\n", 1, 4);
 }
 
+int rusiavimoPasirinkimas()
+{
+    return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį pagal vidurkį didėjančiai,\n6 - galutinį pažymį pagal vidurkį mažėjančiai,\n7 - galutinį pažymį pagal medianą didėjančiai\n8 - galutinį pažymį pagal medianą mažėjančiai", 1, 8);
+}
+
 bool medianosUzklausa()
 {
     return gautiPatvirtinima("Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu");
@@ -111,6 +116,16 @@ void isvestis(const std::vector<Studentas> &A, bool medianos)
         {
             cout << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(X) << "y.yy" << std::endl;
         }
+    }
+}
+
+void isvedimas(const std::vector<StudentasF> &A)
+{
+    cout << std::left << std::setw(15) << "Vardas" << std::setw(15) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
+    cout << std::setfill('-') << std::setw(65) << "-" << std::endl
+         << std::setfill(' ');
+    for(const StudentasF &X : A)
+    {
     }
 }
 
@@ -250,4 +265,69 @@ std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, int rezer
     std::chrono::duration<double> diff = end-start; // Skirtumas (s)
     std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< diff.count() << " s\n";  
     return studentai;
+}
+
+void rusiavimasSkirstymas(std::vector<StudentasF> &studentai, int rPasirinkimas){
+    switch(rPasirinkimas){
+        case 1:
+        {
+            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+                return A.vardas > B.vardas;
+            });
+            break;
+        }
+        case 2:
+        {
+            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+                return A.vardas < B.vardas;
+            });
+            break;
+        }
+        case 3:
+        {
+            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+                return A.pavarde > B.pavarde;
+            });
+            break;
+        }
+        case 4:
+        {
+            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+                return A.pavarde < B.pavarde;
+            });
+            break;
+        }
+        case 5:
+        {
+            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+                return A.galutinisVid > B.galutinisVid;
+            });
+            break;
+        }
+        case 6:
+        {
+            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+                return A.galutinisVid < B.galutinisVid;
+            });
+            break;
+        }
+        case 7:
+        {
+            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+                return A.galutinisMed > B.galutinisMed;
+            });
+            break;
+        }
+        case 8:
+        {
+            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+                return A.galutinisMed < B.galutinisMed;
+            });
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
 }

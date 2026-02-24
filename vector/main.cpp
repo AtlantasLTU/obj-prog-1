@@ -50,25 +50,34 @@ int main()
         case 4:
         {
             int fPasirinkimas = failoPasirinkimas(); // galima prideti, kad failo pavadinima butu galima paciam irasyt. 
+            int rPasirinkimas = rusiavimoPasirinkimas();
             switch(fPasirinkimas){
                 case 1:
                 {
                     std::vector<StudentasF> studentai = skaitymasIsFailo("kursiokai.txt", 2);
+                    rusiavimasSkirstymas(studentai, rPasirinkimas);
+                    isvedimas(studentai);
                     break;
                 }
                 case 2:
                 {
                     std::vector<StudentasF> studentai = skaitymasIsFailo("studentai10000.txt", 10000);
+                    rusiavimasSkirstymas(studentai, rPasirinkimas);
+                    isvedimas(studentai);
                     break;
                 }
                 case 3:
                 {   
                     std::vector<StudentasF> studentai = skaitymasIsFailo("studentai100000.txt", 100000);
+                    rusiavimasSkirstymas(studentai, rPasirinkimas);
+                    isvedimas(studentai);
                     break;
                 }
                 case 4:
                 {
                     std::vector<StudentasF> studentai = skaitymasIsFailo("studentai1000000.txt", 1000000);
+                    rusiavimasSkirstymas(studentai, rPasirinkimas);
+                    isvedimas(studentai);
                     break;
                 }
                 default:
