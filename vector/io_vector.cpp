@@ -138,7 +138,7 @@ void isvedimas(const std::vector<StudentasF> &A, bool failas)
     out << std::string(75, '-') << "\n";
     for(const StudentasF &X : A)
     {
-        out << std::setw(20) << X.vardas << std::setw(20) << X.pavarde << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << X.galutinisMed << "\n";
+        out << std::setw(20) << X.vardas << std::setw(21) << X.pavarde << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << X.galutinisMed << "\n";
     }
     if(failas){
         std::ofstream fout("rezultatai.txt");

@@ -1,5 +1,5 @@
 #ifndef CALC_H
-#define CALC_h
+#define CALC_H
 #include "studentas.h"
 
 double galutinisVid(const Studentas &A);
