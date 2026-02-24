@@ -108,18 +108,18 @@ bool skaitymas(Studentas &A)
 void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas)
 {
     std::ostringstream out;
-    out << std::left << std::setw(15) << "Vardas" << std::setw(15) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
-    out << std::string(65, '-') << "\n";
+    out << std::left << std::setw(20) << "Vardas" << std::setw(21) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
+    out << std::string(75, '-') << "\n";
     for(const Studentas &X : A)
     {
-        out << std::setw(15) << X.vardas << std::setw(15) << X.pavarde << " ";
+        out << std::setw(20) << X.vardas << std::setw(20) << X.pavarde;
         if (medianos)
         {
-            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(X) << std::endl;
+            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(X) << "\n";
         }
         else
         {
-            out << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(X) << "y.yy" << std::endl;
+            out << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(X) << "y.yy\n";
         }
     }
     if(failas){
@@ -134,11 +134,11 @@ void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas)
 void isvedimas(const std::vector<StudentasF> &A, bool failas)
 {
     std::ostringstream out;
-    out << std::left << std::setw(15) << "Vardas" << std::setw(15) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
-    out << std::string(65, '-') << "\n";
+    out << std::left << std::setw(20) << "Vardas" << std::setw(21) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
+    out << std::string(75, '-') << "\n";
     for(const StudentasF &X : A)
     {
-        out << std::setw(15) << X.vardas << std::setw(15) << X.pavarde << std::setprecision(2) << std::fixed << std::setw(18) << X.galutinisVid << " " << X.galutinisMed << "\n";
+        out << std::setw(20) << X.vardas << std::setw(20) << X.pavarde << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << X.galutinisMed << "\n";
     }
     if(failas){
         std::ofstream fout("rezultatai.txt");
