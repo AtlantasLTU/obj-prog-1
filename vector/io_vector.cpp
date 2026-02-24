@@ -6,8 +6,17 @@ using std::endl;
 
 int menu()
 {
-    return gautiSkaiciu("Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - baigti darbą): ", 1, 4);
+    return gautiSkaiciu("Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - skaityti studentus iš failo, 5 - baigti darbą): ", 1, 5);
 }
+
+/* int menu()
+{
+    return gautiSkaiciu("Pasirinkite failą, iš kurio skaityti \n
+        (1 - ranką, 
+        2 - generuoti tik pažymius, \n
+        3 - generuoti studentų vardus, pavardės ir pažymius, \n
+        4 - skaityti studentus iš failo, 5 - baigti darbą): ", 1, 5);
+} */
 
 bool medianosUzklausa()
 {
@@ -198,4 +207,49 @@ bool arTikSkaicius(const std::string& eilute)
     { // geriau paaiskint lambda
         return std::isdigit(simbolis) || std::isspace(simbolis);
     });
+}
+
+std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas){
+    std::vector<Studentas> studentai;
+    studentai.reserve(1000000);
+    std::string eil;
+    std::string t="";
+    int ndKiekis = 0;
+
+    auto start = std::chrono::high_resolution_clock::now(); 
+    auto st=start;
+    std::ifstream open_f(failoPavadinimas);
+
+    std::getline(open_f, eil);
+    std::stringstream antraste(eil);
+    antraste >> t >> t;
+    while(antraste >> t){
+        if(t == "Egz." || t == "Egzaminas") break;
+        ndKiekis++;
+    }
+
+    std::string vardas, pavarde;
+    int paz;
+    
+    while (open_f >> vardas >> pavarde) {
+        Studentas studentas;
+        studentas.vardas = std::move(vardas);
+        studentas.pavarde = std::move(pavarde);
+    
+        studentas.nd.reserve(ndKiekis);
+    
+        for (int i = 0; i < ndKiekis; i++) {
+            open_f >> paz;
+            studentas.nd.push_back(std::move(paz));
+        }
+    
+        open_f >> studentas.rez;
+    
+        studentai.push_back(std::move(studentas));
+    }
+    open_f.close();
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = end-start; // Skirtumas (s)
+    std::cout << "Failo nuskaitymas tiesiai į studentai vektorių užtruko: "<< diff.count() << " s\n";  
+    return studentai;
 }

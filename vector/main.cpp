@@ -19,7 +19,6 @@ using std::cout;
 
 int main()
 {
-
     #ifdef _WIN32 // Jei kompiliuojama Windows operacinei sistemai nustatyti konsoles įvestį ir išvestį UTF-8 užkodavimui.
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -48,7 +47,14 @@ int main()
             isvestis(studentai, medianos);
             break;
         }
-        case 4: // darbo baigtis
+        case 4:
+        {
+            bool medianos = medianosUzklausa();
+            std::vector<Studentas> studentai = skaitymasIsFailo("kursiokai.txt");
+            cout << studentai.at(1).vardas;
+            break;
+        }
+        case 5: // darbo baigtis
         {
             cout << "Darbas su programa baigtas.";
             return 0;

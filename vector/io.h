@@ -8,6 +8,8 @@
 #include <iomanip>
 #include <vector>
 #include <algorithm>
+#include <chrono>
+#include <fstream>
 
 int menu();
 
@@ -30,5 +32,7 @@ void egzaminoRezultatoIvestis(Studentas &A);
 int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia = false);
 
 bool arTikSkaicius(const std::string& s);
+
+std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas);
 
 #endif
