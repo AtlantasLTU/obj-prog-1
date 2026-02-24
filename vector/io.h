@@ -13,6 +13,8 @@
 
 int menu();
 
+int failoPasirinkimas();
+
 bool medianosUzklausa();
 
 bool gautiPatvirtinima(std::string pranesimas);
@@ -33,6 +35,6 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
 
 bool arTikSkaicius(const std::string& s);
 
-std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas);
+std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int rezervas);
 
 #endif

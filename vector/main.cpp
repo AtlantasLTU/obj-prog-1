@@ -50,8 +50,33 @@ int main()
         case 4:
         {
             bool medianos = medianosUzklausa();
-            std::vector<Studentas> studentai = skaitymasIsFailo("kursiokai.txt");
-            cout << studentai.at(1).vardas;
+            int fPasirinkimas = failoPasirinkimas();
+            switch(fPasirinkimas){
+                case 1:
+                {
+                    std::vector<Studentas> studentai = skaitymasIsFailo("kursiokai.txt", 2);
+                    break;
+                }
+                case 2:
+                {
+                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai10000.txt", 10000);
+                    break;
+                }
+                case 3:
+                {   
+                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai100000.txt", 100000);
+                    break;
+                }
+                case 4:
+                {
+                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai1000000.txt", 1000000);
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
             break;
         }
         case 5: // darbo baigtis

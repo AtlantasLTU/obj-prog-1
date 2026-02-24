@@ -9,14 +9,10 @@ int menu()
     return gautiSkaiciu("Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - skaityti studentus iš failo, 5 - baigti darbą): ", 1, 5);
 }
 
-/* int menu()
+int failoPasirinkimas()
 {
-    return gautiSkaiciu("Pasirinkite failą, iš kurio skaityti \n
-        (1 - ranką, 
-        2 - generuoti tik pažymius, \n
-        3 - generuoti studentų vardus, pavardės ir pažymius, \n
-        4 - skaityti studentus iš failo, 5 - baigti darbą): ", 1, 5);
-} */
+    return gautiSkaiciu("Pasirinkite failą, iš kurio skaityti\n1 - kursiokai.txt,\n2 - studentai10000.txt,\n3 - studentai100000.txt,\n4 - studentai1000000.txt\n", 1, 4);
+}
 
 bool medianosUzklausa()
 {
@@ -209,9 +205,9 @@ bool arTikSkaicius(const std::string& eilute)
     });
 }
 
-std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas){
+std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int rezervas){
     std::vector<Studentas> studentai;
-    studentai.reserve(1000000);
+    studentai.reserve(rezervas);
     std::string eil;
     std::string t="";
     int ndKiekis = 0;
