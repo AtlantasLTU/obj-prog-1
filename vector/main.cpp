@@ -25,26 +25,27 @@ int main()
     #endif
     //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
     int pasirinkimas = menu();
+    bool failas = !failoUzklausa();
     switch(pasirinkimas){
         case 1: // rankinis ivedimas
         {
             bool medianos = medianosUzklausa();
             std::vector<Studentas> studentai = ivestiStudentus();
-            isvestis(studentai, medianos);
+            isvestis(studentai, medianos, failas);
             break;
         }
         case 2: // tik pazymiu generavimas.
         {
             bool medianos = medianosUzklausa();
             std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
-            isvestis(studentai, medianos);
+            isvestis(studentai, medianos, failas);
             break;
         }
         case 3: // studentu ir pazymiu generavimas;
         {
             bool medianos = medianosUzklausa();
             std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
-            isvestis(studentai, medianos);
+            isvestis(studentai, medianos, failas);
             break;
         }
         case 4:
@@ -63,7 +64,7 @@ int main()
                     end = std::chrono::high_resolution_clock::now();
                     std::chrono::duration<double> rusiavimoTrukme = end-start; // Skirtumas (s)
                     start = std::chrono::high_resolution_clock::now(); 
-                    isvedimas(studentai);
+                    isvedimas(studentai, failas);
                     end = std::chrono::high_resolution_clock::now();
                     std::chrono::duration<double> isvedimoTrukme = end-start; // Skirtumas (s)
                     std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< apdorojimoTrukme.count() << " s\n";
@@ -83,7 +84,7 @@ int main()
                     end = std::chrono::high_resolution_clock::now();
                     std::chrono::duration<double> rusiavimoTrukme = end-start; // Skirtumas (s)
                     start = std::chrono::high_resolution_clock::now(); 
-                    isvedimas(studentai);
+                    isvedimas(studentai, failas);
                     end = std::chrono::high_resolution_clock::now();
                     std::chrono::duration<double> isvedimoTrukme = end-start; // Skirtumas (s)
                     std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< apdorojimoTrukme.count() << " s\n";
@@ -103,7 +104,7 @@ int main()
                     end = std::chrono::high_resolution_clock::now();
                     std::chrono::duration<double> rusiavimoTrukme = end-start; // Skirtumas (s)
                     start = std::chrono::high_resolution_clock::now(); 
-                    isvedimas(studentai);
+                    isvedimas(studentai, failas);
                     end = std::chrono::high_resolution_clock::now();
                     std::chrono::duration<double> isvedimoTrukme = end-start; // Skirtumas (s)
                     std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< apdorojimoTrukme.count() << " s\n";
@@ -123,7 +124,7 @@ int main()
                     end = std::chrono::high_resolution_clock::now();
                     std::chrono::duration<double> rusiavimoTrukme = end-start; // Skirtumas (s)
                     start = std::chrono::high_resolution_clock::now(); 
-                    isvedimas(studentai);
+                    isvedimas(studentai, failas);
                     end = std::chrono::high_resolution_clock::now();
                     std::chrono::duration<double> isvedimoTrukme = end-start; // Skirtumas (s)
                     std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< apdorojimoTrukme.count() << " s\n";

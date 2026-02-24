@@ -24,6 +24,11 @@ bool medianosUzklausa()
     return gautiPatvirtinima("Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu");
 }
 
+bool failoUzklausa()
+{
+    return gautiPatvirtinima("Ar išvesti į terminalą? Jei ne, tai bus išvedama į rezultatai.txt failą");
+}
+
 bool gautiPatvirtinima(std::string pranesimas)
 {
     std::string ivestis;
@@ -100,33 +105,47 @@ bool skaitymas(Studentas &A)
     return true;
 }
 
-void isvestis(const std::vector<Studentas> &A, bool medianos)
+void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas)
 {
-    cout << std::left << std::setw(15) << "Pavarde" << std::setw(15) << "Vardas" << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
-    cout << std::setfill('-') << std::setw(65) << "-" << std::endl
-         << std::setfill(' ');
+    std::ostringstream out;
+    out << std::left << std::setw(15) << "Vardas" << std::setw(15) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
+    out << std::string(65, '-') << "\n";
     for(const Studentas &X : A)
     {
-        cout << std::setw(15) << X.vardas << std::setw(15) << X.pavarde << " ";
+        out << std::setw(15) << X.vardas << std::setw(15) << X.pavarde << " ";
         if (medianos)
         {
-            cout << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(X) << std::endl;
+            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(X) << std::endl;
         }
         else
         {
-            cout << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(X) << "y.yy" << std::endl;
+            out << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(X) << "y.yy" << std::endl;
         }
+    }
+    if(failas){
+        std::ofstream fout("rezultatai.txt");
+        fout << out.str();
+        fout.close();
+    } else {
+        cout << out.str();
     }
 }
 
-void isvedimas(const std::vector<StudentasF> &A)
+void isvedimas(const std::vector<StudentasF> &A, bool failas)
 {
-    cout << std::left << std::setw(15) << "Vardas" << std::setw(15) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
-    cout << std::setfill('-') << std::setw(65) << "-" << std::endl
-         << std::setfill(' ');
+    std::ostringstream out;
+    out << std::left << std::setw(15) << "Vardas" << std::setw(15) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
+    out << std::string(65, '-') << "\n";
     for(const StudentasF &X : A)
     {
-        cout << std::setw(15) << X.vardas << std::setw(15) << X.pavarde << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << " " << X.galutinisMed << std::endl;
+        out << std::setw(15) << X.vardas << std::setw(15) << X.pavarde << std::setprecision(2) << std::fixed << std::setw(18) << X.galutinisVid << " " << X.galutinisMed << "\n";
+    }
+    if(failas){
+        std::ofstream fout("rezultatai.txt");
+        fout << out.str();
+        fout.close();
+    } else {
+        cout << out.str();
     }
 }
 

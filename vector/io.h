@@ -19,15 +19,17 @@ int rusiavimoPasirinkimas();
 
 bool medianosUzklausa();
 
+bool failoUzklausa();
+
 bool gautiPatvirtinima(std::string pranesimas);
 
 std::vector<Studentas> ivestiStudentus();
 
 bool skaitymas(Studentas &A);
 
-void isvestis(const std::vector<Studentas> &A, bool medianos);
+void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas = true);
 
-void isvedimas(const std::vector<StudentasF> &A);
+void isvedimas(const std::vector<StudentasF> &A, bool failas = true);
 
 bool studentoVardoPavardesIvestis(Studentas &A, std::string& eilute);
 
