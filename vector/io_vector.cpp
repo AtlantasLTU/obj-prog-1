@@ -205,8 +205,8 @@ bool arTikSkaicius(const std::string& eilute)
     });
 }
 
-std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int rezervas){
-    std::vector<Studentas> studentai;
+std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, bool medianos, int rezervas){
+    std::vector<StudentasF> studentai;
     studentai.reserve(rezervas);
     std::string eil;
     std::string t="";
@@ -228,24 +228,52 @@ std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int rezerv
     int paz;
     
     while (open_f >> vardas >> pavarde) {
-        Studentas studentas;
+        StudentasF studentas;
         studentas.vardas = std::move(vardas);
         studentas.pavarde = std::move(pavarde);
-    
-        studentas.nd.reserve(ndKiekis);
-    
-        for (int i = 0; i < ndKiekis; i++) {
+
+        if(ndKiekis==0)
+        {
             open_f >> paz;
-            studentas.nd.push_back(std::move(paz));
+            studentas.galutinis = paz*0.6;
+        } 
+        else 
+        {
+            if(medianos){
+                std::vector<int> nd;
+                nd.reserve(ndKiekis);
+                for(int i = 0; i < ndKiekis; i++){
+                    open_f >> paz;
+                    nd.push_back(paz);
+                }
+
+                std::sort(nd.begin(), nd.end());
+
+                double med =
+                    (ndKiekis % 2 == 0) // jei lyginis, tai dvieju viduriniu nd vektoriaus nariu mediana paskaiciuoja
+                    ? (nd[ndKiekis/2] + nd[ndKiekis/2 - 1]) / 2.0
+                    : nd[ndKiekis/2];
+                
+                open_f >> paz;
+                studentas.galutinis+= med*0.4 + paz * 0.6;
+            }
+            else 
+            {
+                for(int i = 0; i < ndKiekis; i++){
+                    open_f >> paz;
+                    studentas.galutinis+=paz;
+                }
+                studentas.galutinis/=ndKiekis;
+                studentas.galutinis*=0.4;
+                open_f >> paz;
+                studentas.galutinis+=paz*0.6;
+            }
         }
-    
-        open_f >> studentas.rez;
-    
         studentai.push_back(std::move(studentas));
     }
     open_f.close();
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end-start; // Skirtumas (s)
-    std::cout << "Failo nuskaitymas tiesiai į studentai vektorių užtruko: "<< diff.count() << " s\n";  
+    std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< diff.count() << " s\n";  
     return studentai;
 }

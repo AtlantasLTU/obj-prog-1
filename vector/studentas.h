@@ -8,7 +8,12 @@
 struct Studentas {
     std::string vardas, pavarde;
     std::vector<int> nd;
-    int rez = 0;
+    int rez;
+};
+
+struct StudentasF {
+    std::string vardas, pavarde;
+    double galutinis = 0;
 };
 
 #endif // STUDENTAS_H

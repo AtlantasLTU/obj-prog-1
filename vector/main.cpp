@@ -50,26 +50,26 @@ int main()
         case 4:
         {
             bool medianos = medianosUzklausa();
-            int fPasirinkimas = failoPasirinkimas();
+            int fPasirinkimas = failoPasirinkimas(); // galima prideti, kad failo pavadinima butu galima paciam irasyt. 
             switch(fPasirinkimas){
                 case 1:
                 {
-                    std::vector<Studentas> studentai = skaitymasIsFailo("kursiokai.txt", 2);
+                    std::vector<StudentasF> studentai = skaitymasIsFailo("kursiokai.txt", medianos, 2);
                     break;
                 }
                 case 2:
                 {
-                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai10000.txt", 10000);
+                    std::vector<StudentasF> studentai = skaitymasIsFailo("studentai10000.txt", medianos, 10000);
                     break;
                 }
                 case 3:
                 {   
-                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai100000.txt", 100000);
+                    std::vector<StudentasF> studentai = skaitymasIsFailo("studentai100000.txt", medianos, 100000);
                     break;
                 }
                 case 4:
                 {
-                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai1000000.txt", 1000000);
+                    std::vector<StudentasF> studentai = skaitymasIsFailo("studentai1000000.txt", medianos, 1000000);
                     break;
                 }
                 default:
