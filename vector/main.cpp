@@ -54,30 +54,82 @@ int main()
             switch(fPasirinkimas){
                 case 1:
                 {
+                    auto start = std::chrono::high_resolution_clock::now(); 
                     std::vector<StudentasF> studentai = skaitymasIsFailo("kursiokai.txt", 2);
+                    auto end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> apdorojimoTrukme = end-start; // Skirtumas (s)
+                    start = std::chrono::high_resolution_clock::now(); 
                     rusiavimasSkirstymas(studentai, rPasirinkimas);
+                    end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> rusiavimoTrukme = end-start; // Skirtumas (s)
+                    start = std::chrono::high_resolution_clock::now(); 
                     isvedimas(studentai);
+                    end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> isvedimoTrukme = end-start; // Skirtumas (s)
+                    std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< apdorojimoTrukme.count() << " s\n";
+                    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: "<< rusiavimoTrukme.count() << " s\n";
+                    std::cout << "Studentų išvedimas užtruko: "<< isvedimoTrukme.count() << " s\n";
+                    std::cout << "Bendra trukmė: " << (apdorojimoTrukme+rusiavimoTrukme+isvedimoTrukme).count() << " s";
                     break;
                 }
                 case 2:
                 {
+                    auto start = std::chrono::high_resolution_clock::now(); 
                     std::vector<StudentasF> studentai = skaitymasIsFailo("studentai10000.txt", 10000);
+                    auto end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> apdorojimoTrukme = end-start; // Skirtumas (s)
+                    start = std::chrono::high_resolution_clock::now(); 
                     rusiavimasSkirstymas(studentai, rPasirinkimas);
+                    end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> rusiavimoTrukme = end-start; // Skirtumas (s)
+                    start = std::chrono::high_resolution_clock::now(); 
                     isvedimas(studentai);
+                    end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> isvedimoTrukme = end-start; // Skirtumas (s)
+                    std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< apdorojimoTrukme.count() << " s\n";
+                    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: "<< rusiavimoTrukme.count() << " s\n";
+                    std::cout << "Studentų išvedimas užtruko: "<< isvedimoTrukme.count() << " s\n";
+                    std::cout << "Bendra trukmė: " << (apdorojimoTrukme+rusiavimoTrukme+isvedimoTrukme).count() << " s";
                     break;
                 }
                 case 3:
                 {   
+                    auto start = std::chrono::high_resolution_clock::now(); 
                     std::vector<StudentasF> studentai = skaitymasIsFailo("studentai100000.txt", 100000);
+                    auto end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> apdorojimoTrukme = end-start; // Skirtumas (s)
+                    start = std::chrono::high_resolution_clock::now(); 
                     rusiavimasSkirstymas(studentai, rPasirinkimas);
+                    end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> rusiavimoTrukme = end-start; // Skirtumas (s)
+                    start = std::chrono::high_resolution_clock::now(); 
                     isvedimas(studentai);
+                    end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> isvedimoTrukme = end-start; // Skirtumas (s)
+                    std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< apdorojimoTrukme.count() << " s\n";
+                    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: "<< rusiavimoTrukme.count() << " s\n";
+                    std::cout << "Studentų išvedimas užtruko: "<< isvedimoTrukme.count() << " s\n";
+                    std::cout << "Bendra trukmė: " << (apdorojimoTrukme+rusiavimoTrukme+isvedimoTrukme).count() << " s";
                     break;
                 }
                 case 4:
                 {
+                    auto start = std::chrono::high_resolution_clock::now(); 
                     std::vector<StudentasF> studentai = skaitymasIsFailo("studentai1000000.txt", 1000000);
+                    auto end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> apdorojimoTrukme = end-start; // Skirtumas (s)
+                    start = std::chrono::high_resolution_clock::now(); 
                     rusiavimasSkirstymas(studentai, rPasirinkimas);
+                    end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> rusiavimoTrukme = end-start; // Skirtumas (s)
+                    start = std::chrono::high_resolution_clock::now(); 
                     isvedimas(studentai);
+                    end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> isvedimoTrukme = end-start; // Skirtumas (s)
+                    std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< apdorojimoTrukme.count() << " s\n";
+                    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: "<< rusiavimoTrukme.count() << " s\n";
+                    std::cout << "Studentų išvedimas užtruko: "<< isvedimoTrukme.count() << " s\n";
+                    std::cout << "Bendra trukmė: " << (apdorojimoTrukme+rusiavimoTrukme+isvedimoTrukme).count() << " s";
                     break;
                 }
                 default:

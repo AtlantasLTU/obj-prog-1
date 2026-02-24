@@ -16,7 +16,7 @@ int failoPasirinkimas()
 
 int rusiavimoPasirinkimas()
 {
-    return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį pagal vidurkį didėjančiai,\n6 - galutinį pažymį pagal vidurkį mažėjančiai,\n7 - galutinį pažymį pagal medianą didėjančiai\n8 - galutinį pažymį pagal medianą mažėjančiai", 1, 8);
+    return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį pagal vidurkį didėjančiai,\n6 - galutinį pažymį pagal vidurkį mažėjančiai,\n7 - galutinį pažymį pagal medianą didėjančiai,\n8 - galutinį pažymį pagal medianą mažėjančiai:\n", 1, 8);
 }
 
 bool medianosUzklausa()
@@ -126,6 +126,7 @@ void isvedimas(const std::vector<StudentasF> &A)
          << std::setfill(' ');
     for(const StudentasF &X : A)
     {
+        cout << std::setw(15) << X.vardas << std::setw(15) << X.pavarde << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << " " << X.galutinisMed << std::endl;
     }
 }
 
@@ -227,8 +228,6 @@ std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, int rezer
     std::string t="";
     int ndKiekis = 0;
 
-    auto start = std::chrono::high_resolution_clock::now(); 
-    auto st=start;
     std::ifstream open_f(failoPavadinimas);
 
     std::getline(open_f, eil);
@@ -259,11 +258,7 @@ std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, int rezer
 
         studentai.push_back(std::move(studentas));
     }
-    //cout << studentai.at(1).vardas << " " << studentai.at(1).galutinisMed << " " << studentai.at(1).galutinisVid << endl;
     open_f.close();
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff = end-start; // Skirtumas (s)
-    std::cout << "Failo apdorojimas (nuskaitymas bei rezultatų apskaičiavimas) į studentai vektorių užtruko: "<< diff.count() << " s\n";  
     return studentai;
 }
 
@@ -272,49 +267,49 @@ void rusiavimasSkirstymas(std::vector<StudentasF> &studentai, int rPasirinkimas)
         case 1:
         {
             std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.vardas > B.vardas;
+                return A.vardas < B.vardas;
             });
             break;
         }
         case 2:
         {
             std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.vardas < B.vardas;
+                return A.vardas > B.vardas;
             });
             break;
         }
         case 3:
         {
             std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.pavarde > B.pavarde;
+                return A.pavarde < B.pavarde;
             });
             break;
         }
         case 4:
         {
             std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.pavarde < B.pavarde;
+                return A.pavarde > B.pavarde;
             });
             break;
         }
         case 5:
         {
             std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.galutinisVid > B.galutinisVid;
+                return A.galutinisVid < B.galutinisVid;
             });
             break;
         }
         case 6:
         {
             std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.galutinisVid < B.galutinisVid;
+                return A.galutinisVid > B.galutinisVid;
             });
             break;
         }
         case 7:
         {
             std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.galutinisMed > B.galutinisMed;
+                return A.galutinisMed < B.galutinisMed;
             });
             break;
         }
