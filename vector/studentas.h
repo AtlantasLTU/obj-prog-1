@@ -13,7 +13,8 @@ struct Studentas {
 
 struct StudentasF {
     std::string vardas, pavarde;
-    double galutinis = 0;
+    double galutinisVid = 0;
+    double galutinisMed = 0;
 };
 
 #endif // STUDENTAS_H

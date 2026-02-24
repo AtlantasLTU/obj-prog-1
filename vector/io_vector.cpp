@@ -205,7 +205,7 @@ bool arTikSkaicius(const std::string& eilute)
     });
 }
 
-std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, bool medianos, int rezervas){
+std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, int rezervas){
     std::vector<StudentasF> studentai;
     studentai.reserve(rezervas);
     std::string eil;
@@ -232,45 +232,19 @@ std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, bool medi
         studentas.vardas = std::move(vardas);
         studentas.pavarde = std::move(pavarde);
 
-        if(ndKiekis==0)
-        {
+        std::vector<int> nd;
+        nd.reserve(ndKiekis);
+        for(int i = 0; i < ndKiekis; i++){
             open_f >> paz;
-            studentas.galutinis = paz*0.6;
-        } 
-        else 
-        {
-            if(medianos){
-                std::vector<int> nd;
-                nd.reserve(ndKiekis);
-                for(int i = 0; i < ndKiekis; i++){
-                    open_f >> paz;
-                    nd.push_back(paz);
-                }
-
-                std::sort(nd.begin(), nd.end());
-
-                double med =
-                    (ndKiekis % 2 == 0) // jei lyginis, tai dvieju viduriniu nd vektoriaus nariu mediana paskaiciuoja
-                    ? (nd[ndKiekis/2] + nd[ndKiekis/2 - 1]) / 2.0
-                    : nd[ndKiekis/2];
-                
-                open_f >> paz;
-                studentas.galutinis+= med*0.4 + paz * 0.6;
-            }
-            else 
-            {
-                for(int i = 0; i < ndKiekis; i++){
-                    open_f >> paz;
-                    studentas.galutinis+=paz;
-                }
-                studentas.galutinis/=ndKiekis;
-                studentas.galutinis*=0.4;
-                open_f >> paz;
-                studentas.galutinis+=paz*0.6;
-            }
+            nd.push_back(paz);
         }
+        open_f >> paz;
+        studentas.galutinisVid = galutinisVidF(studentas, nd, paz, ndKiekis);
+        studentas.galutinisMed = galutinisMedF(studentas, nd, paz, ndKiekis);
+
         studentai.push_back(std::move(studentas));
     }
+    //cout << studentai.at(1).vardas << " " << studentai.at(1).galutinisMed << " " << studentai.at(1).galutinisVid << endl;
     open_f.close();
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end-start; // Skirtumas (s)

@@ -35,6 +35,6 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
 
 bool arTikSkaicius(const std::string& s);
 
-std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, bool medianos, int rezervas);
+std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, int rezervas = 0);
 
 #endif
