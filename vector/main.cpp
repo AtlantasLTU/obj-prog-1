@@ -168,6 +168,7 @@ int main()
                     double bendraTrukme=0;
                     for(int i = 0; i < tPasirinkimas; i++){
                         Timer t; 
+                        ndKiekis = 0;
                         std::vector<Studentas> studentai = skaitymasIsFailo("kursiokai.txt", ndKiekis, 2);
                         bendraTrukme += t.elapsed();
                         //ar testuoti skaiciavimu greiti?
@@ -192,6 +193,7 @@ int main()
                     double bendraTrukme=0;
                     for(int i = 0; i < tPasirinkimas; i++){
                         Timer t; 
+                        ndKiekis = 0;
                         std::vector<Studentas> studentai = skaitymasIsFailo("studentai10000.txt", ndKiekis, 10000);
                         bendraTrukme += t.elapsed();
                         //ar testuoti skaiciavimu greiti?
@@ -216,6 +218,7 @@ int main()
                     double bendraTrukme=0;
                     for(int i = 0; i < tPasirinkimas; i++){
                         Timer t; 
+                        ndKiekis = 0;
                         std::vector<Studentas> studentai = skaitymasIsFailo("studentai100000.txt", ndKiekis, 100000);
                         bendraTrukme += t.elapsed();
                         //ar testuoti skaiciavimu greiti?
@@ -240,6 +243,7 @@ int main()
                     double bendraTrukme=0;
                     for(int i = 0; i < tPasirinkimas; i++){
                         Timer t; 
+                        ndKiekis = 0;
                         std::vector<Studentas> studentai = skaitymasIsFailo("studentai1000000.txt", ndKiekis, 1000000);
                         bendraTrukme += t.elapsed();
                         //ar testuoti skaiciavimu greiti?
