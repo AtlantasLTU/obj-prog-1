@@ -36,7 +36,7 @@ bool gautiPatvirtinima(std::string pranesimas)
 
         // ivesties ilgio patikrinimas ir konvertavimas
         if (ivestis.length() == 1) {
-            char t = std::tolower(static_cast<unsigned char>(ivestis[0]));
+            char t = std::tolower(static_cast<unsigned char>(ivestis[0])); // ivesti vercia i mazaja | to lower tikisi unsigned char arba EOF pagal standarta, static_cast keicia char interpretavima i unsigned char.
             if (t == 'y') return true;
             if (t == 'n') return false;
         }
@@ -235,7 +235,7 @@ bool arTikSkaicius(const std::string& eilute)
 { // jei eilute tuscia grazinama false, std::all_of pereina nuo eilutes.begin() pradzios iki galo eilutes.end() per kiekviena simboli, kiekvienam simboliui jei jis skaicius ar tarpas grazina true, jei tai tiesiog raide - grazinama false ir toliau eilute nebetikrinama
     return !eilute.empty() && 
     std::all_of(eilute.begin(), eilute.end(), [](unsigned char simbolis) 
-    { // geriau paaiskint lambda
+    {
         return std::isdigit(simbolis) || std::isspace(simbolis);
     });
 }

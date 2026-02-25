@@ -15,35 +15,43 @@ using std::cout;
 #include <windows.h> // windows antraščių failas
 #endif
 
-//apsaugot nuo CTRL+D, Enter, padaryti UX geresni tsg
+// Ar galima naudoti kita studentu struktura kur saugomi tik galutiniai rezultatai ir visa tai apskaiciuojama ivedant juos, ar butina naudoti sena struktura ir apskaiciuoti rezultatus atskirai?
+
+//prideti failu testavima
+//prideti galimybe ivesti savo faila
 
 int main()
 {
     #ifdef _WIN32 // Jei kompiliuojama Windows operacinei sistemai nustatyti konsoles įvestį ir išvestį UTF-8 užkodavimui.
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8); // pakeičiame išvesties code page į UTF-8
+    SetConsoleCP(CP_UTF8); // pakeičiame įvesties code page į UTF-8
     #endif
     //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
     int pasirinkimas = menu();
-    bool failas = !failoUzklausa();
+    bool failas;
+    bool medianos;
+    if(pasirinkimas<5){
+        failas = !failoUzklausa();
+        if(pasirinkimas<4){
+            medianos = medianosUzklausa();
+        }
+    }
+    
     switch(pasirinkimas){
         case 1: // rankinis ivedimas
         {
-            bool medianos = medianosUzklausa();
             std::vector<Studentas> studentai = ivestiStudentus();
             isvestis(studentai, medianos, failas);
             break;
         }
         case 2: // tik pazymiu generavimas.
         {
-            bool medianos = medianosUzklausa();
             std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
             isvestis(studentai, medianos, failas);
             break;
         }
         case 3: // studentu ir pazymiu generavimas;
         {
-            bool medianos = medianosUzklausa();
             std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
             isvestis(studentai, medianos, failas);
             break;

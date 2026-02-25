@@ -18,8 +18,8 @@ int main()
 {
 
     #ifdef _WIN32 // Jei kompiliuojama Windows operacinei sistemai nustatyti konsoles įvestį ir išvestį UTF-8 užkodavimui.
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8); // pakeičiame išvesties code page į UTF-8
+    SetConsoleCP(CP_UTF8); // pakeičiame įvesties code page į UTF-8
     #endif
     //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
     int pasirinkimas = menu();
