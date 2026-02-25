@@ -17,6 +17,8 @@ int failoPasirinkimas();
 
 int rusiavimoPasirinkimas();
 
+int testavimoPasirinkimas();
+
 bool medianosUzklausa();
 
 bool failoUzklausa();

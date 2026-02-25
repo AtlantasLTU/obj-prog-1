@@ -6,7 +6,7 @@ using std::endl;
 
 int menu()
 {
-    return gautiSkaiciu("Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - skaityti studentus iš failo, 5 - baigti darbą): ", 1, 5);
+    return gautiSkaiciu("Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - skaityti studentus iš failo, 5 - testavimas su failais, 6 - baigti darbą): ", 1, 6);
 }
 
 int failoPasirinkimas()
@@ -17,6 +17,11 @@ int failoPasirinkimas()
 int rusiavimoPasirinkimas()
 {
     return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį pagal vidurkį didėjančiai,\n6 - galutinį pažymį pagal vidurkį mažėjančiai,\n7 - galutinį pažymį pagal medianą didėjančiai,\n8 - galutinį pažymį pagal medianą mažėjančiai:\n", 1, 8);
+}
+
+int testavimoPasirinkimas()
+{
+    return gautiSkaiciu("Kiek kartų testuoti skaitymą iš failo? (1-100):", 1, 100);
 }
 
 bool medianosUzklausa()
