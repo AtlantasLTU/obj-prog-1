@@ -16,7 +16,7 @@ int failoPasirinkimas()
 
 int rusiavimoPasirinkimas()
 {
-    return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį pagal vidurkį didėjančiai,\n6 - galutinį pažymį pagal vidurkį mažėjančiai,\n7 - galutinį pažymį pagal medianą didėjančiai,\n8 - galutinį pažymį pagal medianą mažėjančiai:\n", 1, 8);
+    return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį didėjančiai (1->10),\n6 - galutinį pažymį mažėjančiai (10->1),\n", 1, 6);
 }
 
 int testavimoPasirinkimas()
@@ -117,14 +117,17 @@ void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas)
     out << std::string(75, '-') << "\n";
     for(const Studentas &X : A)
     {
-        out << std::setw(20) << X.vardas << std::setw(20) << X.pavarde;
+        int vardoPlotis = 20 + lietuviskosRaides(X.vardas);
+        int pavardesPlotis = 20 + lietuviskosRaides(X.pavarde);
+        
+        out << std::setw(vardoPlotis) << X.vardas << std::setw(pavardesPlotis) << X.pavarde;
         if (medianos)
         {
-            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << galutinisMed(X) << "\n";
+            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << X.galutinisMed << "\n";
         }
         else
         {
-            out << std::setprecision(2) << std::fixed << std::setw(19) << galutinisVid(X) << "y.yy\n";
+            out << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << "y.yy\n";
         }
     }
     if(failas){
@@ -136,12 +139,25 @@ void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas)
     }
 }
 
-void isvedimas(const std::vector<StudentasF> &A, bool failas)
+// apskaiciuoti kiek string su lietuviskomis raidemis sudaro baitu, kadangi viena lietuviska raide - 2 baitai, o ne 1 baitas. Kitaip sakant vardas Ąžuolas turi 7 raides, o jį sudaro 8 baitai, o setw mato baitus, tai jei setw(20), tai jis pridės 12 tusciu tarpu, o ne 13.
+int lietuviskosRaides(const std::string& eilute) {
+    int simboliuKiekis = 0;
+    for (char c : eilute) {
+        // jei baitas neprasideda su 10xxxxxx, tai naujas simbolis
+        if ((c & 0xC0) != 0x80) { // paprastas ASCII simbolis prasideda su 0, keliu baitu pvz lietuviskos raides prasideda su 11 arba 111 arba 1111, priklausomai nuo kodavimo | 0xC0 = 11000000, 0x80 = 10000000. & (AND) bit'u operacija atranda ar c prasideda su 0 ar 1. antras, trecias ar ketvirtas baitas UTF-8 kodavime visad prasides su 10xxxxxx
+            simboliuKiekis++;
+        }
+    }
+    // grazinam trukstama isvesties ploti.
+    return eilute.length() - simboliuKiekis;
+}
+
+/* void isvedimas(const std::vector<Studentas> &A, bool failas)
 {
     std::ostringstream out;
     out << std::left << std::setw(20) << "Vardas" << std::setw(21) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
     out << std::string(75, '-') << "\n";
-    for(const StudentasF &X : A)
+    for(const Studentas &X : A)
     {
         out << std::setw(20) << X.vardas << std::setw(21) << X.pavarde << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << X.galutinisMed << "\n";
     }
@@ -152,7 +168,7 @@ void isvedimas(const std::vector<StudentasF> &A, bool failas)
     } else {
         cout << out.str();
     }
-}
+} */
 
 bool studentoVardoPavardesIvestis(Studentas &A, std::string& eilute)
 {
@@ -245,12 +261,11 @@ bool arTikSkaicius(const std::string& eilute)
     });
 }
 
-std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, int rezervas){
-    std::vector<StudentasF> studentai;
+std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKiekis, int rezervas){
+    std::vector<Studentas> studentai;
     studentai.reserve(rezervas);
     std::string eil;
     std::string t="";
-    int ndKiekis = 0;
 
     std::ifstream open_f(failoPavadinimas);
 
@@ -266,81 +281,98 @@ std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, int rezer
     int paz;
     
     while (open_f >> vardas >> pavarde) {
-        StudentasF studentas;
-        studentas.vardas = std::move(vardas);
+        Studentas studentas;
+        studentas.vardas = std::move(vardas); //std::move - vardas istrinamas is atminties, t.y. string vardas tampa "", ir tai kas buvo jame dabar priklauso studento strukturos vardui. Paprastai tariant: nedaroma kopija, o vardas priskiriamas studentas.vardas su std::move; taip susitaupo laiko
         studentas.pavarde = std::move(pavarde);
+        // uzkomentuotas kodas parodo, kad po std::move dingsta string vardas esantis string, nes jis perkeltas i studentas.vardas
+        // cout << "vardas: " << vardas << "\n";
 
-        std::vector<int> nd;
-        nd.reserve(ndKiekis);
         for(int i = 0; i < ndKiekis; i++){
             open_f >> paz;
-            nd.push_back(paz);
+            studentas.nd.push_back(paz);
         }
-        open_f >> paz;
-        studentas.galutinisVid = galutinisVidF(studentas, nd, paz, ndKiekis);
-        studentas.galutinisMed = galutinisMedF(studentas, nd, paz, ndKiekis);
+        open_f >> studentas.rez;
 
         studentai.push_back(std::move(studentas));
     }
+
     open_f.close();
     return studentai;
 }
 
-void rusiavimasSkirstymas(std::vector<StudentasF> &studentai, int rPasirinkimas){
+void skaiciavimas(std::vector<Studentas> &A, bool medianos, int ndKiekis){
+    if(medianos)
+    {
+        for(Studentas &X : A){
+            X.galutinisMed = galutinisMedF(X, ndKiekis);
+        }
+    }
+    else
+    {
+        for(Studentas &X : A){
+            X.galutinisVid = galutinisVidF(X, ndKiekis);
+        }
+    }
+}
+
+void skaiciavimas(std::vector<Studentas> &A, bool medianos){
+    if(medianos)
+    {
+        for(Studentas &X : A){
+            X.galutinisMed = galutinisMed(X);
+        }
+    }
+    else
+    {
+        for(Studentas &X : A){
+            X.galutinisVid = galutinisVid(X);
+        }
+    }
+}
+
+void rusiavimasSkirstymas(std::vector<Studentas> &studentai, int rPasirinkimas, bool medianos){
     switch(rPasirinkimas){
         case 1:
         {
-            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+            std::sort(studentai.begin(), studentai.end(), [](const Studentas &A, const Studentas &B){
                 return A.vardas < B.vardas;
             });
             break;
         }
         case 2:
         {
-            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+            std::sort(studentai.begin(), studentai.end(), [](const Studentas &A, const Studentas &B){
                 return A.vardas > B.vardas;
             });
             break;
         }
         case 3:
         {
-            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+            std::sort(studentai.begin(), studentai.end(), [](const Studentas &A, const Studentas &B){
                 return A.pavarde < B.pavarde;
             });
             break;
         }
         case 4:
         {
-            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+            std::sort(studentai.begin(), studentai.end(), [](const Studentas &A, const Studentas &B){
                 return A.pavarde > B.pavarde;
             });
             break;
         }
         case 5:
         {
-            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+            std::sort(studentai.begin(), studentai.end(), [medianos](const Studentas &A, const Studentas &B){
+                if(medianos) return A.galutinisMed < B.galutinisMed;
                 return A.galutinisVid < B.galutinisVid;
             });
             break;
         }
         case 6:
         {
-            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
+            std::sort(studentai.begin(), studentai.end(), [medianos](const Studentas &A, const Studentas &B){
+                if(medianos) return A.galutinisMed > B.galutinisMed;
                 return A.galutinisVid > B.galutinisVid;
-            });
-            break;
-        }
-        case 7:
-        {
-            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.galutinisMed < B.galutinisMed;
-            });
-            break;
-        }
-        case 8:
-        {
-            std::sort(studentai.begin(), studentai.end(), [](const StudentasF &A, const StudentasF &B){
-                return A.galutinisMed < B.galutinisMed;
             });
             break;
         }

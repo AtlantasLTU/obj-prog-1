@@ -31,8 +31,10 @@ bool skaitymas(Studentas &A);
 
 void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas = true);
 
-void isvedimas(const std::vector<StudentasF> &A, bool failas = true);
+int lietuviskosRaides(const std::string& eilute);
 
+/* void isvedimas(const std::vector<Studentas> &A, bool failas = true);
+ */
 bool studentoVardoPavardesIvestis(Studentas &A, std::string &eilute);
 
 void namuDarbuRezultatuIvestis(Studentas &A);
@@ -43,8 +45,12 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
 
 bool arTikSkaicius(const std::string &s);
 
-std::vector<StudentasF> skaitymasIsFailo(std::string failoPavadinimas, int rezervas = 0);
+std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKiekis, int rezervas = 0);
 
-void rusiavimasSkirstymas(std::vector<StudentasF> &A, int rPasirinkimas);
+void skaiciavimas(std::vector<Studentas> &A, bool medianos, int ndKiekis);
+
+void skaiciavimas(std::vector<Studentas> &A, bool medianos);
+
+void rusiavimasSkirstymas(std::vector<Studentas> &A, int rPasirinkimas, bool medianos);
 
 #endif

@@ -9,10 +9,6 @@ struct Studentas {
     std::string vardas, pavarde;
     std::vector<int> nd;
     int rez;
-};
-
-struct StudentasF {
-    std::string vardas, pavarde;
     double galutinisVid = 0;
     double galutinisMed = 0;
 };
