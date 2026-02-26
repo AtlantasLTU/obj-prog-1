@@ -86,102 +86,22 @@ int main()
             switch(fPasirinkimas){
                 case 1:
                 {
-                    double bendraTrukme=0;
-                    for(int i = 0; i < tPasirinkimas; i++){
-                        Timer t; 
-                        ndKiekis = 0;
-                        std::vector<Studentas> studentai = skaitymasIsFailo("kursiokai.txt", ndKiekis, 2);
-                        bendraTrukme += t.elapsed();
-                        //ar testuoti skaiciavimu greiti?
-                        /* t.reset();
-                        skaiciavimas(studentai, medianos, ndKiekis);
-                        bendraTrukme += t.elapsed(); */
-                        //ar testuoti sorts?
-                        /* t.reset();
-                        rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
-                        bendraTrukme += t.elapsed(); */
-                        //ar testuoti isvedima?
-                        /* t.reset();
-                        isvestis(studentai, medianos, failas);
-                        bendraTrukme += t.elapsed(); */
-                    }   
-                    std::cout << "Failo įvedimas vidutiniškai užtruko: " << bendraTrukme/tPasirinkimas << "\n";
-                    std::cout << "Bendra trukmė: " << bendraTrukme << "\n";
+                    failoTestavimas("kursiokai.txt", 2, tPasirinkimas, ndKiekis);
                     break;
                 }
                 case 2:
                 {
-                    double bendraTrukme=0;
-                    for(int i = 0; i < tPasirinkimas; i++){
-                        Timer t; 
-                        ndKiekis = 0;
-                        std::vector<Studentas> studentai = skaitymasIsFailo("studentai10000.txt", ndKiekis, 10000);
-                        bendraTrukme += t.elapsed();
-                        //ar testuoti skaiciavimu greiti?
-                        /* t.reset();
-                        skaiciavimas(studentai, medianos, ndKiekis);
-                        bendraTrukme += t.elapsed(); */
-                        //ar testuoti sorts?
-                        /* t.reset();
-                        rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
-                        bendraTrukme += t.elapsed(); */
-                        //ar testuoti isvedima?
-                        /* t.reset();
-                        isvestis(studentai, medianos, failas);
-                        bendraTrukme += t.elapsed(); */
-                    }   
-                    std::cout << "Failo įvedimas vidutiniškai užtruko: " << bendraTrukme/tPasirinkimas << "\n";
-                    std::cout << "Bendra trukmė: " << bendraTrukme << "\n";
+                    failoTestavimas("studentai10000.txt", 10000, tPasirinkimas, ndKiekis);
                     break;
                 }
                 case 3:
                 {   
-                    double bendraTrukme=0;
-                    for(int i = 0; i < tPasirinkimas; i++){
-                        Timer t; 
-                        ndKiekis = 0;
-                        std::vector<Studentas> studentai = skaitymasIsFailo("studentai100000.txt", ndKiekis, 100000);
-                        bendraTrukme += t.elapsed();
-                        //ar testuoti skaiciavimu greiti?
-                        /* t.reset();
-                        skaiciavimas(studentai, medianos, ndKiekis);
-                        bendraTrukme += t.elapsed(); */
-                        //ar testuoti sorts?
-                        /* t.reset();
-                        rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
-                        bendraTrukme += t.elapsed(); */
-                        //ar testuoti isvedima?
-                        /* t.reset();
-                        isvestis(studentai, medianos, failas);
-                        bendraTrukme += t.elapsed(); */
-                    }   
-                    std::cout << "Failo įvedimas vidutiniškai užtruko: " << bendraTrukme/tPasirinkimas << "\n";
-                    std::cout << "Bendra trukmė: " << bendraTrukme << "\n";
+                    failoTestavimas("studentai100000.txt", 100000, tPasirinkimas, ndKiekis);
                     break;
                 }
                 case 4:
                 {
-                    double bendraTrukme=0;
-                    for(int i = 0; i < tPasirinkimas; i++){
-                        Timer t; 
-                        ndKiekis = 0;
-                        std::vector<Studentas> studentai = skaitymasIsFailo("studentai1000000.txt", ndKiekis, 1000000);
-                        bendraTrukme += t.elapsed();
-                        //ar testuoti skaiciavimu greiti?
-                        /* t.reset();
-                        skaiciavimas(studentai, medianos, ndKiekis);
-                        bendraTrukme += t.elapsed(); */
-                        //ar testuoti sorts?
-                        /* t.reset();
-                        rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
-                        bendraTrukme += t.elapsed(); */
-                        //ar testuoti isvedima?
-                        /* t.reset();
-                        isvestis(studentai, medianos, failas);
-                        bendraTrukme += t.elapsed(); */
-                    }   
-                    std::cout << "Failo įvedimas vidutiniškai užtruko: " << bendraTrukme/tPasirinkimas << "\n";
-                    std::cout << "Bendra trukmė: " << bendraTrukme << "\n";
+                    failoTestavimas("studentai1000000.txt", 1000000, tPasirinkimas, ndKiekis);
                     break;
                 }
                 default:
@@ -202,6 +122,32 @@ int main()
         }
     }
     return 0;
+}
+
+void failoTestavimas(std::string failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis)
+{
+    double bendraTrukme = 0;
+    for (int i = 0; i < tPasirinkimas; i++)
+    {
+        Timer t;
+        ndKiekis = 0;
+        std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
+        bendraTrukme += t.elapsed();
+        // ar testuoti skaiciavimu greiti?
+        /* t.reset();
+        skaiciavimas(studentai, medianos, ndKiekis);
+        bendraTrukme += t.elapsed(); */
+        // ar testuoti sorts?
+        /* t.reset();
+        rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
+        bendraTrukme += t.elapsed(); */
+        // ar testuoti isvedima?
+        /* t.reset();
+        isvestis(studentai, medianos, failas);
+        bendraTrukme += t.elapsed(); */
+    }
+    std::cout << "Failo įvedimas vidutiniškai užtruko: " << bendraTrukme / tPasirinkimas << "\n";
+    std::cout << "Bendra trukmė: " << bendraTrukme << "\n";
 }
 
 void failoApdorojimas(std::string failoPavadinimas, int rezervas, int &ndKiekis, bool medianos, int rPasirinkimas, bool failas)

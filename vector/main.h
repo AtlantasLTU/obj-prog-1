@@ -10,3 +10,5 @@
 #endif
 
 void failoApdorojimas(std::string failoPavadinimas, int rezervas, int &ndKiekis, bool medianos, int rPasirinkimas, bool failas);
+
+void failoTestavimas(std::string failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis);
