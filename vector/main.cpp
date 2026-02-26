@@ -1,13 +1,4 @@
-//Header file includes
-#include "ivestis.h"
-#include "isvestis.h"
-#include "apdorojimas.h"
-#include "random.h"
-#include "Timer.h"
-
-#ifdef _WIN32 // naudojame preprocesorių, kad kompiliatorius, naudojant Windows, pridėtų windows.h antraščių failą, kad vėliau galėtume pakeistį terminalo išvesties ir įvesties užkodavimą į UTF-8
-#include <windows.h> // windows antraščių failas
-#endif
+#include "main.h"
 
 // ar refactorint bei atnaujint iki tokio pat funkcionalumo masyvu versija, kadangi v0.2 liepta dirbti tik su vector, o dabar jau nebe. Masyvu versija galbut nebenaudojama?
 // 1) restructurint failus.
@@ -61,86 +52,22 @@ int main()
             switch(fPasirinkimas){
                 case 1:
                 {
-                    Timer t; 
-                    std::vector<Studentas> studentai = skaitymasIsFailo("kursiokai.txt", ndKiekis, 2);
-                    double skaitymoTrukme = t.elapsed(); // Skirtumas (s)
-                    t.reset();
-                    skaiciavimas(studentai, medianos, ndKiekis);
-                    double skaiciavimoTrukme = t.elapsed();
-                    t.reset();
-                    rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
-                    double rusiavimoTrukme = t.elapsed();
-                    t.reset();
-                    isvestis(studentai, medianos, failas);
-                    double isvedimoTrukme = t.elapsed(); // Skirtumas (s)
-                    std::cout << "Failo nuskaitymas į studentai vektorių užtruko: "<< skaitymoTrukme << " s\n";
-                    std::cout << "Rezultatų skaičiavimas užtruko: " << skaiciavimoTrukme << " s\n";
-                    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: "<< rusiavimoTrukme << " s\n";
-                    std::cout << "Studentų išvedimas užtruko: "<< isvedimoTrukme << " s\n";
-                    std::cout << "Bendra trukmė: " << skaitymoTrukme+skaiciavimoTrukme+rusiavimoTrukme+isvedimoTrukme << " s";
+                    failoApdorojimas("kursiokai.txt", 2, ndKiekis, medianos, rPasirinkimas, failas);
                     break;
                 }
                 case 2:
                 {
-                    Timer t; 
-                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai10000.txt", ndKiekis, 10000);
-                    double skaitymoTrukme = t.elapsed(); // Skirtumas (s)
-                    t.reset();
-                    skaiciavimas(studentai, medianos, ndKiekis);
-                    double skaiciavimoTrukme = t.elapsed();
-                    t.reset();
-                    rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
-                    double rusiavimoTrukme = t.elapsed();
-                    t.reset();
-                    isvestis(studentai, medianos, failas);
-                    double isvedimoTrukme = t.elapsed(); // Skirtumas (s)
-                    std::cout << "Failo nuskaitymas į studentai vektorių užtruko: "<< skaitymoTrukme << " s\n";
-                    std::cout << "Rezultatų skaičiavimas užtruko: " << skaiciavimoTrukme << " s\n";
-                    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: "<< rusiavimoTrukme << " s\n";
-                    std::cout << "Studentų išvedimas užtruko: "<< isvedimoTrukme << " s\n";
-                    std::cout << "Bendra trukmė: " << skaitymoTrukme+skaiciavimoTrukme+rusiavimoTrukme+isvedimoTrukme << " s";
+                    failoApdorojimas("studentai10000.txt", 10000, ndKiekis, medianos, rPasirinkimas, failas);
                     break;
                 }
                 case 3:
                 {   
-                    Timer t; 
-                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai100000.txt", ndKiekis, 100000);
-                    double skaitymoTrukme = t.elapsed(); // Skirtumas (s)
-                    t.reset();
-                    skaiciavimas(studentai, medianos, ndKiekis);
-                    double skaiciavimoTrukme = t.elapsed();
-                    t.reset();
-                    rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
-                    double rusiavimoTrukme = t.elapsed();
-                    t.reset();
-                    isvestis(studentai, medianos, failas);
-                    double isvedimoTrukme = t.elapsed(); // Skirtumas (s)
-                    std::cout << "Failo nuskaitymas į studentai vektorių užtruko: "<< skaitymoTrukme << " s\n";
-                    std::cout << "Rezultatų skaičiavimas užtruko: " << skaiciavimoTrukme << " s\n";
-                    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: "<< rusiavimoTrukme << " s\n";
-                    std::cout << "Studentų išvedimas užtruko: "<< isvedimoTrukme << " s\n";
-                    std::cout << "Bendra trukmė: " << skaitymoTrukme+skaiciavimoTrukme+rusiavimoTrukme+isvedimoTrukme << " s";
+                    failoApdorojimas("studentai100000.txt", 100000, ndKiekis, medianos, rPasirinkimas, failas);
                     break;
                 }
                 case 4:
                 {
-                    Timer t; 
-                    std::vector<Studentas> studentai = skaitymasIsFailo("studentai1000000.txt", ndKiekis, 1000000);
-                    double skaitymoTrukme = t.elapsed(); // Skirtumas (s)
-                    t.reset();
-                    skaiciavimas(studentai, medianos, ndKiekis);
-                    double skaiciavimoTrukme = t.elapsed();
-                    t.reset();
-                    rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
-                    double rusiavimoTrukme = t.elapsed();
-                    t.reset();
-                    isvestis(studentai, medianos, failas);
-                    double isvedimoTrukme = t.elapsed(); // Skirtumas (s)
-                    std::cout << "Failo nuskaitymas į studentai vektorių užtruko: "<< skaitymoTrukme << " s\n";
-                    std::cout << "Rezultatų skaičiavimas užtruko: " << skaiciavimoTrukme << " s\n";
-                    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: "<< rusiavimoTrukme << " s\n";
-                    std::cout << "Studentų išvedimas užtruko: "<< isvedimoTrukme << " s\n";
-                    std::cout << "Bendra trukmė: " << skaitymoTrukme+skaiciavimoTrukme+rusiavimoTrukme+isvedimoTrukme << " s";
+                    failoApdorojimas("studentai1000000.txt", 1000000, ndKiekis, medianos, rPasirinkimas, failas);
                     break;
                 }
                 default:
@@ -275,4 +202,25 @@ int main()
         }
     }
     return 0;
+}
+
+void failoApdorojimas(std::string failoPavadinimas, int rezervas, int &ndKiekis, bool medianos, int rPasirinkimas, bool failas)
+{
+    Timer t;
+    std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
+    double skaitymoTrukme = t.elapsed(); // Skirtumas (s)
+    t.reset();
+    skaiciavimas(studentai, medianos, ndKiekis);
+    double skaiciavimoTrukme = t.elapsed();
+    t.reset();
+    rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
+    double rusiavimoTrukme = t.elapsed();
+    t.reset();
+    isvestis(studentai, medianos, failas);
+    double isvedimoTrukme = t.elapsed(); // Skirtumas (s)
+    std::cout << "Failo nuskaitymas į studentai vektorių užtruko: " << skaitymoTrukme << " s\n";
+    std::cout << "Rezultatų skaičiavimas užtruko: " << skaiciavimoTrukme << " s\n";
+    std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: " << rusiavimoTrukme << " s\n";
+    std::cout << "Studentų išvedimas užtruko: " << isvedimoTrukme << " s\n";
+    std::cout << "Bendra trukmė: " << skaitymoTrukme + skaiciavimoTrukme + rusiavimoTrukme + isvedimoTrukme << " s";
 }
