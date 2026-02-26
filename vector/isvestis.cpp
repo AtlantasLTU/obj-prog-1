@@ -1,0 +1,77 @@
+#include "isvestis.h"
+#include "ivestis.h"
+
+int menu()
+{
+    return gautiSkaiciu("Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - skaityti studentus iš failo, 5 - testavimas su failais, 6 - baigti darbą): ", 1, 6);
+}
+
+int failoPasirinkimas()
+{
+    return gautiSkaiciu("Pasirinkite failą, iš kurio skaityti\n1 - kursiokai.txt,\n2 - studentai10000.txt,\n3 - studentai100000.txt,\n4 - studentai1000000.txt\n", 1, 4);
+}
+
+int rusiavimoPasirinkimas()
+{
+    return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį didėjančiai (1->10),\n6 - galutinį pažymį mažėjančiai (10->1),\n", 1, 6);
+}
+
+int testavimoPasirinkimas()
+{
+    return gautiSkaiciu("Kiek kartų testuoti skaitymą iš failo? (1-100):", 1, 100);
+}
+
+bool medianosUzklausa()
+{
+    return gautiPatvirtinima("Skaičiuoti tik medianas? Jei ne, tai galutinis rezultatas bus skaičiuojamas su vidurkiu");
+}
+
+bool failoUzklausa()
+{
+    return gautiPatvirtinima("Ar išvesti į terminalą? Jei ne, tai bus išvedama į rezultatai.txt failą");
+}
+
+void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas)
+{
+    std::ostringstream out;
+    out << std::left << std::setw(20) << "Vardas" << std::setw(21) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
+    out << std::string(75, '-') << "\n";
+    for(const Studentas &X : A)
+    {
+        int vardoPlotis = 20 + lietuviskosRaides(X.vardas);
+        int pavardesPlotis = 20 + lietuviskosRaides(X.pavarde);
+        
+        out << std::setw(vardoPlotis) << X.vardas << std::setw(pavardesPlotis) << X.pavarde;
+        if (medianos)
+        {
+            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << X.galutinisMed << "\n";
+        }
+        else
+        {
+            out << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << "y.yy\n";
+        }
+    }
+    if(failas){
+        std::ofstream fout("rezultatai.txt");
+        fout << out.str();
+        fout.close();
+    } else {
+        std::cout << out.str();
+    }
+}
+
+// apskaiciuoti kiek string su lietuviskomis raidemis sudaro baitu, kadangi viena lietuviska raide - 2 baitai, o ne 1 baitas. Kitaip sakant vardas Ąžuolas turi 7 raides, o jį sudaro 8 baitai, o setw mato baitus, tai jei setw(20), tai jis pridės 12 tusciu tarpu, o ne 13.
+int lietuviskosRaides(const std::string& eilute)
+{
+    int simboliuKiekis = 0;
+    for (char c : eilute)
+    {
+        // jei baitas neprasideda su 10xxxxxx, tai naujas simbolis
+        if ((c & 0xC0) != 0x80)
+        { // paprastas ASCII simbolis prasideda su 0, keliu baitu pvz lietuviskos raides prasideda su 11 arba 111 arba 1111, priklausomai nuo kodavimo | 0xC0 = 11000000, 0x80 = 10000000. & (AND) bit'u operacija atranda ar c prasideda su 0 ar 1. antras, trecias ar ketvirtas baitas UTF-8 kodavime visad prasides su 10xxxxxx
+            simboliuKiekis++;
+        }
+    }
+    // grazinam trukstama isvesties ploti.
+    return eilute.length() - simboliuKiekis;
+}

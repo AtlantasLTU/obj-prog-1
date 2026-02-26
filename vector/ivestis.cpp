@@ -1,0 +1,207 @@
+#include "ivestis.h"
+
+bool gautiPatvirtinima(std::string pranesimas)
+{
+    std::string ivestis;
+    while (true) {
+        std::cout << pranesimas << " (y/n): ";
+        
+        if (!std::getline(std::cin, ivestis)) {
+            if (std::cin.eof())
+            { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+                std::cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+                exit(0); // sustabdoma programa
+            }
+            std::cin.clear(); // atstatome std::cin fail flag'a
+            continue;
+        }
+
+        ivestis.erase(0, ivestis.find_first_not_of(" \t")); // randa pirma simboli kuris nera tarpas arba tabuliacija, tada trina nuo 0-inio indekso iki rasto simbolio.
+        ivestis.erase(ivestis.find_last_not_of(" \t") + 1); // randa pirma simboli kuris nera tarpas arba tabuliacija nuo galo ir istrina viska po to
+
+        // ivesties ilgio patikrinimas ir konvertavimas
+        if (ivestis.length() == 1) {
+            char t = std::tolower(static_cast<unsigned char>(ivestis[0])); // ivesti vercia i mazaja | to lower tikisi unsigned char arba EOF pagal standarta, static_cast keicia char interpretavima i unsigned char.
+            if (t == 'y') return true;
+            if (t == 'n') return false;
+        }
+
+        // jei ivestis neteisinga, t.y. nieko nebuvo returninta, tai prompt'ina vartotoja vel ivesti y ar n!
+        std::cout << "Neteisinga įvestis! Prašome įvesti tik 'y' arba 'n'.\n";
+    }
+}
+
+std::vector<Studentas> ivestiStudentus()
+{
+    std::vector<Studentas> studentai;
+    while(true)
+    {
+        Studentas A;
+        if(!skaitymas(A))
+        {
+            break;
+        }
+        studentai.push_back(A);
+    }
+    return studentai;
+}
+
+bool skaitymas(Studentas &A)
+{
+    std::string eilute;
+    std::cout << "Įveskite studento vardą bei pavardę (ENTER - nutraukti įvedimą): ";
+
+        // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar std::cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
+    if (!std::getline(std::cin, eilute))
+    {
+        if (std::cin.eof())
+        { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+            std::cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+            exit(0); // sustabdoma programa
+        }
+        std::cin.clear(); // atstatome std::cin fail flag'a
+        return false;
+    } // jei enter - iseina
+    if(eilute.empty())
+    {
+        return false;
+    }
+    while(!studentoVardoPavardesIvestis(A, eilute))
+    {
+        std::cout << "Įveskite studento vardą bei pavardę (ENTER - baigti): ";
+        if(!std::getline(std::cin, eilute) || eilute.empty()) return false;
+    }
+    namuDarbuRezultatuIvestis(A);
+    egzaminoRezultatoIvestis(A);
+    return true;
+}
+
+bool studentoVardoPavardesIvestis(Studentas &A, std::string& eilute)
+{
+    std::istringstream iss(eilute);
+    std::string vardas, pavarde;
+    // įvestį skaidome į du žodžius
+    if (!(iss >> vardas >> pavarde))
+    {
+        std::cout << "Įveskite vardą ir pavardę (du žodžiai)!\n";
+        return false;
+    }
+    // tikriname ar po vardo ir pavardės yra dar žodžių
+    std::string ekstra;
+    if (iss >> ekstra)
+    {
+        std::cout << "Įvesta per daug žodžių — reikia tik vardo ir pavardės!\n";
+        return false;
+    }
+    // Jei viskas gerai — saugom
+    A.vardas = vardas;
+    A.pavarde = pavarde;
+    return true;
+}
+
+void namuDarbuRezultatuIvestis(Studentas &A)
+{
+    std::cout << "Įveskite " << maxNdKiekis << " namų darbų rezultatų." << std::endl;
+    while (A.nd.size()<maxNdKiekis)
+    {
+        int balas = gautiSkaiciu("Įveskite namų darbų rezultatą nuo 1 iki 10 (ENTER - baigti): ", 1, 10, true);
+        if (balas == -1) break; 
+        A.nd.push_back(balas);
+    }
+
+    if(A.nd.size()==maxNdKiekis)
+    {
+        std::cout << "Įvestas didžiausias namų darbų rezultatų kiekis" << std::endl;
+    }
+}
+
+void egzaminoRezultatoIvestis(Studentas &A)
+{
+    int balas = gautiSkaiciu("Įveskite egzamino rezultatą (1-10): ", 1, 10);
+    A.rez = balas;
+}
+
+int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia /* = false */)
+{
+    std::string ivestis;
+    while (true) {
+        std::cout << pranešimas;
+
+        if (!std::getline(std::cin, ivestis)) {
+            if (std::cin.eof()) 
+            { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+                std::cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+                exit(0); // sustabdoma programa
+            }
+            std::cin.clear(); // atstato std::cin veliavele is fail
+            continue;
+        }
+
+        // ivesties nutraukimas su ENTER
+        if (galiButiTuscia && ivestis.empty()) return -1;
+
+        try {
+            // 
+            if (!arTikSkaicius(ivestis)) throw std::invalid_argument("Ne skaičius");
+
+            int skaicius = std::stoi(ivestis);
+
+            //tikriname ar ivestas skaicius atitinka nuo maziausio leistino iki didziausio leistino
+            if (skaicius >= min && skaicius <= max) {
+                return skaicius;
+            } else {
+                std::cout << "Klaida, skaičius turi būti tarp " << min << " ir " << max << "!\n";
+            }
+        } catch (...) {
+            std::cout << "Klaida, įveskite sveikąjį skaičių!\n";
+        }
+    }
+}
+
+bool arTikSkaicius(const std::string& eilute)
+{ // jei eilute tuscia grazinama false, std::all_of pereina nuo eilutes.begin() pradzios iki galo eilutes.end() per kiekviena simboli, kiekvienam simboliui jei jis skaicius ar tarpas grazina true, jei tai tiesiog raide - grazinama false ir toliau eilute nebetikrinama
+    return !eilute.empty() && 
+    std::all_of(eilute.begin(), eilute.end(), [](unsigned char simbolis) 
+    {
+        return std::isdigit(simbolis) || std::isspace(simbolis);
+    });
+}
+
+std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKiekis, int rezervas){
+    std::vector<Studentas> studentai;
+    studentai.reserve(rezervas);
+    std::string eil;
+    std::string t="";
+
+    std::ifstream open_f(failoPavadinimas);
+
+    std::getline(open_f, eil);
+    std::istringstream antraste(eil);
+    antraste >> t >> t;
+    while(antraste >> t){
+        if(t == "Egz." || t == "Egzaminas") break;
+        ndKiekis++;
+    }
+
+    std::string vardas, pavarde;
+    int paz;
+    
+    while (open_f >> vardas >> pavarde) {
+        Studentas studentas;
+        studentas.vardas = std::move(vardas); //std::move - vardas istrinamas is atminties, t.y. string vardas tampa "", ir tai kas buvo jame dabar priklauso studento strukturos vardui. Paprastai tariant: nedaroma kopija, o vardas priskiriamas studentas.vardas su std::move; taip susitaupo laiko
+        studentas.pavarde = std::move(pavarde);
+        // uzkomentuotas kodas parodo, kad po std::move dingsta string vardas esantis string, nes jis perkeltas i studentas.vardas
+        // std::cout << "vardas: " << vardas << "\n";
+
+        for(int i = 0; i < ndKiekis; i++){
+            open_f >> paz;
+            studentas.nd.push_back(paz);
+        }
+        open_f >> studentas.rez;
+
+        studentai.push_back(std::move(studentas));
+    }
+
+    open_f.close();
+    return studentai;
+}

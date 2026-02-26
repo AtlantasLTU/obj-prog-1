@@ -1,25 +1,19 @@
-#include <iostream>
-#include <string>
-#include <vector>
-
 //Header file includes
-#include "io.h"
+#include "ivestis.h"
+#include "isvestis.h"
+#include "apdorojimas.h"
 #include "random.h"
 #include "Timer.h"
-
-//namespaces
-using std::vector;
-using std::cin;
-using std::cout;
-using namespace std::chrono;
 
 #ifdef _WIN32 // naudojame preprocesorių, kad kompiliatorius, naudojant Windows, pridėtų windows.h antraščių failą, kad vėliau galėtume pakeistį terminalo išvesties ir įvesties užkodavimą į UTF-8
 #include <windows.h> // windows antraščių failas
 #endif
 
-//prideti failu testavima
-//kadangi negalima turet antros strukturos, tai naudot sena, ja papildyt
-//isvesti pritaikyti irgi
+// ar refactorint bei atnaujint iki tokio pat funkcionalumo masyvu versija, kadangi v0.2 liepta dirbti tik su vector, o dabar jau nebe. Masyvu versija galbut nebenaudojama?
+// 1) restructurint failus.
+// 2) Prideti isimciu valdyma:
+//      a) programa tikrina naudojant klaidų gaudymo mechanizmą ar failas egzistuoja nurodytoje vietoje. 
+//      b) programoje turi būti realizuoti duomenų įvesties tikrinimai naudojant klaidų gaudymo mechanizmą (raidžių, žodžių, sveikųjų ir realiųjų skaičių), visi pranešimai turi būti išvedami lietuvių kalbą (unicode naudoti nebūtina).    
 
 int main()
 {
@@ -271,7 +265,7 @@ int main()
         }
         case 6: // darbo baigtis
         {
-            cout << "Darbas su programa baigtas.";
+            std::cout << "Darbas su programa baigtas.";
             return 0;
         }
         default:

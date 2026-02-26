@@ -1,9 +1,6 @@
 #include "random.h"
 #include "studVPGen.h"
-
-using std::cout;
-using std::cin;
-using std::endl;
+#include "ivestis.h"
 
 Studentas skaitymasRandom()
 {
@@ -17,17 +14,17 @@ Studentas skaitymasRandom()
 bool skaitymasRandom(Studentas &A)
 {
     std::string eilute;
-    cout << "Įveskite studento vardą bei pavardę (ENTER - nutraukti įvedimą): ";
+    std::cout << "Įveskite studento vardą bei pavardę (ENTER - nutraukti įvedimą): ";
 
-        // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
-    if (!std::getline(cin, eilute))
+        // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar std::cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
+    if (!std::getline(std::cin, eilute))
     {
-        if (cin.eof())
+        if (std::cin.eof())
         { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-            cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
+            std::cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
             exit(0); // sustabdoma programa
         }
-        cin.clear(); // atstatome cin fail flag'a
+        std::cin.clear(); // atstatome std::cin fail flag'a
         return false;
     } // jei enter - iseina
     if(eilute.empty())
@@ -36,8 +33,8 @@ bool skaitymasRandom(Studentas &A)
     }
     while(!studentoVardoPavardesIvestis(A, eilute))
     {
-        cout << "Įveskite studento vardą bei pavardę (ENTER - baigti): ";
-        if(!std::getline(cin, eilute) || eilute.empty()) return false;
+        std::cout << "Įveskite studento vardą bei pavardę (ENTER - baigti): ";
+        if(!std::getline(std::cin, eilute) || eilute.empty()) return false;
     }
     namuDarbuRezultataiRandom(A, namuDarbuRezultataiIvestisRandom());
     egzaminoRezultatasRandom(A);
@@ -101,7 +98,7 @@ std::vector<Studentas> ivestiStudentusRandom(int pasirinkimas)
         }
         default:
         {
-            cout << "ivestiStudentusRandom default atvejis" << std::endl;
+            std::cout << "ivestiStudentusRandom default atvejis" << std::endl;
         }
     }
     return studentai;
