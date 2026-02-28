@@ -1,8 +1,10 @@
 #include "main.h"
 
 // ar refactorint bei atnaujint iki tokio pat funkcionalumo masyvu versija, kadangi v0.2 liepta dirbti tik su vector, o dabar jau nebe. Masyvu versija galbut nebenaudojama?
+// ar visur naudot try catch ar galima naudot ir return kodus ir t.t.
 // 1) restructurint failus.
-// 2) Prideti isimciu valdyma:
+// 2) template, kad lengviau sort perskaityt
+// 3) Prideti isimciu valdyma:
 //      a) programa tikrina naudojant klaidų gaudymo mechanizmą ar failas egzistuoja nurodytoje vietoje. 
 //      b) programoje turi būti realizuoti duomenų įvesties tikrinimai naudojant klaidų gaudymo mechanizmą (raidžių, žodžių, sveikųjų ir realiųjų skaičių), visi pranešimai turi būti išvedami lietuvių kalbą (unicode naudoti nebūtina).    
 
