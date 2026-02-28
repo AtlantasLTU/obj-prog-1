@@ -30,52 +30,25 @@ void skaiciavimas(std::vector<Studentas> &A, bool medianos){
     }
 }
 
+template<class T>
+void rusiavimasPagal(std::vector<Studentas> &studentai, T lambdaFunkcija, bool didejanciai = true)
+{
+    std::sort(studentai.begin(), studentai.end(),
+        [didejanciai, lambdaFunkcija](const Studentas &A, const Studentas &B)
+        {
+            return didejanciai ? lambdaFunkcija(A) < lambdaFunkcija(B) : lambdaFunkcija(A) > lambdaFunkcija(B); // lambdaFunkcija(A) prilygsta kad i funkcija [](const Studentas &studentas){return studentas.vardas;} perduotas studentas A ir na, tas pats su B
+        }
+    );
+}
+
 void rusiavimasSkirstymas(std::vector<Studentas> &studentai, int rPasirinkimas, bool medianos){
     switch(rPasirinkimas){
-        case 1:
-        {
-            std::sort(studentai.begin(), studentai.end(), [](const Studentas &A, const Studentas &B){
-                return A.vardas < B.vardas;
-            });
-            break;
-        }
-        case 2:
-        {
-            std::sort(studentai.begin(), studentai.end(), [](const Studentas &A, const Studentas &B){
-                return A.vardas > B.vardas;
-            });
-            break;
-        }
-        case 3:
-        {
-            std::sort(studentai.begin(), studentai.end(), [](const Studentas &A, const Studentas &B){
-                return A.pavarde < B.pavarde;
-            });
-            break;
-        }
-        case 4:
-        {
-            std::sort(studentai.begin(), studentai.end(), [](const Studentas &A, const Studentas &B){
-                return A.pavarde > B.pavarde;
-            });
-            break;
-        }
-        case 5:
-        {
-            std::sort(studentai.begin(), studentai.end(), [medianos](const Studentas &A, const Studentas &B){
-                if(medianos) return A.galutinisMed < B.galutinisMed;
-                return A.galutinisVid < B.galutinisVid;
-            });
-            break;
-        }
-        case 6:
-        {
-            std::sort(studentai.begin(), studentai.end(), [medianos](const Studentas &A, const Studentas &B){
-                if(medianos) return A.galutinisMed > B.galutinisMed;
-                return A.galutinisVid > B.galutinisVid;
-            });
-            break;
-        }
+        case 1: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.vardas;}); break;
+        case 2: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.vardas;}, false); break;
+        case 3: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.pavarde;}); break;
+        case 4: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.pavarde;}, false); break;
+        case 5: rusiavimasPagal(studentai, [medianos](const Studentas &studentas){return medianos ? studentas.galutinisMed : studentas.galutinisVid;}); break;
+        case 6: rusiavimasPagal(studentai, [medianos](const Studentas &studentas){return medianos ? studentas.galutinisMed : studentas.galutinisVid;}, false); break;
         default:
         {
             break;
