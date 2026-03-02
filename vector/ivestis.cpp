@@ -174,6 +174,10 @@ std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKie
     std::string t="";
 
     std::ifstream open_f(failoPavadinimas);
+    if (!open_f.is_open())
+    {
+        throw std::runtime_error("Klaida: failas \"" + failoPavadinimas + "\" nerastas.");
+    }
 
     std::getline(open_f, eil);
     std::istringstream antraste(eil);

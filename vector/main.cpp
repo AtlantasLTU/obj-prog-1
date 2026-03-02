@@ -10,118 +10,127 @@
 
 int main()
 {
-    #ifdef _WIN32 // Jei kompiliuojama Windows operacinei sistemai nustatyti konsoles įvestį ir išvestį UTF-8 užkodavimui.
-    SetConsoleOutputCP(CP_UTF8); // pakeičiame išvesties code page į UTF-8
-    SetConsoleCP(CP_UTF8); // pakeičiame įvesties code page į UTF-8
-    #endif
-    //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
-    int pasirinkimas = menu();
-    bool failas;
-    bool medianos;
-    if(pasirinkimas<5)
+    try
     {
-        failas = !failoUzklausa();
-        medianos = medianosUzklausa();
+        #ifdef _WIN32 // Jei kompiliuojama Windows operacinei sistemai nustatyti konsoles įvestį ir išvestį UTF-8 užkodavimui.
+        SetConsoleOutputCP(CP_UTF8); // pakeičiame išvesties code page į UTF-8
+        SetConsoleCP(CP_UTF8); // pakeičiame įvesties code page į UTF-8
+        #endif
+        //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
+        int pasirinkimas = menu();
+        bool failas;
+        bool medianos;
+        if(pasirinkimas<5)
+        {
+            failas = !failoUzklausa();
+            medianos = medianosUzklausa();
+        }
+
+        switch(pasirinkimas){
+            case 1: // rankinis ivedimas
+            {
+                std::vector<Studentas> studentai = ivestiStudentus();
+                skaiciavimas(studentai, medianos);
+                isvestis(studentai, medianos, failas);
+                break;
+            }
+            case 2: // tik pazymiu generavimas.
+            {
+                std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
+                skaiciavimas(studentai, medianos);
+                isvestis(studentai, medianos, failas);
+                break;
+            }
+            case 3: // studentu ir pazymiu generavimas;
+            {
+                std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
+                skaiciavimas(studentai, medianos);
+                isvestis(studentai, medianos, failas);
+                break;
+            }
+            case 4: // skaitymas is failo
+            {
+                int ndKiekis = 0;
+                int fPasirinkimas = failoPasirinkimas();
+                int rPasirinkimas = rusiavimoPasirinkimas();
+                switch(fPasirinkimas){
+                    case 1:
+                    {
+                        failoApdorojimas("kursiokai.txt", 2, ndKiekis, medianos, rPasirinkimas, failas);
+                        break;
+                    }
+                    case 2:
+                    {
+                        failoApdorojimas("studentai10000.txt", 10000, ndKiekis, medianos, rPasirinkimas, failas);
+                        break;
+                    }
+                    case 3:
+                    {   
+                        failoApdorojimas("studentai100000.txt", 100000, ndKiekis, medianos, rPasirinkimas, failas);
+                        break;
+                    }
+                    case 4:
+                    {
+                        failoApdorojimas("studentai1000000.txt", 1000000, ndKiekis, medianos, rPasirinkimas, failas);
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+                break;
+            }
+            case 5: // testavimas su failais // kiekviename test case'e uzkomentuota koda arba jo dalis galima atkomentuoti bei keisti parametrus, kad pakeisti kas yra testuojama, kadangi tiksliai neapibrezta pagal ka testuoti.
+            {
+                int ndKiekis = 0;
+                int fPasirinkimas = failoPasirinkimas();
+                //int rPasirinkimas = rusiavimoPasirinkimas();
+                int tPasirinkimas = testavimoPasirinkimas();
+                switch(fPasirinkimas){
+                    case 1:
+                    {
+                        failoTestavimas("kursiokai.txt", 2, tPasirinkimas, ndKiekis);
+                        break;
+                    }
+                    case 2:
+                    {
+                        failoTestavimas("studentai10000.txt", 10000, tPasirinkimas, ndKiekis);
+                        break;
+                    }
+                    case 3:
+                    {   
+                        failoTestavimas("studentai100000.txt", 100000, tPasirinkimas, ndKiekis);
+                        break;
+                    }
+                    case 4:
+                    {
+                        failoTestavimas("studentai1000000.txt", 1000000, tPasirinkimas, ndKiekis);
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+                break;
+            }
+            case 6: // darbo baigtis
+            {
+                std::cout << "Darbas su programa baigtas.";
+                return 0;
+            }
+            default:
+            {
+                std::cout << "How did we get here?" << std::endl; // https://minecraft.wiki/w/Tutorial:Advancement_guide/How_Did_We_Get_Here%3F
+                return 0;
+            }
+        }
     }
-    
-    switch(pasirinkimas){
-        case 1: // rankinis ivedimas
-        {
-            std::vector<Studentas> studentai = ivestiStudentus();
-            skaiciavimas(studentai, medianos);
-            isvestis(studentai, medianos, failas);
-            break;
-        }
-        case 2: // tik pazymiu generavimas.
-        {
-            std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
-            skaiciavimas(studentai, medianos);
-            isvestis(studentai, medianos, failas);
-            break;
-        }
-        case 3: // studentu ir pazymiu generavimas;
-        {
-            std::vector<Studentas> studentai = ivestiStudentusRandom(pasirinkimas);
-            skaiciavimas(studentai, medianos);
-            isvestis(studentai, medianos, failas);
-            break;
-        }
-        case 4: // skaitymas is failo
-        {
-            int ndKiekis = 0;
-            int fPasirinkimas = failoPasirinkimas();
-            int rPasirinkimas = rusiavimoPasirinkimas();
-            switch(fPasirinkimas){
-                case 1:
-                {
-                    failoApdorojimas("kursiokai.txt", 2, ndKiekis, medianos, rPasirinkimas, failas);
-                    break;
-                }
-                case 2:
-                {
-                    failoApdorojimas("studentai10000.txt", 10000, ndKiekis, medianos, rPasirinkimas, failas);
-                    break;
-                }
-                case 3:
-                {   
-                    failoApdorojimas("studentai100000.txt", 100000, ndKiekis, medianos, rPasirinkimas, failas);
-                    break;
-                }
-                case 4:
-                {
-                    failoApdorojimas("studentai1000000.txt", 1000000, ndKiekis, medianos, rPasirinkimas, failas);
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
-            }
-            break;
-        }
-        case 5: // testavimas su failais // kiekviename test case'e uzkomentuota koda arba jo dalis galima atkomentuoti bei keisti parametrus, kad pakeisti kas yra testuojama, kadangi tiksliai neapibrezta pagal ka testuoti.
-        {
-            int ndKiekis = 0;
-            int fPasirinkimas = failoPasirinkimas();
-            //int rPasirinkimas = rusiavimoPasirinkimas();
-            int tPasirinkimas = testavimoPasirinkimas();
-            switch(fPasirinkimas){
-                case 1:
-                {
-                    failoTestavimas("kursiokai.txt", 2, tPasirinkimas, ndKiekis);
-                    break;
-                }
-                case 2:
-                {
-                    failoTestavimas("studentai10000.txt", 10000, tPasirinkimas, ndKiekis);
-                    break;
-                }
-                case 3:
-                {   
-                    failoTestavimas("studentai100000.txt", 100000, tPasirinkimas, ndKiekis);
-                    break;
-                }
-                case 4:
-                {
-                    failoTestavimas("studentai1000000.txt", 1000000, tPasirinkimas, ndKiekis);
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
-            }
-        }
-        case 6: // darbo baigtis
-        {
-            std::cout << "Darbas su programa baigtas.";
-            return 0;
-        }
-        default:
-        {
-            std::cout << "How did we get here?" << std::endl; // https://minecraft.wiki/w/Tutorial:Advancement_guide/How_Did_We_Get_Here%3F
-            return 0;
-        }
+    catch(const std::exception &klaida)
+    {
+        std::cerr << klaida.what() << "\n";
+        return 1;
     }
     return 0;
 }
