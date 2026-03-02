@@ -174,12 +174,9 @@ std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKie
     std::string t="";
 
     std::ifstream open_f(failoPavadinimas);
-    if (!open_f.is_open())
-    {
-        throw std::runtime_error("Klaida: failas \"" + failoPavadinimas + "\" nerastas.");
-    }
+    if (!open_f.is_open()) throw std::runtime_error("Klaida: failas \"" + failoPavadinimas + "\" nerastas.");
 
-    std::getline(open_f, eil);
+    if(!std::getline(open_f, eil)) throw std::runtime_error("Klaida: failas tuščias arba netinkantis");
     std::istringstream antraste(eil);
     antraste >> t >> t;
     while(antraste >> t){
@@ -198,10 +195,10 @@ std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKie
         // std::cout << "vardas: " << vardas << "\n";
 
         for(int i = 0; i < ndKiekis; i++){
-            open_f >> paz;
+            if(!(open_f >> paz)) throw std::runtime_error("Klaida: netinkami pažymiai faile.");
             studentas.nd.push_back(paz);
         }
-        open_f >> studentas.rez;
+        if(!(open_f >> studentas.rez)) throw std::runtime_error("Klaida: netinkamas egzamino rezultatas faile.");
 
         studentai.push_back(std::move(studentas));
     }
