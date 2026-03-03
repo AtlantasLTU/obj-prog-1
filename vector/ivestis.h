@@ -25,4 +25,6 @@ bool arTikSkaicius(const std::string &s);
 
 std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKiekis, int rezervas = 0);
 
+void cinEOFgaudymas();
+
 #endif

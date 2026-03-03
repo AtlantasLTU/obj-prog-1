@@ -7,11 +7,7 @@ bool gautiPatvirtinima(std::string pranesimas)
         std::cout << pranesimas << " (y/n): ";
         
         if (!std::getline(std::cin, ivestis)) {
-            if (std::cin.eof())
-            { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-                throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
-            }
-            std::cin.clear(); // atstatome std::cin fail flag'a
+            cinEOFgaudymas();
             continue;
         }
 
@@ -53,11 +49,7 @@ bool skaitymas(Studentas &A)
         // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar std::cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
     if (!std::getline(std::cin, eilute))
     {
-        if (std::cin.eof())
-        { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-                throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
-        }
-        std::cin.clear(); // atstatome std::cin fail flag'a
+        cinEOFgaudymas();
         return false;
     } // jei enter - iseina
     if(eilute.empty())
@@ -127,10 +119,7 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
 
         if (!std::getline(std::cin, ivestis)) {
             if (std::cin.eof()) 
-            { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-                throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
-            }
-            std::cin.clear(); // atstato std::cin veliavele is fail
+                cinEOFgaudymas();
             continue;
         }
 
@@ -202,4 +191,13 @@ std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKie
 
     open_f.close();
     return studentai;
+}
+
+void cinEOFgaudymas()
+{
+    if (std::cin.eof())
+    { // apsauga nuo CTRL+D (linux), CTRL+Z (windows)
+        throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
+    }
+    std::cin.clear(); // atstatome std::cin fail flag'a
 }

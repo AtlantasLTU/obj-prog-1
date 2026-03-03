@@ -19,11 +19,7 @@ bool skaitymasRandom(Studentas &A)
         // perskaito eilute ir jei perskaitymas nesekmingas, tai ziuri ar std::cin.eof, jei taip, tai programa uzbaigiama, jei ne, tai isvalo ivesties stream'o veliaveles ir vel prasoma ivesti
     if (!std::getline(std::cin, eilute))
     {
-        if (std::cin.eof())
-        { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-                throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
-        }
-        std::cin.clear(); // atstatome std::cin fail flag'a
+        cinEOFgaudymas();
         return false;
     } // jei enter - iseina
     if(eilute.empty())
