@@ -21,8 +21,7 @@ bool skaitymasRandom(Studentas &A)
     {
         if (std::cin.eof())
         { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-            std::cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
-            exit(0); // sustabdoma programa
+                throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
         }
         std::cin.clear(); // atstatome std::cin fail flag'a
         return false;

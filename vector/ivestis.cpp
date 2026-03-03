@@ -9,8 +9,7 @@ bool gautiPatvirtinima(std::string pranesimas)
         if (!std::getline(std::cin, ivestis)) {
             if (std::cin.eof())
             { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-                std::cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
-                exit(0); // sustabdoma programa
+                throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
             }
             std::cin.clear(); // atstatome std::cin fail flag'a
             continue;
@@ -56,8 +55,7 @@ bool skaitymas(Studentas &A)
     {
         if (std::cin.eof())
         { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-            std::cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
-            exit(0); // sustabdoma programa
+                throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
         }
         std::cin.clear(); // atstatome std::cin fail flag'a
         return false;
@@ -130,8 +128,7 @@ int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia 
         if (!std::getline(std::cin, ivestis)) {
             if (std::cin.eof()) 
             { //apsauga nuo CTRL+D (linux), CTRL+Z (windows)
-                std::cout << "\nĮvesties pabaiga (EOF). Darbas su programa baigtas.";
-                exit(0); // sustabdoma programa
+                throw std::runtime_error("Įvesties pabaiga (EOF). Darbas su programa baigtas");
             }
             std::cin.clear(); // atstato std::cin veliavele is fail
             continue;
