@@ -18,8 +18,8 @@ int main()
         #endif
         //pasirinkima galima tobulint su enumeratorium del type safety ir jei butu norima valdyti atminti.
         int pasirinkimas = menu();
-        bool failas;
-        bool medianos;
+        bool failas = false;
+        bool medianos = false;
         if(pasirinkimas<5)
         {
             failas = !failoUzklausa();
@@ -87,6 +87,7 @@ int main()
                 int fPasirinkimas = failoPasirinkimas();
                 //int rPasirinkimas = rusiavimoPasirinkimas();
                 int tPasirinkimas = testavimoPasirinkimas();
+                if(tPasirinkimas < 0) throw std::invalid_argument("Testavimo skaičius turi būti daugiau už 0!");
                 switch(fPasirinkimas){
                     case 1:
                     {
@@ -135,7 +136,7 @@ int main()
     return 0;
 }
 
-void failoTestavimas(std::string failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis)
+void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis)
 {
     double bendraTrukme = 0;
     for (int i = 0; i < tPasirinkimas; i++)
@@ -161,7 +162,7 @@ void failoTestavimas(std::string failoPavadinimas, int rezervas, int tPasirinkim
     std::cout << "Bendra trukmė: " << bendraTrukme << "\n";
 }
 
-void failoApdorojimas(std::string failoPavadinimas, int rezervas, int &ndKiekis, bool medianos, int rPasirinkimas, bool failas)
+void failoApdorojimas(const std::string &failoPavadinimas, int rezervas, int &ndKiekis, bool medianos, int rPasirinkimas, bool failas)
 {
     Timer t;
     std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);

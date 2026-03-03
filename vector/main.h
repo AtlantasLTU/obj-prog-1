@@ -9,6 +9,6 @@
 #include <windows.h> // windows antraščių failas
 #endif
 
-void failoApdorojimas(std::string failoPavadinimas, int rezervas, int &ndKiekis, bool medianos, int rPasirinkimas, bool failas);
+void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis);
 
-void failoTestavimas(std::string failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis);
+void failoApdorojimas(const std::string &failoPavadinimas, int rezervas, int &ndKiekis, bool medianos, int rPasirinkimas, bool failas);

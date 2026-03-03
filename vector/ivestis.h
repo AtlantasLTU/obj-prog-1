@@ -7,23 +7,23 @@
 #include <sstream>
 #include <algorithm>
 
-bool gautiPatvirtinima(std::string pranesimas);
+bool gautiPatvirtinima(const std::string &pranesimas);
 
 std::vector<Studentas> ivestiStudentus();
 
 bool skaitymas(Studentas &A);
 
-bool studentoVardoPavardesIvestis(Studentas &A, std::string &eilute);
+bool studentoVardoPavardesIvestis(Studentas &A, const std::string &eilute);
 
 void namuDarbuRezultatuIvestis(Studentas &A);
 
 void egzaminoRezultatoIvestis(Studentas &A);
 
-int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia = false);
+int gautiSkaiciu(const std::string &pranešimas, int min, int max, bool galiButiTuscia = false);
 
 bool arTikSkaicius(const std::string &s);
 
-std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKiekis, int rezervas = 0);
+std::vector<Studentas> skaitymasIsFailo(const std::string &failoPavadinimas, int &ndKiekis, int rezervas = 0);
 
 void cinEOFgaudymas();
 

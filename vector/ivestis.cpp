@@ -1,6 +1,6 @@
 #include "ivestis.h"
 
-bool gautiPatvirtinima(std::string pranesimas)
+bool gautiPatvirtinima(const std::string &pranesimas)
 {
     std::string ivestis;
     while (true) {
@@ -66,7 +66,7 @@ bool skaitymas(Studentas &A)
     return true;
 }
 
-bool studentoVardoPavardesIvestis(Studentas &A, std::string& eilute)
+bool studentoVardoPavardesIvestis(Studentas &A, const std::string& eilute)
 {
     std::istringstream iss(eilute);
     std::string vardas, pavarde;
@@ -111,7 +111,7 @@ void egzaminoRezultatoIvestis(Studentas &A)
     A.rez = balas;
 }
 
-int gautiSkaiciu(std::string pranešimas, int min, int max, bool galiButiTuscia /* = false */)
+int gautiSkaiciu(const std::string &pranešimas, int min, int max, bool galiButiTuscia /* = false */)
 {
     std::string ivestis;
     while (true) {
@@ -153,7 +153,7 @@ bool arTikSkaicius(const std::string& eilute)
     });
 }
 
-std::vector<Studentas> skaitymasIsFailo(std::string failoPavadinimas, int &ndKiekis, int rezervas){
+std::vector<Studentas> skaitymasIsFailo(const std::string &failoPavadinimas, int &ndKiekis, int rezervas){
     std::vector<Studentas> studentai;
     studentai.reserve(rezervas);
     std::string eil;
