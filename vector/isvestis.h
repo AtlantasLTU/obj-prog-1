@@ -14,6 +14,10 @@ int rusiavimoPasirinkimas();
 
 int testavimoPasirinkimas();
 
+int studentuPasirinkimas();
+
+int ndPasirinkimas();
+
 bool medianosUzklausa();
 
 bool failoUzklausa();

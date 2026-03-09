@@ -3,7 +3,7 @@
 
 int menu()
 {
-    return gautiSkaiciu("Pasirinkite programos eigą (1 - ranką, 2 - generuoti tik pažymius, 3 - generuoti studentų vardus, pavardės ir pažymius, 4 - skaityti studentus iš failo, 5 - testavimas su failais, 6 - baigti darbą): ", 1, 6);
+    return gautiSkaiciu("Pasirinkite programos eigą:\n1 - ranką,\n2 - generuoti tik pažymius,\n3 - generuoti studentų vardus, pavardės ir pažymius,\n4 - skaityti studentus iš failo,\n5 - testavimas su failais,\n6 - generuoti failą,\n7 - baigti darbą: ", 1, 7);
 }
 
 int failoPasirinkimas()
@@ -13,12 +13,22 @@ int failoPasirinkimas()
 
 int rusiavimoPasirinkimas()
 {
-    return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį didėjančiai (1->10),\n6 - galutinį pažymį mažėjančiai (10->1),\n", 1, 6);
+    return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį didėjančiai (1->10),\n6 - galutinį pažymį mažėjančiai (10->1)\n", 1, 6);
 }
 
 int testavimoPasirinkimas()
 {
     return gautiSkaiciu("Kiek kartų testuoti skaitymą iš failo? (1-100):", 1, 100);
+}
+
+int studentuPasirinkimas()
+{
+    return gautiSkaiciu("Įveskite norimą generuoti studentų kiekį (1-10000000):", 1, 10000000);
+}
+
+int ndPasirinkimas()
+{
+    return gautiSkaiciu("Įveskite norimą generuoti namų darbų rezultatų kiekį (0-10000000): ", 0, 10000000);
 }
 
 bool medianosUzklausa()

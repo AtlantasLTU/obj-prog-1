@@ -11,4 +11,6 @@ void skaiciavimas(std::vector<Studentas> &A, bool medianos);
 
 void rusiavimasSkirstymas(std::vector<Studentas> &A, int rPasirinkimas, bool medianos);
 
+void failoGeneravimas(int studentuKiekis, int ndKiekis);
+
 #endif

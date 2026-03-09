@@ -55,3 +55,8 @@ void rusiavimasSkirstymas(std::vector<Studentas> &studentai, int rPasirinkimas, 
         }
     }
 }
+
+void failoGeneravimas(int studentuKiekis, int ndKiekis)
+{
+    
+}

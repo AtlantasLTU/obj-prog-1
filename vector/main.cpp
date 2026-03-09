@@ -122,7 +122,14 @@ int main()
                     }
                     break;
                 }
-                case 6: // darbo baigtis
+                case 6:
+                {   
+                    int studentuKiekis = studentuPasirinkimas();
+                    int ndKiekis = ndPasirinkimas();
+                    failoGeneravimas(studentuKiekis, ndKiekis);
+                    break;
+                }
+                case 7: // darbo baigtis
                 {
                     std::cout << "Darbas su programa baigtas.";
                     veikimas = false;
@@ -188,5 +195,5 @@ void failoApdorojimas(const std::string &failoPavadinimas, int rezervas, int &nd
     std::cout << "Rezultatų skaičiavimas užtruko: " << skaiciavimoTrukme << " s\n";
     std::cout << "Duomenų rūšiavimas pagal pasirinktą parametrą užtruko: " << rusiavimoTrukme << " s\n";
     std::cout << "Studentų išvedimas užtruko: " << isvedimoTrukme << " s\n";
-    std::cout << "Bendra trukmė: " << skaitymoTrukme + skaiciavimoTrukme + rusiavimoTrukme + isvedimoTrukme << " s";
+    std::cout << "Bendra trukmė: " << skaitymoTrukme + skaiciavimoTrukme + rusiavimoTrukme + isvedimoTrukme << " s\n";
 }
