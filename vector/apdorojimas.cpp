@@ -1,4 +1,7 @@
 #include "apdorojimas.h"
+#include "studVPGen.h"
+#include "random.h"
+#include <fstream>
 
 void skaiciavimas(std::vector<Studentas> &A, bool medianos, int ndKiekis){
     if(medianos)
@@ -58,5 +61,25 @@ void rusiavimasSkirstymas(std::vector<Studentas> &studentai, int rPasirinkimas, 
 
 void failoGeneravimas(int studentuKiekis, int ndKiekis)
 {
-    
+    std::ostringstream out;
+    out << std::left << std::setw(20) << "Vardas" << std::setw(21) << "Pavardė";
+    for(int i = 1; i <= ndKiekis; i++){
+        out << std::left << std::setw(10) << "ND"+std::to_string(i);
+    }
+    out << "Egz.\n";
+    for(int i = 0; i < studentuKiekis; i++){
+        Studentas A;
+        gen_map(A);
+        namuDarbuRezultataiRandom(A, ndKiekis);
+        egzaminoRezultatasRandom(A);
+        out << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
+        for(int j = 0; j < ndKiekis; j++){
+            out << std::left << std::setw(10) << A.nd.at(j);
+        }
+        out << std::left << A.rez << "\n";
+    }
+    std::string failoPavadinimas = std::string("studentai") + std::to_string(studentuKiekis) + ".txt";
+    std::ofstream fout(failoPavadinimas);
+    fout << out.str();
+    fout.close();
 }
