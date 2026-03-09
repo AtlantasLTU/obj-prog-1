@@ -16,9 +16,9 @@ bool gautiPatvirtinima(const std::string &pranesimas)
 
         // ivesties ilgio patikrinimas ir konvertavimas
         if (ivestis.length() == 1) {
-            char t = std::tolower(static_cast<unsigned char>(ivestis[0])); // ivesti vercia i mazaja | to lower tikisi unsigned char arba EOF pagal standarta, static_cast keicia char interpretavima i unsigned char.
-            if (t == 'y') return true;
-            if (t == 'n') return false;
+            // ivesti vercia i mazaja | to lower tikisi unsigned char arba EOF pagal standarta, static_cast keicia char interpretavima i unsigned char.
+            if (std::tolower(static_cast<unsigned char>(ivestis[0])) == 'y') return true;
+            if (std::tolower(static_cast<unsigned char>(ivestis[0])) == 'n') return false;
         }
 
         // jei ivestis neteisinga, t.y. nieko nebuvo returninta, tai prompt'ina vartotoja vel ivesti y ar n!
