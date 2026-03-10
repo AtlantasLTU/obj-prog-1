@@ -83,3 +83,8 @@ void failoGeneravimas(int studentuKiekis, int ndKiekis)
     fout << out.str();
     fout.close();
 }
+
+void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvociai, std::vector<Studentas> &vargsiukai)
+{
+
+}

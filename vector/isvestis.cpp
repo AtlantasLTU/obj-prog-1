@@ -41,7 +41,7 @@ bool failoUzklausa()
     return gautiPatvirtinima("Ar išvesti į terminalą? Jei ne, tai bus išvedama į rezultatai.txt failą");
 }
 
-void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas)
+void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas, const std::string &failoPavadinimas)
 {
     std::ostringstream out;
     out << std::left << std::setw(20) << "Vardas" << std::setw(21) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
@@ -62,7 +62,7 @@ void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas)
         }
     }
     if(failas){
-        std::ofstream fout("rezultatai.txt");
+        std::ofstream fout(failoPavadinimas);
         fout << out.str();
         fout.close();
     } else {

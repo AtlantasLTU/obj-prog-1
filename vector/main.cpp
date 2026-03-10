@@ -160,6 +160,9 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
         ndKiekis = 0;
         std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
         bendraTrukme += t.elapsed();
+        std::vector<Studentas> galvociai(rezervas);
+        std::vector<Studentas> vargsiukai(rezervas);
+        skirstymas(studentai, galvociai, vargsiukai);
         // ar testuoti skaiciavimu greiti?
         /* t.reset();
         skaiciavimas(studentai, medianos, ndKiekis);
