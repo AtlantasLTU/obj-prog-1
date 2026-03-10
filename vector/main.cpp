@@ -72,7 +72,7 @@ int main()
                     std::string fPasirinkimas;
                     failoPasirinkimas(rezervas, fPasirinkimas);
                     //int rPasirinkimas = rusiavimoPasirinkimas();
-                    int tPasirinkimas = 1;//testavimoPasirinkimas();
+                    int tPasirinkimas = testavimoPasirinkimas();
                     if(tPasirinkimas < 0) throw std::invalid_argument("Testavimo skaičius turi būti daugiau už 0!");
                     failoTestavimas(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
                     break;
@@ -111,35 +111,45 @@ int main()
 
 void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis, bool medianos)
 {
-    Timer t;
-    std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
-    double skaitymoTrukme = t.elapsed(); // Skirtumas (s)
-    t.reset();
-    skaiciavimas(studentai, medianos, ndKiekis);
-    double skaiciavimoTrukme = t.elapsed();
-    t.reset();
-    rusiavimasSkirstymas(studentai, 5, medianos);
-    double rusiavimoTrukme = t.elapsed();
-    t.reset();
-    std::vector<Studentas> galvociai;
-    std::vector<Studentas> vargsiukai;
-    galvociai.reserve(studentai.size());
-    vargsiukai.reserve(studentai.size());
-    skirstymas(studentai, galvociai, vargsiukai);
-    double skirstymoTrukme = t.elapsed();
-    t.reset();
-    isvestis(galvociai, medianos, true, "vargsiukai.txt");
-    double isvedimoTrukme1 = t.elapsed(); // Skirtumas (s)
-    t.reset();
-    isvestis(vargsiukai, medianos, true, "galvociai.txt");
-    double isvedimoTrukme2 = t.elapsed(); // Skirtumas (s)
-    std::cout << "Failo nuskaitymas į studentai vektorių užtruko: " << skaitymoTrukme << " s\n";
-    std::cout << "Rezultatų skaičiavimas užtruko: " << skaiciavimoTrukme << " s\n";
-    std::cout << "Duomenų rūšiavimas didėjančiai užtruko: " << rusiavimoTrukme << " s\n";
-    std::cout << "Studentų skirstymas pagal pažymius užtruko: " << skirstymoTrukme << " s\n";
-    std::cout << "Studentų išvedimas į vargsiukai.txt užtruko: " << isvedimoTrukme1 << " s\n";
-    std::cout << "Studentų išvedimas į galvociai.txt užtruko: " << isvedimoTrukme2 << " s\n";
-    std::cout << "Bendra trukmė: " << skaitymoTrukme + skaiciavimoTrukme + rusiavimoTrukme + isvedimoTrukme1 + isvedimoTrukme2 << " s\n";
+    double skaitymoTrukme = 0;
+    double skaiciavimoTrukme = 0;
+    double rusiavimoTrukme = 0;
+    double skirstymoTrukme = 0;
+    double isvedimoTrukme1 = 0;
+    double isvedimoTrukme2 = 0;
+    for(int i = 0; i < tPasirinkimas; i++)
+    {
+        ndKiekis = 0;
+        Timer t;
+        std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
+        skaitymoTrukme += t.elapsed(); // Skirtumas (s)
+        t.reset();
+        skaiciavimas(studentai, medianos, ndKiekis);
+        skaiciavimoTrukme += t.elapsed();
+        t.reset();
+        rusiavimasSkirstymas(studentai, 5, medianos);
+        rusiavimoTrukme += t.elapsed();
+        t.reset();
+        std::vector<Studentas> galvociai;
+        std::vector<Studentas> vargsiukai;
+        galvociai.reserve(studentai.size());
+        vargsiukai.reserve(studentai.size());
+        skirstymas(studentai, galvociai, vargsiukai);
+        skirstymoTrukme += t.elapsed();
+        t.reset();
+        isvestis(galvociai, medianos, true, "galvociai.txt");
+        isvedimoTrukme1 += t.elapsed(); // Skirtumas (s)
+        t.reset();
+        isvestis(vargsiukai, medianos, true, "vargsiukai.txt");
+        isvedimoTrukme2 += t.elapsed(); // Skirtumas (s)
+    }
+    std::cout << "Failo nuskaitymas į studentai vektorių vidutiniškai užtruko: " << skaitymoTrukme/tPasirinkimas << " s\n";
+    std::cout << "Rezultatų skaičiavimas vidutiniškai užtruko: " << skaiciavimoTrukme/tPasirinkimas << " s\n";
+    std::cout << "Duomenų rūšiavimas didėjančiai vidutiniškai užtruko: " << rusiavimoTrukme/tPasirinkimas << " s\n";
+    std::cout << "Studentų skirstymas pagal pažymius vidutiniškai užtruko: " << skirstymoTrukme/tPasirinkimas << " s\n";
+    std::cout << "Studentų išvedimas į vargsiukai.txt vidutiniškai užtruko: " << isvedimoTrukme1/tPasirinkimas << " s\n";
+    std::cout << "Studentų išvedimas į galvociai.txt vidutiniškai užtruko: " << isvedimoTrukme2/tPasirinkimas << " s\n";
+    std::cout << "Bendra trukmė: " << skaitymoTrukme + skaiciavimoTrukme + rusiavimoTrukme + skirstymoTrukme + isvedimoTrukme1 + isvedimoTrukme2 << " s\n";
 }
 
 void failoApdorojimas(const std::string &failoPavadinimas, int rezervas, int &ndKiekis, bool medianos, int rPasirinkimas, bool failas)

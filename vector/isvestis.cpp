@@ -18,7 +18,7 @@ int rusiavimoPasirinkimas()
 
 int testavimoPasirinkimas()
 {
-    return gautiSkaiciu("Kiek kartų testuoti skaitymą iš failo? (1-100):", 1, 100);
+    return gautiSkaiciu("Kiek kartų testuoti failą? (1-100):", 1, 100);
 }
 
 int studentuPasirinkimas()
