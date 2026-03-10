@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <format>
 
 int menu();
 
@@ -24,8 +25,6 @@ bool medianosUzklausa();
 bool failoUzklausa();
 
 void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas = true, const std::string &failoPavadinimas = "rezultatai.txt");
-
-int lietuviskosRaides(const std::string& eilute);
 
 void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::string& vieta = ".");
 

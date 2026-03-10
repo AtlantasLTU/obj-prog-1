@@ -43,47 +43,27 @@ bool failoUzklausa()
 
 void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas, const std::string &failoPavadinimas)
 {
-    std::ostringstream out;
-    out << std::left << std::setw(20) << "Vardas" << std::setw(21) << "Pavardė" << "Galutinis (Vid.) / Galutinis (Med.)\n";
-    out << std::string(75, '-') << "\n";
+    std::string out;
+    out += std::format("{:<20}{:<21}Galutinis (Vid.) / Galutinis (Med.)\n", "Vardas", "Pavardė");
+    out += std::string(75, '-') + "\n";
     for(const Studentas &X : A)
     {
-        int vardoPlotis = 20 + lietuviskosRaides(X.vardas);
-        int pavardesPlotis = 20 + lietuviskosRaides(X.pavarde);
-        
-        out << std::setw(vardoPlotis) << X.vardas << std::setw(pavardesPlotis) << X.pavarde;
         if (medianos)
         {
-            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << X.galutinis << "\n";
+            out += std::format("{:<20}{:<21}{:<19}{:.2f}\n", X.vardas, X.pavarde, "x.xx", X.galutinis);
         }
         else
         {
-            out << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinis << "y.yy\n";
+            out += std::format("{:<20}{:<21}{:<19.2f}y.yy\n", X.vardas, X.pavarde, X.galutinis);
         }
     }
     if(failas){
         std::ofstream fout(failoPavadinimas);
-        fout << out.str();
+        fout << out;
         fout.close();
     } else {
-        std::cout << out.str();
+        std::cout << out;
     }
-}
-
-// apskaiciuoti kiek string su lietuviskomis raidemis sudaro baitu, kadangi viena lietuviska raide - 2 baitai, o ne 1 baitas. Kitaip sakant vardas Ąžuolas turi 7 raides, o jį sudaro 8 baitai, o setw mato baitus, tai jei setw(20), tai jis pridės 12 tusciu tarpu, o ne 13.
-int lietuviskosRaides(const std::string& eilute)
-{
-    int simboliuKiekis = 0;
-    for (char c : eilute)
-    {
-        // jei baitas neprasideda su 10xxxxxx, tai naujas simbolis
-        if ((c & 0xC0) != 0x80)
-        { // paprastas ASCII simbolis prasideda su 0, keliu baitu pvz lietuviskos raides prasideda su 11 arba 111 arba 1111, priklausomai nuo kodavimo | 0xC0 = 11000000, 0x80 = 10000000. & (AND) bit'u operacija atranda ar c prasideda su 0 ar 1. antras, trecias ar ketvirtas baitas UTF-8 kodavime visad prasides su 10xxxxxx
-            simboliuKiekis++;
-        }
-    }
-    // grazinam trukstama isvesties ploti.
-    return eilute.length() - simboliuKiekis;
 }
 
 void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::string& vieta)
@@ -119,6 +99,8 @@ void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::
             {
                 rezervai.push_back(std::stoi(skaicius));
             }
+        } else {
+            rezervai.push_back(0);
         }
 
         failai.push_back(failas);
