@@ -1,16 +1,15 @@
 #include "main.h"
 
-// 1) failų generatoriaus funkcija (studentas + kiekis.txt)
+// 1) failų generatoriaus funkcija (studentas + kiekis.txt) VVV
 // failo generavimo pasirinkimas -> kiek generuoti studentu -> kiek generuoti namu darbu -> generavimas (studentas vardas pavarde, nd, egzo rezultatai) -> isvestis
-// 2) Surusiuoti (padalinti) studentus i dvi kategorijas:
-//      studentai, kuriu galutinis balas < 5
-//      studentai, kuriu balas didesnis arba lygus 5
-// 3) isvesti siuos studentus i du naujus failus
+// 2) Surusiuoti (padalinti) studentus i dvi kategorijas: VVV
+//      studentai, kuriu galutinis balas < 5 VVV
+//      studentai, kuriu balas didesnis arba lygus 5 VVV
+// 3) isvesti siuos studentus i du naujus failus VVV
 // 4) spartos analize
-// optional, del vartotojo ir saves
-// prideti failu pasirinkima su  system("dir *.txt");
+// optional, del vartotojo ir saves VVV
+// prideti failu pasirinkima su  system("dir *.txt"); VVVV
 // UTF-8 isvesti galbut patvarkyt??
-//input viska i stringstream ir tai darant suskaiciuot '\n' ir pagal tai reservuot vektoriaus dydi, jei pvz skaitytume is failo su X eiluciu.
 int main()
 {
     try
@@ -82,7 +81,10 @@ int main()
                 {   
                     int studentuKiekis = studentuPasirinkimas();
                     int ndKiekis = ndPasirinkimas();
+                    Timer t;
                     failoGeneravimas(studentuKiekis, ndKiekis);
+                    double trukme = t.elapsed();
+                    std::cout << "Failo generavimas užtruko: " << trukme << "\n";
                     break;
                 }
                 case 7: // darbo baigtis
