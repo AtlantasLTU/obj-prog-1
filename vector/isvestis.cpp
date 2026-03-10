@@ -6,10 +6,10 @@ int menu()
     return gautiSkaiciu("Pasirinkite programos eigą:\n1 - ranką,\n2 - generuoti tik pažymius,\n3 - generuoti studentų vardus, pavardės ir pažymius,\n4 - skaityti studentus iš failo,\n5 - testavimas su failais,\n6 - generuoti failą,\n7 - baigti darbą: ", 1, 7);
 }
 
-int failoPasirinkimas()
+/* int failoPasirinkimas()
 {
     return gautiSkaiciu("Pasirinkite failą, iš kurio skaityti\n1 - kursiokai.txt,\n2 - studentai10000.txt,\n3 - studentai100000.txt,\n4 - studentai1000000.txt\n", 1, 4);
-}
+} */
 
 int rusiavimoPasirinkimas()
 {
@@ -84,4 +84,41 @@ int lietuviskosRaides(const std::string& eilute)
     }
     // grazinam trukstama isvesties ploti.
     return eilute.length() - simboliuKiekis;
+}
+
+std::string failoPasirinkimas(const std::string& vieta)
+{
+    std::vector<std::filesystem::directory_entry> failai;
+
+    for(auto &failas : std::filesystem::directory_iterator(vieta))
+    {
+        if(!failas.is_regular_file())
+            continue;
+
+        if(failas.path().extension() != ".txt")
+            continue;
+        
+        std::string vardas = failas.path().filename().string();
+
+        if(vardas == "rezultatai.txt" || vardas == "galvociai.txt" || vardas == "vargsiukai.txt")
+            continue;
+
+        failai.push_back(failas);
+    }
+
+    if(failai.empty())
+    {
+        std::cout << "Nerasta tekstinių failų vietoje: " << vieta << "\n";
+        return "";
+    }
+
+    std::cout << "Pasirinkite testavimo failą:\n";
+    for(int i = 0; i < failai.size(); i++)
+    {
+        std::cout << (i + 1) << ": " << failai.at(i).path().filename().string() << "\n";
+    }
+
+    int pasirinkimas = gautiSkaiciu("Įveskite failo numerį: ", 1, failai.size(), false);
+
+    return failai.at(pasirinkimas-1).path().filename().string();
 }

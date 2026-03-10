@@ -92,9 +92,9 @@ int main()
                 case 5: // testavimas su failais // kiekviename test case'e uzkomentuota koda arba jo dalis galima atkomentuoti bei keisti parametrus, kad pakeisti kas yra testuojama, kadangi tiksliai neapibrezta pagal ka testuoti.
                 {
                     int ndKiekis = 0;
-                    int fPasirinkimas = failoPasirinkimas();
+                    std::string fPasirinkimas = failoPasirinkimas();
                     //int rPasirinkimas = rusiavimoPasirinkimas();
-                    int tPasirinkimas = testavimoPasirinkimas();
+                    int tPasirinkimas = 1;//testavimoPasirinkimas();
                     if(tPasirinkimas < 0) throw std::invalid_argument("Testavimo skaičius turi būti daugiau už 0!");
                     switch(fPasirinkimas){
                         case 1:
