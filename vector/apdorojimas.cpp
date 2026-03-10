@@ -84,9 +84,14 @@ void failoGeneravimas(int studentuKiekis, int ndKiekis)
     fout.close();
 }
 
-void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvociai, std::vector<Studentas> &vargsiukai, int rezervas)
+void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvociai, std::vector<Studentas> &vargsiukai)
 {
-    for(int i = 0; i < rezervas; i++)
+    for(Studentas &A : studentai)
     {
+        if(A.galutinis<5){
+            vargsiukai.push_back(std::move(A));
+        } else {
+            galvociai.push_back(std::move(A));
+        }
     }
 }
