@@ -54,11 +54,11 @@ void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas, const
         out << std::setw(vardoPlotis) << X.vardas << std::setw(pavardesPlotis) << X.pavarde;
         if (medianos)
         {
-            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << X.galutinisMed << "\n";
+            out << std::setprecision(2) << std::fixed << std::setw(19) << "x.xx" << X.galutinis << "\n";
         }
         else
         {
-            out << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinisVid << "y.yy\n";
+            out << std::setprecision(2) << std::fixed << std::setw(19) << X.galutinis << "y.yy\n";
         }
     }
     if(failas){

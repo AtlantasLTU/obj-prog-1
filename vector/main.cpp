@@ -162,7 +162,7 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
         bendraTrukme += t.elapsed();
         std::vector<Studentas> galvociai(rezervas);
         std::vector<Studentas> vargsiukai(rezervas);
-        skirstymas(studentai, galvociai, vargsiukai);
+        skirstymas(studentai, galvociai, vargsiukai, rezervas);
         // ar testuoti skaiciavimu greiti?
         /* t.reset();
         skaiciavimas(studentai, medianos, ndKiekis);

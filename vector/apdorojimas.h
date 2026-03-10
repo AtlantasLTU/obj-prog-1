@@ -13,6 +13,6 @@ void rusiavimasSkirstymas(std::vector<Studentas> &A, int rPasirinkimas, bool med
 
 void failoGeneravimas(int studentuKiekis, int ndKiekis);
 
-void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvociai, std::vector<Studentas> &vargsiukai);
+void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvociai, std::vector<Studentas> &vargsiukai, int rezervas);
 
 #endif

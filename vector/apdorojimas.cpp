@@ -7,13 +7,13 @@ void skaiciavimas(std::vector<Studentas> &A, bool medianos, int ndKiekis){
     if(medianos)
     {
         for(Studentas &X : A){
-            X.galutinisMed = galutinisMedF(X, ndKiekis);
+            X.galutinis = galutinisMedF(X, ndKiekis);
         }
     }
     else
     {
         for(Studentas &X : A){
-            X.galutinisVid = galutinisVidF(X, ndKiekis);
+            X.galutinis = galutinisVidF(X, ndKiekis);
         }
     }
 }
@@ -22,13 +22,13 @@ void skaiciavimas(std::vector<Studentas> &A, bool medianos){
     if(medianos)
     {
         for(Studentas &X : A){
-            X.galutinisMed = galutinisMed(X);
+            X.galutinis = galutinisMed(X);
         }
     }
     else
     {
         for(Studentas &X : A){
-            X.galutinisVid = galutinisVid(X);
+            X.galutinis = galutinisVid(X);
         }
     }
 }
@@ -50,8 +50,8 @@ void rusiavimasSkirstymas(std::vector<Studentas> &studentai, int rPasirinkimas, 
         case 2: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.vardas;}, false); break;
         case 3: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.pavarde;}); break;
         case 4: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.pavarde;}, false); break;
-        case 5: rusiavimasPagal(studentai, [medianos](const Studentas &studentas){return medianos ? studentas.galutinisMed : studentas.galutinisVid;}); break;
-        case 6: rusiavimasPagal(studentai, [medianos](const Studentas &studentas){return medianos ? studentas.galutinisMed : studentas.galutinisVid;}, false); break;
+        case 5: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.galutinis;}); break;
+        case 6: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.galutinis;}, false); break;
         default:
         {
             break;
@@ -84,7 +84,9 @@ void failoGeneravimas(int studentuKiekis, int ndKiekis)
     fout.close();
 }
 
-void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvociai, std::vector<Studentas> &vargsiukai)
+void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvociai, std::vector<Studentas> &vargsiukai, int rezervas)
 {
-
+    for(int i = 0; i < rezervas; i++)
+    {
+    }
 }
