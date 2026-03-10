@@ -86,9 +86,10 @@ int lietuviskosRaides(const std::string& eilute)
     return eilute.length() - simboliuKiekis;
 }
 
-std::string failoPasirinkimas(const std::string& vieta)
+void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::string& vieta)
 {
     std::vector<std::filesystem::directory_entry> failai;
+    std::vector<int> rezervai;
 
     for(auto &failas : std::filesystem::directory_iterator(vieta))
     {
@@ -103,16 +104,32 @@ std::string failoPasirinkimas(const std::string& vieta)
         if(vardas == "rezultatai.txt" || vardas == "galvociai.txt" || vardas == "vargsiukai.txt")
             continue;
 
+        if(vardas.find("studentai", 0) == 0)
+        {
+            std::string skaicius = vardas.substr(9, vardas.size() - 9 - 4);
+
+            if(skaicius.empty() || !std::all_of(skaicius.begin(), skaicius.end(), [](unsigned char simbolis)
+            {
+                return std::isdigit(simbolis);
+            }))
+            {
+                rezervai.push_back(0);
+            } 
+            else
+            {
+                rezervai.push_back(std::stoi(skaicius));
+            }
+        }
+
         failai.push_back(failas);
     }
 
     if(failai.empty())
     {
         std::cout << "Nerasta tekstinių failų vietoje: " << vieta << "\n";
-        return "";
     }
 
-    std::cout << "Pasirinkite testavimo failą:\n";
+    std::cout << "Pasirinkite failą:\n";
     for(int i = 0; i < failai.size(); i++)
     {
         std::cout << (i + 1) << ": " << failai.at(i).path().filename().string() << "\n";
@@ -120,5 +137,6 @@ std::string failoPasirinkimas(const std::string& vieta)
 
     int pasirinkimas = gautiSkaiciu("Įveskite failo numerį: ", 1, failai.size(), false);
 
-    return failai.at(pasirinkimas-1).path().filename().string();
+    failoPavadinimas = failai.at(pasirinkimas-1).path().filename().string();
+    rezervas = rezervai.at(pasirinkimas-1);
 }

@@ -27,6 +27,6 @@ void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas = true
 
 int lietuviskosRaides(const std::string& eilute);
 
-std::string failoPasirinkimas(const std::string& vieta = ".");
+void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::string& vieta = ".");
 
 #endif

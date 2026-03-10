@@ -59,69 +59,23 @@ int main()
                 case 4: // skaitymas is failo
                 {
                     int ndKiekis = 0;
-                    int fPasirinkimas = failoPasirinkimas();
+                    int rezervas = 0;
+                    std::string fPasirinkimas;
+                    failoPasirinkimas(rezervas, fPasirinkimas);
                     int rPasirinkimas = rusiavimoPasirinkimas();
-                    switch(fPasirinkimas){
-                        case 1:
-                        {
-                            failoApdorojimas("kursiokai.txt", 2, ndKiekis, medianos, rPasirinkimas, failas);
-                            break;
-                        }
-                        case 2:
-                        {
-                            failoApdorojimas("studentai10000.txt", 10000, ndKiekis, medianos, rPasirinkimas, failas);
-                            break;
-                        }
-                        case 3:
-                        {   
-                            failoApdorojimas("studentai100000.txt", 100000, ndKiekis, medianos, rPasirinkimas, failas);
-                            break;
-                        }
-                        case 4:
-                        {
-                            failoApdorojimas("studentai1000000.txt", 1000000, ndKiekis, medianos, rPasirinkimas, failas);
-                            break;
-                        }
-                        default:
-                        {
-                            break;
-                        }
-                    }
+                    failoApdorojimas(fPasirinkimas, rezervas, ndKiekis, medianos, rPasirinkimas, failas);
                     break;
                 }
                 case 5: // testavimas su failais // kiekviename test case'e uzkomentuota koda arba jo dalis galima atkomentuoti bei keisti parametrus, kad pakeisti kas yra testuojama, kadangi tiksliai neapibrezta pagal ka testuoti.
                 {
                     int ndKiekis = 0;
-                    std::string fPasirinkimas = failoPasirinkimas();
+                    int rezervas = 0;
+                    std::string fPasirinkimas;
+                    failoPasirinkimas(rezervas, fPasirinkimas);
                     //int rPasirinkimas = rusiavimoPasirinkimas();
                     int tPasirinkimas = 1;//testavimoPasirinkimas();
                     if(tPasirinkimas < 0) throw std::invalid_argument("Testavimo skaičius turi būti daugiau už 0!");
-                    switch(fPasirinkimas){
-                        case 1:
-                        {
-                            failoTestavimas("kursiokai.txt", 2, tPasirinkimas, ndKiekis, medianos);
-                            break;
-                        }
-                        case 2:
-                        {
-                            failoTestavimas("studentai10000.txt", 10000, tPasirinkimas, ndKiekis, medianos);
-                            break;
-                        }
-                        case 3:
-                        {   
-                            failoTestavimas("studentai100000.txt", 100000, tPasirinkimas, ndKiekis, medianos);
-                            break;
-                        }
-                        case 4:
-                        {
-                            failoTestavimas("studentai1000000.txt", 1000000, tPasirinkimas, ndKiekis, medianos);
-                            break;
-                        }
-                        default:
-                        {
-                            break;
-                        }
-                    }
+                    failoTestavimas(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
                     break;
                 }
                 case 6:
