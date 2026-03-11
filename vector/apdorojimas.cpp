@@ -61,26 +61,29 @@ void rusiavimasSkirstymas(std::vector<Studentas> &studentai, int rPasirinkimas, 
 
 void failoGeneravimas(int studentuKiekis, int ndKiekis)
 {
-    std::ostringstream out;
-    out << std::left << std::setw(20) << "Vardas" << std::setw(21) << "Pavardė";
+    std::string out;
+    out.reserve(studentuKiekis*100/* 46+(ndKiekis*10)+studentuKiekis*(43+ndKiekis*10) */);
+    setw("Vardas", 20, out);
+    setw("Pavardė", 21, out);
     for(int i = 1; i <= ndKiekis; i++){
-        out << std::left << std::setw(10) << "ND"+std::to_string(i);
+        setw(std::format("ND{}", i), 10, out);
     }
-    out << "Egz.\n";
+    out += "Egz.\n";
     for(int i = 0; i < studentuKiekis; i++){
         Studentas A;
         gen_map(A);
         namuDarbuRezultataiRandom(A, ndKiekis);
         egzaminoRezultatasRandom(A);
-        out << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
+        setw(A.vardas, 20, out);
+        setw(A.pavarde, 20, out);
         for(int j = 0; j < ndKiekis; j++){
-            out << std::left << std::setw(10) << A.nd.at(j);
+            setw(std::to_string(A.nd.at(j)), 10, out);
         }
-        out << std::left << A.rez << "\n";
+        out += std::to_string(A.rez)+"\n";
     }
     std::string failoPavadinimas = std::string("studentai") + std::to_string(studentuKiekis) + ".txt";
     std::ofstream fout(failoPavadinimas);
-    fout << out.str();
+    fout << out;
     fout.close();
 }
 
@@ -95,3 +98,9 @@ void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvo
         }
     }
 }
+
+void setw(const std::string &tekstas, int plotis, std::string& out) {
+    out += tekstas;
+    if (tekstas.size() < plotis)
+        out.append(plotis - tekstas.size(), ' ');
+};

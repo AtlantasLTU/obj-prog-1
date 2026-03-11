@@ -2,6 +2,7 @@
 #define ISVESTIS_H
 
 #include "studentas.h"
+#include "apdorojimas.h"
 #include <iomanip>
 #include <iostream>
 #include <fstream>
@@ -25,6 +26,8 @@ bool medianosUzklausa();
 bool failoUzklausa();
 
 void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas = true, const std::string &failoPavadinimas = "rezultatai.txt");
+
+int lietuviskosRaides(const std::string& eilute);
 
 void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::string& vieta = ".");
 

@@ -73,7 +73,7 @@ int main()
                     failoPasirinkimas(rezervas, fPasirinkimas);
                     //int rPasirinkimas = rusiavimoPasirinkimas();
                     int tPasirinkimas = testavimoPasirinkimas();
-                    if(tPasirinkimas < 0) throw std::invalid_argument("Testavimo skaičius turi būti daugiau už 0!");
+                    if(tPasirinkimas <= 0) throw std::invalid_argument("Testavimo skaičius turi būti daugiau už 0!");
                     failoTestavimas(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
                     break;
                 }
@@ -81,10 +81,23 @@ int main()
                 {   
                     int studentuKiekis = studentuPasirinkimas();
                     int ndKiekis = ndPasirinkimas();
-                    Timer t;
-                    failoGeneravimas(studentuKiekis, ndKiekis);
-                    double trukme = t.elapsed();
-                    std::cout << "Failo generavimas užtruko: " << trukme << "\n";
+                    int tPasirinkimas = testavimoPasirinkimas();
+                    if(tPasirinkimas <= 0) throw std::invalid_argument("Testavimo skaičius turi būti daugiau už 0!");
+                    double trukme = 0;
+                    for(int i = 0; i < tPasirinkimas+1; i++)
+                    {
+                        if(i!=0)
+                        {
+                            Timer t;
+                            failoGeneravimas(studentuKiekis, ndKiekis);
+                            trukme += t.elapsed();
+                        }
+                        else
+                        {
+                            failoGeneravimas(studentuKiekis, ndKiekis);
+                        }
+                    }
+                    std::cout << "Failų(-o) generavimas vidutiniškai užtruko: " << trukme/tPasirinkimas << " s\n";
                     break;
                 }
                 case 7: // darbo baigtis
@@ -117,31 +130,46 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
     double skirstymoTrukme = 0;
     double isvedimoTrukme1 = 0;
     double isvedimoTrukme2 = 0;
-    for(int i = 0; i < tPasirinkimas; i++)
-    {
+    for(int i = 0; i < tPasirinkimas+1; i++)
+    {   
         ndKiekis = 0;
-        Timer t;
-        std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
-        skaitymoTrukme += t.elapsed(); // Skirtumas (s)
-        t.reset();
-        skaiciavimas(studentai, medianos, ndKiekis);
-        skaiciavimoTrukme += t.elapsed();
-        t.reset();
-        rusiavimasSkirstymas(studentai, 5, medianos);
-        rusiavimoTrukme += t.elapsed();
-        t.reset();
-        std::vector<Studentas> galvociai;
-        std::vector<Studentas> vargsiukai;
-        galvociai.reserve(studentai.size());
-        vargsiukai.reserve(studentai.size());
-        skirstymas(studentai, galvociai, vargsiukai);
-        skirstymoTrukme += t.elapsed();
-        t.reset();
-        isvestis(galvociai, medianos, true, "galvociai.txt");
-        isvedimoTrukme1 += t.elapsed(); // Skirtumas (s)
-        t.reset();
-        isvestis(vargsiukai, medianos, true, "vargsiukai.txt");
-        isvedimoTrukme2 += t.elapsed(); // Skirtumas (s)
+        if(i!=0)
+        {
+            Timer t;
+            std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
+            skaitymoTrukme += t.elapsed(); // Skirtumas (s)
+            t.reset();
+            skaiciavimas(studentai, medianos, ndKiekis);
+            skaiciavimoTrukme += t.elapsed();
+            t.reset();
+            rusiavimasSkirstymas(studentai, 5, medianos);
+            rusiavimoTrukme += t.elapsed();
+            t.reset();
+            std::vector<Studentas> galvociai;
+            std::vector<Studentas> vargsiukai;
+            galvociai.reserve(studentai.size());
+            vargsiukai.reserve(studentai.size());
+            skirstymas(studentai, galvociai, vargsiukai);
+            skirstymoTrukme += t.elapsed();
+            t.reset();
+            isvestis(galvociai, medianos, true, "galvociai.txt");
+            isvedimoTrukme1 += t.elapsed(); // Skirtumas (s)
+            t.reset();
+            isvestis(vargsiukai, medianos, true, "vargsiukai.txt");
+            isvedimoTrukme2 += t.elapsed(); // Skirtumas (s)
+        } 
+        else 
+        {
+            std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
+            skaiciavimas(studentai, medianos, ndKiekis);
+            rusiavimasSkirstymas(studentai, 5, medianos);
+            std::vector<Studentas> galvociai;
+            std::vector<Studentas> vargsiukai;
+            galvociai.reserve(studentai.size());
+            vargsiukai.reserve(studentai.size());
+            skirstymas(studentai, galvociai, vargsiukai);
+            isvestis(galvociai, medianos, true, "galvociai.txt");
+        }
     }
     std::cout << "Failo nuskaitymas į studentai vektorių vidutiniškai užtruko: " << skaitymoTrukme/tPasirinkimas << " s\n";
     std::cout << "Rezultatų skaičiavimas vidutiniškai užtruko: " << skaiciavimoTrukme/tPasirinkimas << " s\n";

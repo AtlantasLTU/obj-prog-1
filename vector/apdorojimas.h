@@ -15,4 +15,6 @@ void failoGeneravimas(int studentuKiekis, int ndKiekis);
 
 void skirstymas(std::vector<Studentas> &studentai, std::vector<Studentas> &galvociai, std::vector<Studentas> &vargsiukai);
 
+void setw(const std::string &tekstas, int plotis, std::string& out);
+
 #endif
