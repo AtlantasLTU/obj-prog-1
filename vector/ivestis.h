@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include "ivestis.tpp"
 
 bool gautiPatvirtinima(const std::string &pranesimas);
 
@@ -23,7 +24,8 @@ int gautiSkaiciu(const std::string &pranešimas, int min, int max, bool galiButi
 
 bool arTikSkaicius(const std::string &s);
 
-std::vector<Studentas> skaitymasIsFailo(const std::string &failoPavadinimas, int &ndKiekis, int rezervas = 0);
+template<class Konteineris>
+Konteineris skaitymasIsFailo(const std::string &failoPavadinimas, int &ndKiekis, int rezervas);
 
 void cinEOFgaudymas();
 

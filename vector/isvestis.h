@@ -11,9 +11,9 @@
 
 int menu();
 
-/* int failoPasirinkimas(); */
-
 int rusiavimoPasirinkimas();
+
+int gautiTipoPasirinkima();
 
 int testavimoPasirinkimas();
 

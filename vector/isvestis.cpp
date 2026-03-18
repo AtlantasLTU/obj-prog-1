@@ -6,14 +6,14 @@ int menu()
     return gautiSkaiciu("Pasirinkite programos eigą:\n1 - ranką,\n2 - generuoti tik pažymius,\n3 - generuoti studentų vardus, pavardės ir pažymius,\n4 - skaityti studentus iš failo,\n5 - testavimas su failais,\n6 - generuoti failą,\n7 - baigti darbą: ", 1, 7);
 }
 
-/* int failoPasirinkimas()
-{
-    return gautiSkaiciu("Pasirinkite failą, iš kurio skaityti\n1 - kursiokai.txt,\n2 - studentai10000.txt,\n3 - studentai100000.txt,\n4 - studentai1000000.txt\n", 1, 4);
-} */
-
 int rusiavimoPasirinkimas()
 {
     return gautiSkaiciu("Pasirinkite pagal ką rūšiuoti: \n1 - vardą (A->Ž),\n2 - vardą (Ž->A),\n3 - pavardę (A->Ž),\n4 - pavardę (Ž->A),\n5 - galutinį pažymį didėjančiai (1->10),\n6 - galutinį pažymį mažėjančiai (10->1)\n", 1, 6);
+}
+
+int gautiTipoPasirinkima()
+{
+    return gautiSkaiciu("Kokį konteinerio tipą norite testuoti?\n1 - vektorių,\n2 - deque,\n3 - list: ", 1, 3);
 }
 
 int testavimoPasirinkimas()
