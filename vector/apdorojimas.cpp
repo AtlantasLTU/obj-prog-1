@@ -44,7 +44,7 @@ void rusiavimasPagal(std::vector<Studentas> &studentai, T lambdaFunkcija, bool d
     );
 }
 
-void rusiavimasSkirstymas(std::vector<Studentas> &studentai, int rPasirinkimas, bool medianos){
+void rusiavimasSkirstymas(std::vector<Studentas> &studentai, int rPasirinkimas){
     switch(rPasirinkimas){
         case 1: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.vardas;}); break;
         case 2: rusiavimasPagal(studentai, [](const Studentas &studentas){return studentas.vardas;}, false); break;

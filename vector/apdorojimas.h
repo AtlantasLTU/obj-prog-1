@@ -9,7 +9,7 @@ void skaiciavimas(std::vector<Studentas> &A, bool medianos, int ndKiekis);
 
 void skaiciavimas(std::vector<Studentas> &A, bool medianos);
 
-void rusiavimasSkirstymas(std::vector<Studentas> &A, int rPasirinkimas, bool medianos);
+void rusiavimasSkirstymas(std::vector<Studentas> &A, int rPasirinkimas);
 
 void failoGeneravimas(int studentuKiekis, int ndKiekis);
 

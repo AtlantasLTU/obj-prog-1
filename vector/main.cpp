@@ -1,15 +1,9 @@
 #include "main.h"
 
-// 1) failų generatoriaus funkcija (studentas + kiekis.txt) VVV
-// failo generavimo pasirinkimas -> kiek generuoti studentu -> kiek generuoti namu darbu -> generavimas (studentas vardas pavarde, nd, egzo rezultatai) -> isvestis
-// 2) Surusiuoti (padalinti) studentus i dvi kategorijas: VVV
-//      studentai, kuriu galutinis balas < 5 VVV
-//      studentai, kuriu balas didesnis arba lygus 5 VVV
-// 3) isvesti siuos studentus i du naujus failus VVV
-// 4) spartos analize
-// optional, del vartotojo ir saves VVV
-// prideti failu pasirinkima su  system("dir *.txt"); VVVV
-// UTF-8 isvesti galbut patvarkyt??
+// programoje turi atsirasti realizacija su deque ir list, vector PALIEKAM
+// matuoti duomenu nuskaityma is failu i atitinkama konteineri (failai islieka tokie patys)
+// studentu rusiavimas didejimo tvarka (funkcija sort);
+// studentu skirstymas i dvi grupes/kategorijas vargsiukai ir galvociai
 int main()
 {
     try
@@ -142,7 +136,7 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
             skaiciavimas(studentai, medianos, ndKiekis);
             skaiciavimoTrukme += t.elapsed();
             t.reset();
-            rusiavimasSkirstymas(studentai, 5, medianos);
+            rusiavimasSkirstymas(studentai, 5);
             rusiavimoTrukme += t.elapsed();
             t.reset();
             std::vector<Studentas> galvociai;
@@ -162,7 +156,7 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
         {
             std::vector<Studentas> studentai = skaitymasIsFailo(failoPavadinimas, ndKiekis, rezervas);
             skaiciavimas(studentai, medianos, ndKiekis);
-            rusiavimasSkirstymas(studentai, 5, medianos);
+            rusiavimasSkirstymas(studentai, 5);
             std::vector<Studentas> galvociai;
             std::vector<Studentas> vargsiukai;
             galvociai.reserve(studentai.size());
@@ -189,7 +183,7 @@ void failoApdorojimas(const std::string &failoPavadinimas, int rezervas, int &nd
     skaiciavimas(studentai, medianos, ndKiekis);
     double skaiciavimoTrukme = t.elapsed();
     t.reset();
-    rusiavimasSkirstymas(studentai, rPasirinkimas, medianos);
+    rusiavimasSkirstymas(studentai, rPasirinkimas);
     double rusiavimoTrukme = t.elapsed();
     t.reset();
     isvestis(studentai, medianos, failas);
