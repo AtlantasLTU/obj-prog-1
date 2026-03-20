@@ -1,7 +1,8 @@
 template<class Konteineris>
 Konteineris skaitymasIsFailo(const std::string &failoPavadinimas, int &ndKiekis, int rezervas){
     Konteineris studentai;
-    studentai.reserve(rezervas);
+    if constexpr(requires(Konteineris konteineris){konteineris.reserve(0);})
+        studentai.reserve(rezervas);
     std::string eil;
     std::string t="";
 

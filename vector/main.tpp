@@ -1,4 +1,6 @@
 #include "main.h"
+#include "apdorojimas.tpp"
+#include "isvestis.tpp"
 
 template<class Konteineris>
 void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis, bool medianos)
@@ -9,48 +11,48 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
     double skirstymoTrukme = 0;
     double isvedimoTrukme1 = 0;
     double isvedimoTrukme2 = 0;
-    for(int i = 0; i < tPasirinkimas+1; i++)
+    ndKiekis = 0;
+    Konteineris studentai = skaitymasIsFailo<Konteineris>(failoPavadinimas, ndKiekis, rezervas);
+    skaiciavimas<Konteineris>(studentai, medianos, ndKiekis);
+    rusiavimasSkirstymas(studentai, 5);
+    Konteineris galvociai;
+    Konteineris vargsiukai;
+    if constexpr(requires(Konteineris konteineris){konteineris.reserve(0);}){
+        galvociai.reserve(studentai.size());
+        vargsiukai.reserve(studentai.size());
+    }
+    skirstymas(studentai, galvociai, vargsiukai);
+    isvestis(galvociai, medianos, true, "galvociai.txt");
+    isvestis(vargsiukai, medianos, true, "vargsiukai.txt");
+    for(int i = 0; i < tPasirinkimas; i++)
     {   
         ndKiekis = 0;
-        if(i!=0)
-        {
-            Timer t;
-            Konteineris studentai = skaitymasIsFailo<Konteineris>(failoPavadinimas, ndKiekis, rezervas);
-            skaitymoTrukme += t.elapsed(); // Skirtumas (s)
-            t.reset();
-            skaiciavimas(studentai, medianos, ndKiekis);
-            skaiciavimoTrukme += t.elapsed();
-            t.reset();
-            rusiavimasSkirstymas(studentai, 5);
-            rusiavimoTrukme += t.elapsed();
-            t.reset();
-            Konteineris galvociai;
-            Konteineris vargsiukai;
+        Timer t;
+        Konteineris studentai = skaitymasIsFailo<Konteineris>(failoPavadinimas, ndKiekis, rezervas);
+        skaitymoTrukme += t.elapsed(); // Skirtumas (s)
+        t.reset();
+        skaiciavimas<Konteineris>(studentai, medianos, ndKiekis);
+        skaiciavimoTrukme += t.elapsed();
+        t.reset();
+        rusiavimasSkirstymas(studentai, 5);
+        rusiavimoTrukme += t.elapsed();
+        t.reset();
+        Konteineris galvociai;
+        Konteineris vargsiukai;
+        if constexpr (requires(Konteineris konteineris){konteineris.reserve(0);}){
             galvociai.reserve(studentai.size());
             vargsiukai.reserve(studentai.size());
-            skirstymas(studentai, galvociai, vargsiukai);
-            skirstymoTrukme += t.elapsed();
-            t.reset();
-            isvestis(galvociai, medianos, true, "galvociai.txt");
-            isvedimoTrukme1 += t.elapsed(); // Skirtumas (s)
-            t.reset();
-            isvestis(vargsiukai, medianos, true, "vargsiukai.txt");
-            isvedimoTrukme2 += t.elapsed(); // Skirtumas (s)
-        } 
-        else 
-        {
-            Konteineris studentai = skaitymasIsFailo<Konteineris>(failoPavadinimas, ndKiekis, rezervas);
-            skaiciavimas(studentai, medianos, ndKiekis);
-            rusiavimasSkirstymas(studentai, 5);
-            Konteineris galvociai;
-            Konteineris vargsiukai;
-            galvociai.reserve(studentai.size());
-            vargsiukai.reserve(studentai.size());
-            skirstymas(studentai, galvociai, vargsiukai);
-            isvestis(galvociai, medianos, true, "galvociai.txt");
         }
+        skirstymas(studentai, galvociai, vargsiukai);
+        skirstymoTrukme += t.elapsed();
+        t.reset();
+        isvestis(galvociai, medianos, true, "galvociai.txt");
+        isvedimoTrukme1 += t.elapsed(); // Skirtumas (s)
+        t.reset();
+        isvestis(vargsiukai, medianos, true, "vargsiukai.txt");
+        isvedimoTrukme2 += t.elapsed(); // Skirtumas (s)
     }
-    std::cout << "Failo nuskaitymas į studentai vektorių vidutiniškai užtruko: " << skaitymoTrukme/tPasirinkimas << " s\n";
+    std::cout << "Failo nuskaitymas į studentai konteinerį vidutiniškai užtruko: " << skaitymoTrukme/tPasirinkimas << " s\n";
     std::cout << "Rezultatų skaičiavimas vidutiniškai užtruko: " << skaiciavimoTrukme/tPasirinkimas << " s\n";
     std::cout << "Duomenų rūšiavimas didėjančiai vidutiniškai užtruko: " << rusiavimoTrukme/tPasirinkimas << " s\n";
     std::cout << "Studentų skirstymas pagal pažymius vidutiniškai užtruko: " << skirstymoTrukme/tPasirinkimas << " s\n";

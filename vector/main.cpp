@@ -76,10 +76,12 @@ int main()
                         }
                         case 2:
                         {
+                            failoTestavimas<std::deque<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
                             break;
                         }
                         case 3:
                         {
+                            //failoTestavimas<std::list<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
                             break;
                         }
                         default:

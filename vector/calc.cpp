@@ -28,7 +28,7 @@ double galutinisMed(/* const  */Studentas &A){ // uzkomentuotas kodas toks pat k
     return 0.4 * med + 0.6 * A.rez;
 }
 
-double galutinisVidF(const Studentas &A, int ndKiekis){ // perduodam ndKieki, jis naudojamas kaip maxNDKiekis, tik cia jis gautas is failo.
+double galutinisVidF(Studentas &A, int ndKiekis){ // perduodam ndKieki, jis naudojamas kaip maxNDKiekis, tik cia jis gautas is failo.
     if(A.nd.empty()) return 0.6*A.rez;
 
     int sum = std::accumulate(A.nd.begin(), A.nd.end(), 0);

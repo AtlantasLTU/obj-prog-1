@@ -4,6 +4,6 @@
 
 double galutinisVid(const Studentas &A);
 double galutinisMed(/* const */ Studentas &A);
-double galutinisVidF(const Studentas &A, int ndKiekis);
+double galutinisVidF(Studentas &A, int ndKiekis);
 double galutinisMedF(/* const  */Studentas &A, int ndKiekis);
 #endif

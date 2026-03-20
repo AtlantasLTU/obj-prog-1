@@ -41,42 +41,6 @@ bool failoUzklausa()
     return gautiPatvirtinima("Ar išvesti į terminalą? Jei ne, tai bus išvedama į rezultatai.txt failą");
 }
 
-void isvestis(const std::vector<Studentas> &A, bool medianos, bool failas, const std::string &failoPavadinimas)
-{
-    std::string out;
-
-    setw("Vardas", 20, out);
-    setw("Pavardė", 21, out);
-    out += "Galutinis (Vid.) / Galutinis (Med.)\n";
-    out += std::string(75, '-') + "\n";
-    for(const Studentas &X : A)
-    {
-        int vardoPlotis = 20 + lietuviskosRaides(X.vardas);
-        int pavardesPlotis = 20 + lietuviskosRaides(X.pavarde);
-        
-        setw(X.vardas, vardoPlotis, out);
-        setw(X.pavarde, pavardesPlotis, out);
-        if (medianos)
-        {
-            setw("x.xx", 19, out);
-            out += std::format("{:.2f}", X.galutinis);
-            out += '\n';
-        }
-        else
-        {
-            setw(std::format("{:.2f}", X.galutinis), 19, out);
-            out += "y.yy\n";
-        }
-    }
-    if(failas){
-        std::ofstream fout(failoPavadinimas);
-        fout << out;
-        fout.close();
-    } else {
-        std::cout << out;
-    }
-}
-
 // apskaiciuoti kiek string su lietuviskomis raidemis sudaro baitu, kadangi viena lietuviska raide - 2 baitai, o ne 1 baitas. Kitaip sakant vardas Ąžuolas turi 7 raides, o jį sudaro 8 baitai, o setw mato baitus, tai jei setw(20), tai jis pridės 12 tusciu tarpu, o ne 13.
 int lietuviskosRaides(const std::string& eilute)
 {
