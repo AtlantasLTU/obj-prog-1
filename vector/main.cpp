@@ -81,7 +81,7 @@ int main()
                         }
                         case 3:
                         {
-                            //failoTestavimas<std::list<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
+                            failoTestavimas<std::list<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
                             break;
                         }
                         default:

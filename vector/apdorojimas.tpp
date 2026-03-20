@@ -2,6 +2,7 @@
 #include "studVPGen.h"
 #include "random.h"
 #include <fstream>
+#include <list>
 
 template<class Konteineris>
 void skaiciavimas(Konteineris &A, bool medianos, int ndKiekis){
@@ -15,12 +16,25 @@ void skaiciavimas(Konteineris &A, bool medianos, int ndKiekis){
 template<class T, class Konteineris>
 void rusiavimasPagal(Konteineris &studentai, T lambdaFunkcija, bool didejanciai = true)
 {
-    std::sort(studentai.begin(), studentai.end(),
+    if constexpr(std::is_same_v<Konteineris, std::list<Studentas>>){
+        if(didejanciai){
+            studentai.sort([lambdaFunkcija](const Studentas &A, const Studentas &B){
+                return lambdaFunkcija(A) < lambdaFunkcija(B);
+            });
+        } else {
+            studentai.sort([lambdaFunkcija](const Studentas &A, const Studentas &B){
+                return lambdaFunkcija(A) > lambdaFunkcija(B);
+            });
+        }
+    } else {
+        std::sort(studentai.begin(), studentai.end(),
         [didejanciai, lambdaFunkcija](const Studentas &A, const Studentas &B)
         {
             return didejanciai ? lambdaFunkcija(A) < lambdaFunkcija(B) : lambdaFunkcija(A) > lambdaFunkcija(B); // lambdaFunkcija(A) prilygsta kad i funkcija [](const Studentas &studentas){return studentas.vardas;} perduotas studentas A ir na, tas pats su B
         }
-    );
+        );
+    }
+    
 }
 
 template<class Konteineris>
