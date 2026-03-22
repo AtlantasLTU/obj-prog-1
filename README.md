@@ -1,46 +1,43 @@
 # obj-prog-1
-Patobulinta išvestis
-Pridėtas skirstymas į "galvočius" ir "vargšiukus".
-Pridėtas failų generavimas
-Pridėtas failų pasirinkimas
-
 Testavimas:
 
 - Kompiuterio, su kuriuo testuota parametrai:
-<img width="986" height="671" alt="image" src="https://github.com/user-attachments/assets/3c286ba1-2734-41c3-9942-e271b1e1a4e2" />
+<img width="1003" height="602" alt="image" src="https://github.com/user-attachments/assets/26ed66b3-804f-405e-9c00-3e046e22d2a3" />
+
 
 Atlikta programos veikimo greičio (spartos) analizė: t.y. išmatuota programos sparta, išskiriant kiek laiko užtruko kiekvienas iš žemiau išvardintų žingsnių:
-- 1 tyrimas (failo generavimas):  
-failų kūrimas ir jų uždarymas.
+- duomenų nuskaitymas iš failų į atitinkamą konteinerį (Failai visiems tyrimams tie patys, tyrimo patikimumui); 
+- studentų rūšiavimas didėjimo tvarka konteineryje (funkcija sort);
+- studentų skirstymo  į dvi grupes/kategorijas (naujų konteinerių su skirtingais studentais kūrimas);
 
-- 2 tyrimas (duomenų apdorojimas iš esančių testavimo failų):
-        duomenų nuskaitymas iš failo (paprastai matavimo pradžią, kadangi reikia skaityti tuos pačius failus, kad operacijų kiekis išliktų toks pat);
-        studentų rūšiavimas į dvi grupes/kategorijas (į atskirus konteinerius);
-        surūšiuotų studentų išvedimas į du naujus failus.
-        visos programos veikimo laikas
-
-Programa kompiliuota su -O2 veliavėle: "g++ --std=c++20 -O2 *.cpp -o main".
-Testuota tik naudojant terminalą, visos kitos pašalinės programos testavimo metu buvo išjungtas bei įrenginys "performance" režime.
-
-- 1 tyrimas atliktas 10 kartų, su 10 atsitiktinių namų darbų generuojamų kiekvienam studentui. (t.y. kiekvienas failas sugeneruotas 10 kartų ir išvestas vidutinis generavimo laikas)
-
-|Laikas|studentai1000.txt|studentai10000.txt|studentai100000.txt|studentai1000000.txt|studentai10000000.txt|
+Programa kompiliuota su -Ofast veliavėle: "g++ --std=c++20 -Ofast *.cpp -o main".
+Testuota tik naudojant terminalą, visos kitos pašalinės programos testavimo metu buvo išjungtos bei įrenginys "performance" režime.
+Visi testavimo atvejai testuoti 10 kartų, su medianų skaičiavimu.
+Į bendrą trukmę taip pat įeina
+|Studentų kiekis|Konteineris|Nuskaitymas (s)|Rūšiavimas (s)|Skirstymas (s)|Bendra trukmė (s)|
 |---------|------------------|---------------------------|------------------------------|-------------------------------|-------------------------------|
-|Failo generavimo vidurkis|0.0043508 s|0.0604668 s|0.6221 s|7.15733 s|76.5889 s|
+|1000|vector|0.000983345 s|0.000192645 s|3.57552e-05 s|0.0121175 s|
+||deque|0.00137017 s|0.000271119 s|2.40431e-05 s|0.0166533 s|
+||list|0.00119636 s|0.000107939 s|5.43623e-05 s|0.0135866 s|
+|10000|vector|0.00742587 s|0.00159872 s|0.000445567 s|0.0947015 s|
+||deque|0.00625149 s|0.00187195 s|0.000177409 s|0.0830085 s|
+||list|0.00845551 s|0.00118747 s|0.00046127 s|0.101043 s|
+|100000|vector|0.158093 s|0.0447305 s|0.00373089 s|2.06555 s|
+||deque|0.086463 s|0.0461548 s|0.00446084 s|1.37079 s|
+||list|0.10791 s|0.0456203 s|0.016041 s|1.69571 s|
+|1000000|vector|0.752845 s|0.277954 s|0.024425 s|10.5522 s|
+||deque|0.671213 s|0.391769 s|0.0530131 s|11.1599 s|
+||list|0.659179 s|0.632095 s|0.16078 s|14.5205 s|
+|10000000|vector|8.63254 s|4.06191 s|0.24063 s|129.351 s|
+||deque|12.9742 s|8.47272 s|1.15956 s|226.065 s|
+||list|14.9606 s|14.1323 s|2.62529 s|317.182 s|
 
-<img width="654" height="1377" alt="image" src="https://github.com/user-attachments/assets/2bddaa1a-1e37-4779-a02c-55997914123c" />
+<img width="887" height="1440" alt="image" src="https://github.com/user-attachments/assets/1b636946-681c-4ec6-a0ae-c76e1f969a34" />
+<img width="889" height="1284" alt="image" src="https://github.com/user-attachments/assets/a01d6916-627a-4c49-a017-2389a37dc021" />
+<img width="889" height="1285" alt="image" src="https://github.com/user-attachments/assets/02017ccd-45c5-4003-a4e3-65a646ea8ec1" />
+<img width="891" height="1284" alt="image" src="https://github.com/user-attachments/assets/79c1d96e-830c-41dc-8ca6-605933e8bfdc" />
+<img width="887" height="1283" alt="image" src="https://github.com/user-attachments/assets/3ce9aa1f-cffb-43d3-bcb2-066440071d81" />
 
 
-- 2 tyrimas kiekvienam failui atliktas 10 kartų, su medianos skaičiavimais. Lentelėje yra praleistų duomenų, kurie matomi nuotraukose.
 
-|Laikas|studentai1000.txt|studentai10000.txt|studentai100000.txt|studentai1000000.txt|studentai10000000.txt|
-|---------|------------------|---------------------------|------------------------------|-------------------------------|-------------------------------|
-|Duomenų nuskaitymo vidurkis|0.0013552 s|0.0168587 s|0.123717 s|1.41954 s|13.4566 s|
-|Studentų skirstymo į du konteinerius vidurkis|4.31213e-05 s|0.000543653 s|0.00393585 s|0.0308791 s|0.281222 s|
-|Studentų išvedimo (vargsiukai.txt+galvociai.txt) vidurkis|6.84614e-04 s|6.71012e-03 s|0.0393036 s|0.553675 s|5.02019 s|
-|Bendra trukmė|0.0246013 s|0.302279 s|2.15488 s|27.0308 s|269.872 s|
-
-<img width="958" height="1403" alt="image" src="https://github.com/user-attachments/assets/ec429f43-ca8f-49d4-bd2f-6863fb9a2cf1" />
-
-<img width="959" height="1366" alt="image" src="https://github.com/user-attachments/assets/62b6efa4-184e-4f88-9f60-48d1eff1affd" />
 
