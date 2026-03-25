@@ -72,17 +72,17 @@ int main()
                     switch(tipoPasirinkimas){
                         case 1:
                         {
-                            failoTestavimas<std::vector<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
+                            failoTestavimas<std::vector<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, sPasirinkimas, ndKiekis, medianos);
                             break;
                         }
                         case 2:
                         {
-                            failoTestavimas<std::deque<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
+                            failoTestavimas<std::deque<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, sPasirinkimas, ndKiekis, medianos);
                             break;
                         }
                         case 3:
                         {
-                            failoTestavimas<std::list<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, ndKiekis, medianos);
+                            failoTestavimas<std::list<Studentas>>(fPasirinkimas, rezervas, tPasirinkimas, sPasirinkimas, ndKiekis, medianos);
                             break;
                         }
                         default:

@@ -3,7 +3,7 @@
 #include "isvestis.tpp"
 
 template<class Konteineris>
-void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPasirinkimas, int &ndKiekis, bool medianos)
+void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPasirinkimas, int sPasirinkimas, int &ndKiekis, bool medianos)
 {
     double skaitymoTrukme = 0;
     double skaiciavimoTrukme = 0;
@@ -15,13 +15,34 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
     Konteineris studentai = skaitymasIsFailo<Konteineris>(failoPavadinimas, ndKiekis, rezervas); // nuskaitymas
     skaiciavimas<Konteineris>(studentai, medianos, ndKiekis); // rezultatu apsiskaiciavimas pries rikiavima
     rusiavimasSkirstymas(studentai, 5); // rusiavimas didejanciai
-    Konteineris galvociai;
     Konteineris vargsiukai;
+    Konteineris galvociai;
     if constexpr(requires(Konteineris konteineris){konteineris.reserve(0);}){
         galvociai.reserve(studentai.size());
         vargsiukai.reserve(studentai.size());
     }
-    skirstymasStrat3(studentai, vargsiukai); // skirstymas i galvocius ir vargsiukus
+    switch(sPasirinkimas){
+        case 0:
+        {
+            skirstymas(studentai, galvociai, vargsiukai);
+            break;
+        }
+        case 1:
+        {
+            skirstymasStrat1(studentai, galvociai, vargsiukai);
+            break;
+        }
+        case 2:
+        {
+            skirstymasStrat2(studentai, vargsiukai);
+            break;
+        }
+        case 3:
+        {
+            skirstymasStrat3(studentai, vargsiukai);
+            break;
+        }
+    }
 /*     isvestis(galvociai, medianos, true, "galvociai.txt");
     isvestis(vargsiukai, medianos, true, "vargsiukai.txt"); */
     for(int i = 0; i < tPasirinkimas; i++)
@@ -37,13 +58,34 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
         rusiavimasSkirstymas(studentai, 5); // rusiavimas didejanciai
         rusiavimoTrukme += t.elapsed();
         t.reset();
-        Konteineris galvociai;
         Konteineris vargsiukai;
-        if constexpr (requires(Konteineris konteineris){konteineris.reserve(0);}){
+        Konteineris galvociai;
+        if constexpr(requires(Konteineris konteineris){konteineris.reserve(0);}){
             galvociai.reserve(studentai.size());
             vargsiukai.reserve(studentai.size());
         }
-        skirstymasStrat3(studentai, vargsiukai); // skirstymas i galvocius ir vargsiukus
+        switch(sPasirinkimas){
+            case 0:
+            {
+                skirstymas(studentai, galvociai, vargsiukai);
+                break;
+            }
+            case 1:
+            {
+                skirstymasStrat1(studentai, galvociai, vargsiukai);
+                break;
+            }
+            case 2:
+            {
+                skirstymasStrat2(studentai, vargsiukai);
+                break;
+            }
+            case 3:
+            {
+                skirstymasStrat3(studentai, vargsiukai);
+                break;
+            }
+        }
         skirstymoTrukme += t.elapsed();
 /*         t.reset(); */
         isvestis(studentai, medianos, true, "rezultatai.txt");
