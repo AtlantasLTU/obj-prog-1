@@ -21,7 +21,7 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
         galvociai.reserve(studentai.size());
         vargsiukai.reserve(studentai.size());
     }
-    skirstymasStrat2(studentai, vargsiukai); // skirstymas i galvocius ir vargsiukus
+    skirstymasStrat3(studentai, vargsiukai); // skirstymas i galvocius ir vargsiukus
 /*     isvestis(galvociai, medianos, true, "galvociai.txt");
     isvestis(vargsiukai, medianos, true, "vargsiukai.txt"); */
     for(int i = 0; i < tPasirinkimas; i++)
@@ -43,7 +43,7 @@ void failoTestavimas(const std::string &failoPavadinimas, int rezervas, int tPas
             galvociai.reserve(studentai.size());
             vargsiukai.reserve(studentai.size());
         }
-        skirstymasStrat2(studentai, vargsiukai); // skirstymas i galvocius ir vargsiukus
+        skirstymasStrat3(studentai, vargsiukai); // skirstymas i galvocius ir vargsiukus
         skirstymoTrukme += t.elapsed();
 /*         t.reset(); */
         isvestis(studentai, medianos, true, "rezultatai.txt");

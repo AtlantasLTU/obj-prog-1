@@ -97,18 +97,22 @@ void skirstymasStrat2(Konteineris &studentai, Konteineris &vargsiukai){
 
 template<class Konteineris> // jeigu isrusiuotas konteineris pries tai
 void skirstymasStrat2(Konteineris &studentai, Konteineris &vargsiukai){
-    auto it = std::lower_bound(studentai.begin(), studentai.end(), 5, [](Studentas &A, int skaic)
+    auto it = std::lower_bound(studentai.begin(), studentai.end(), 5, [](const Studentas &A, int skaic)
         {
             return A.galutinis < skaic;
         }
     );
-    if constexpr (std::is_same_v<Konteineris, std::list<Studentas>>)
-    {
-        vargsiukai.splice(vargsiukai.begin(), studentai, studentai.begin(), it);
-    } 
-    else
-    {
-            vargsiukai.insert(vargsiukai.begin(), std::make_move_iterator(studentai.begin()), std::make_move_iterator(it));
-            studentai.erase(studentai.begin(), it);
-    }
+    vargsiukai.insert(vargsiukai.begin(), std::make_move_iterator(studentai.begin()), std::make_move_iterator(it));
+    studentai.erase(studentai.begin(), it);
+}
+
+template<class Konteineris>
+void skirstymasStrat3(Konteineris &studentai, Konteineris &vargsiukai){
+    auto it = std::partition(studentai.begin(), studentai.end(),
+        [](const Studentas& s){
+            return s.galutinis >= 5;
+        }
+    );
+    vargsiukai.insert(vargsiukai.begin(), std::make_move_iterator(it), std::make_move_iterator(studentai.end()));
+    studentai.erase(it, studentai.end());
 }
