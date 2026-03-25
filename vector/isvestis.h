@@ -29,6 +29,6 @@ bool failoUzklausa();
 
 int lietuviskosRaides(const std::string& eilute);
 
-void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::string& vieta = ".");
+void failoPasirinkimas(int &rezervas, bool &egzistuoja, std::string &failoPavadinimas, const std::string& vieta = ".");
 
 #endif

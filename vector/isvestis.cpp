@@ -62,7 +62,7 @@ int lietuviskosRaides(const std::string& eilute)
     return eilute.length() - simboliuKiekis;
 }
 
-void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::string& vieta)
+void failoPasirinkimas(int &rezervas, bool &egzistuoja, std::string &failoPavadinimas, const std::string& vieta)
 {
     std::vector<std::filesystem::directory_entry> failai;
     std::vector<int> rezervai;
@@ -104,8 +104,9 @@ void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::
 
     if(failai.empty())
     {
-        std::cout << "Nerasta tekstinių failų vietoje: " << vieta << "\n";
-    }
+        std::cout << "Nerasta tekstinių failų vietoje." << vieta << "\n";
+        egzistuoja = false;
+    } else {
 
     std::cout << "Pasirinkite failą:\n";
     for(int i = 0; i < failai.size(); i++)
@@ -114,7 +115,7 @@ void failoPasirinkimas(int &rezervas, std::string &failoPavadinimas, const std::
     }
 
     int pasirinkimas = gautiSkaiciu("Įveskite failo numerį: ", 1, failai.size(), false);
-
     failoPavadinimas = failai.at(pasirinkimas-1).path().filename().string();
     rezervas = rezervai.at(pasirinkimas-1);
+    }
 }

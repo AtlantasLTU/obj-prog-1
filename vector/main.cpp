@@ -54,7 +54,9 @@ int main()
                     int ndKiekis = 0;
                     int rezervas = 0;
                     std::string fPasirinkimas;
-                    failoPasirinkimas(rezervas, fPasirinkimas);
+                    bool egzistuojaFailai = true;
+                    failoPasirinkimas(rezervas, egzistuojaFailai, fPasirinkimas);
+                    if(egzistuojaFailai == false) break;
                     int rPasirinkimas = rusiavimoPasirinkimas();
                     failoApdorojimas(fPasirinkimas, rezervas, ndKiekis, medianos, rPasirinkimas, failas);
                     break;
@@ -64,7 +66,9 @@ int main()
                     int ndKiekis = 0;
                     int rezervas = 0;
                     std::string fPasirinkimas;
-                    failoPasirinkimas(rezervas, fPasirinkimas);
+                    bool egzistuojaFailai = true;
+                    failoPasirinkimas(rezervas, egzistuojaFailai, fPasirinkimas);
+                    if(egzistuojaFailai == false) break;
                     int tipoPasirinkimas = gautiTipoPasirinkima();
                     int tPasirinkimas = testavimoPasirinkimas();
                     int sPasirinkimas = strategijosPasirinkimas();
