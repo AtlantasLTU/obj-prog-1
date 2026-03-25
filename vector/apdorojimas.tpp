@@ -102,7 +102,13 @@ void skirstymasStrat2(Konteineris &studentai, Konteineris &vargsiukai){
             return A.galutinis < skaic;
         }
     );
-    vargsiukai.insert(vargsiukai.begin(), std::make_move_iterator(studentai.begin()), std::make_move_iterator(it));
-    // insert code about movign studentai from studentai to vargsiukai?
-    studentai.erase(studentai.begin(), it);
+    if constexpr (std::is_same_v<Konteineris, std::list<Studentas>>)
+    {
+        vargsiukai.splice(vargsiukai.begin(), studentai, studentai.begin(), it);
+    } 
+    else
+    {
+            vargsiukai.insert(vargsiukai.begin(), std::make_move_iterator(studentai.begin()), std::make_move_iterator(it));
+            studentai.erase(studentai.begin(), it);
+    }
 }
