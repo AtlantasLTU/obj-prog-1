@@ -65,3 +65,44 @@ void skirstymas(Konteineris &studentai, Konteineris &galvociai, Konteineris &var
         }
     }
 }
+
+template<class Konteineris>
+void skirstymasStrat1(Konteineris &studentai, Konteineris &galvociai, Konteineris &vargsiukai)
+{
+    for(Studentas &A : studentai)
+    {
+        if(A.galutinis<5){
+            vargsiukai.push_back(A);
+        } else {
+            galvociai.push_back(A);
+        }
+    }
+}
+
+/* template<class Konteineris> // jeigu neisrusiuotas konteineris pries tai
+void skirstymasStrat2(Konteineris &studentai, Konteineris &vargsiukai){
+    for(auto it = studentai.begin(); it != studentai.end();)
+    {
+        if(it->galutinis < 5)
+        {
+            vargsiukai.push_back(std::move(*it));
+            it = studentai.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+} */
+
+template<class Konteineris> // jeigu isrusiuotas konteineris pries tai
+void skirstymasStrat2(Konteineris &studentai, Konteineris &vargsiukai){
+    auto it = std::lower_bound(studentai.begin(), studentai.end(), 5, [](Studentas &A, int skaic)
+        {
+            return A.galutinis < skaic;
+        }
+    );
+    vargsiukai.insert(vargsiukai.begin(), std::make_move_iterator(studentai.begin()), std::make_move_iterator(it));
+    // insert code about movign studentai from studentai to vargsiukai?
+    studentai.erase(studentai.begin(), it);
+}
