@@ -67,6 +67,7 @@ int main()
                     failoPasirinkimas(rezervas, fPasirinkimas);
                     int tipoPasirinkimas = gautiTipoPasirinkima();
                     int tPasirinkimas = testavimoPasirinkimas();
+                    int sPasirinkimas = strategijosPasirinkimas();
                     if(tPasirinkimas <= 0) throw std::invalid_argument("Testavimo skaičius turi būti daugiau už 0!");
                     switch(tipoPasirinkimas){
                         case 1:

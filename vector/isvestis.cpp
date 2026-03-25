@@ -21,6 +21,11 @@ int testavimoPasirinkimas()
     return gautiSkaiciu("Kiek kartų testuoti failą? (1-100):", 1, 100);
 }
 
+int strategijosPasirinkimas()
+{
+    return gautiSkaiciu("Pagal kokią strategiją testuoti?\n0 - pradiniame relize naudota strategija,\n1 - pirma strategija,\n2 - antra strategija,\n3 - trečia strategija:", 0, 3);
+}
+
 int studentuPasirinkimas()
 {
     return gautiSkaiciu("Įveskite norimą generuoti studentų kiekį (1-10000000):", 1, 10000000);

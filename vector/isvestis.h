@@ -17,6 +17,8 @@ int gautiTipoPasirinkima();
 
 int testavimoPasirinkimas();
 
+int strategijosPasirinkimas();
+
 int studentuPasirinkimas();
 
 int ndPasirinkimas();
