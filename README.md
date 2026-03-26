@@ -1,19 +1,38 @@
-# obj-prog-1
-Testavimas:
+# Programos naudojimas:
+  ## Reikalavimai:
+    C++ kompiliatorius su C++20 palaikymu.
+    Unix OS (Linux arba MacOS) arba WSL (Windows Subsystem for Linux)
+    git
+
+  ## Programos paleidimas:
+    git clone https://github.com/AtlantasLTU/obj-prog-1.git
+    cd ./obj-prog-1
+    make
+    ./main
+
+# Testavimas:
 
 - Kompiuterio, su kuriuo testuota parametrai:
 <img width="1003" height="602" alt="image" src="https://github.com/user-attachments/assets/26ed66b3-804f-405e-9c00-3e046e22d2a3" />
 
 
-Atlikta programos veikimo greičio (spartos) analizė: t.y. išmatuota programos sparta, išskiriant kiek laiko užtruko kiekvienas iš žemiau išvardintų žingsnių:
+#### Atlikta programos veikimo greičio (spartos) analizė: t.y. išmatuota programos sparta, išskiriant kiek laiko užtruko kiekvienas iš žemiau išvardintų žingsnių:
 - duomenų nuskaitymas iš failų į atitinkamą konteinerį (Failai visiems tyrimams tie patys, tyrimo patikimumui); 
 - studentų rūšiavimas didėjimo tvarka konteineryje (funkcija sort);
 - studentų skirstymo  į dvi grupes/kategorijas (naujų konteinerių su skirtingais studentais kūrimas);
 
+#### Skirstymo strategijos:
+- 0 - pradiniame relize naudota strategija;
+- 1 strategija: Bendro studentai konteinerio (vector, list ir deque tipų) skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų".
+- 2 strategija: Bendro studentų konteinerio (vector, list ir deque) skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį: "vargšiukai".
+- 3 strategija: Bendro studentų konteinerio (vector, list ir deque) skaidymas (rūšiavimas) panaudojant greičiausiai veikianti 1 arba 2 strategiją  įtraukiant į ją "efektyvius" darbo su konteineriais metodus.
+
 Programa kompiliuota su -Ofast veliavėle: "g++ --std=c++20 -Ofast *.cpp -o main".
 Testuota tik naudojant terminalą, visos kitos pašalinės programos testavimo metu buvo išjungtos bei įrenginys "performance" režime.
 Visi testavimo atvejai testuoti 10 kartų, su medianų skaičiavimu.
-Į bendrą trukmę taip pat įeina
+Į bendrą trukmę taip pat įeina skaičiavimų trukmė.
+
+## 0 strategija:
 |Studentų kiekis|Konteineris|Nuskaitymas (s)|Rūšiavimas (s)|Skirstymas (s)|Bendra trukmė (s)|
 |---------|------------------|---------------------------|------------------------------|-------------------------------|-------------------------------|
 |1000|vector|0.000983345 s|0.000192645 s|3.57552e-05 s|0.0121175 s|
@@ -31,13 +50,3 @@ Visi testavimo atvejai testuoti 10 kartų, su medianų skaičiavimu.
 |10000000|vector|8.63254 s|4.06191 s|0.24063 s|129.351 s|
 ||deque|12.9742 s|8.47272 s|1.15956 s|226.065 s|
 ||list|14.9606 s|14.1323 s|2.62529 s|317.182 s|
-
-<img width="887" height="1440" alt="image" src="https://github.com/user-attachments/assets/1b636946-681c-4ec6-a0ae-c76e1f969a34" />
-<img width="889" height="1284" alt="image" src="https://github.com/user-attachments/assets/a01d6916-627a-4c49-a017-2389a37dc021" />
-<img width="889" height="1285" alt="image" src="https://github.com/user-attachments/assets/02017ccd-45c5-4003-a4e3-65a646ea8ec1" />
-<img width="891" height="1284" alt="image" src="https://github.com/user-attachments/assets/79c1d96e-830c-41dc-8ca6-605933e8bfdc" />
-<img width="887" height="1283" alt="image" src="https://github.com/user-attachments/assets/3ce9aa1f-cffb-43d3-bcb2-066440071d81" />
-
-
-
-
