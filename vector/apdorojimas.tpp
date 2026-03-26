@@ -109,8 +109,8 @@ void skirstymasStrat2(Konteineris &studentai, Konteineris &vargsiukai){
 template<class Konteineris>
 void skirstymasStrat3(Konteineris &studentai, Konteineris &vargsiukai){
     auto it = std::partition(studentai.begin(), studentai.end(),
-        [](const Studentas& s){
-            return s.galutinis >= 5;
+        [](const Studentas& A){
+            return A.galutinis >= 5;
         }
     );
     vargsiukai.insert(vargsiukai.begin(), std::make_move_iterator(it), std::make_move_iterator(studentai.end()));
