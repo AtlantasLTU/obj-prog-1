@@ -4,11 +4,26 @@
     Unix OS (Linux arba MacOS) arba WSL (Windows Subsystem for Linux)
     git
 
-  ## Programos paleidimas:
+  ## Programos diegimas:
     git clone https://github.com/AtlantasLTU/obj-prog-1.git
     cd ./obj-prog-1
     make
     ./main
+    
+  ## Programos naudojimas:
+    Funkcijos:
+      Pasirinktina išvestis į failą arba į terminalą.
+      Pasirinktinas galutinio rezultato skaičiavimas, remiantis vidurkiu arba mediana.
+      Direktorijoje esančių .txt failų pasirinkimas.
+      Rūšiavimas pasirinktu būdu.
+      
+    1 parinktis - rankinis duomenų įvedimas, studento vardo, pavardės, namų darbų rezultatų, egzamino rezultato, jų apdorojimas ir išvedimas.
+    2 parinktis - pusiau rankinis duomenų įvedimas, studento vardo, pavardės, rezultatų generavimas, duomenų apdorojimas ir išvedimas.
+    3 parinktis - automatinis studentų vardų, pavardžių, rezultatų generavimas, jų apdorojimas ir išvedimas.
+    4 parinktis - skaitymas iš pasirinktino failo, rūšiavimas pasirinktinu būdu, duomenų apdorojimas ir išvedimas.
+    5 parinktis - testavimas su failais, pasirenkamas failas, konteinerio tipas, strategija, testų skaičius, failai apdorojami (nuskaitymas, skaičiavimas, rūšiavimas, skirstymas) ir išvedami testo rezultatai į terminalą.
+    6 parinktis - studentų failų generavimas, studentų, namų darbų kiekio pasirinkimas ir išvedimas į studentai*.txt failą.
+    7 parinktis - programos nutraukimas.
 
 # Testavimas:
 
@@ -22,10 +37,10 @@
 - studentų skirstymo  į dvi grupes/kategorijas (naujų konteinerių su skirtingais studentais kūrimas);
 
 #### Skirstymo strategijos:
-- 0 - pradiniame relize naudota strategija;
-- 1 strategija: Bendro studentai konteinerio (vector, list ir deque tipų) skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų".
-- 2 strategija: Bendro studentų konteinerio (vector, list ir deque) skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį: "vargšiukai".
-- 3 strategija: Bendro studentų konteinerio (vector, list ir deque) skaidymas (rūšiavimas) panaudojant greičiausiai veikianti 1 arba 2 strategiją  įtraukiant į ją "efektyvius" darbo su konteineriais metodus.
+- 0 - pradiniame relize naudota strategija. Dviejų konteinerių "vargšiukų" ir "kietiakų" sukūrimas, duomenys perkeliami iš "studentai" konteinerio su std::move.
+- 1 strategija: Bendro studentai konteinerio (vector, list ir deque tipų) skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". Dviejų konteinerių "vargšiukų" ir "kietiakų" sukūrimas, duomenys kopijuojami iš "studentai" konteinerio.
+- 2 strategija: Bendro studentų konteinerio (vector, list ir deque) skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį: "vargšiukai". Studentai konteineris išrūšiuotas, randamas iteratorius rodantis į pirmąjį galvočių, viskas iki iteratoriaus perkeliama į vargšiukų konteinerį ir ištrinama iš studentai konteinerio. Iteratoriui rasti naudojamas lower_bound metodas
+- 3 strategija: Bendro studentų konteinerio (vector, list ir deque) skaidymas (rūšiavimas) panaudojant greičiausiai veikianti 1 arba 2 strategiją  įtraukiant į ją "efektyvius" darbo su konteineriais metodus. Šioje strategijoje naudojamas partition metodas.
 
 Programa kompiliuota su -Ofast veliavėle: "g++ --std=c++20 -Ofast *.cpp -o main".
 Testuota tik naudojant terminalą, visos kitos pašalinės programos testavimo metu buvo išjungtos bei įrenginys "performance" režime.
@@ -107,3 +122,53 @@ Visi testavimo atvejai testuoti 10 kartų, su medianų skaičiavimu.
 |10000000|vector|9.45043 s|4.11308 s|0.30175 s|149.526 s|
 ||deque|7.49661 s|5.83884 s|0.713289 s|150.007 s|
 ||list|7.51645 s|12.3989 s|2.19559 s|236.414 s|
+
+## Rezultatai
+![Spartos analizės skirstymo rezultatų grafikas](https://docs.google.com/spreadsheets/d/e/2PACX-1vSLB0LT_2yfVIboTiGk1ewruHywAX4f8oej6yogPwjrmU81BeK0zIa3asQIlR8txpc1nSDh3SU-tnbm/pubchart?oid=1485904283&format=image)
+
+Matoma, kad visose skirstymo strategijose vektorius (ryškiausi, šviesiausi atspalviai) yra greičiausias, tada deque konteineris (tamsesni atspalviai), o lėčiausias yra list (tamsūs atspalviai). Taip pat 1 strategija lėčiausia - viršuje grafiko, o 0, 2 ir 3 strategijos labai panašaus efektyvumo, 0-intoji ir 3-ioji greičiausios. 1 strategija lėčiausia todėl, kad reikalauja daug kopijavimo, tai padidina jos atminties naudojimą (>2x), 0, 2 ir 3 strategijos efektyvios tuo, kad duomenys perkeliami naudojamos STL bibliotekos funkcijos, pavyzdžiui, std::partition (3 strategijoje), std::lower_bound (2 strategijoje). Su vektoriais 0, 2 ir 3 skirstymo strategija maždaug O(n) efektyvumo.
+
+# Relizų aprašas
+
+v1.0
+
+    Padidintas template naudojimas, siekiant ištestuoti vector, deque ir list konteinerius.
+    Pridėtos trys studentų skirstymo į „vargšiukus“ (vidurkis < 5.0) ir „kietiakus“ strategijos:
+        1 strategija: Bendro konteinerio skaidymas į du naujus, kopijuojant į vargsiukai ir galvočiai konteinerius.
+        2 strategija: „Vargšiukų“ perkėlimas į naują konteinerį, juos ištrinant iš studentų konteinerio.
+        3 strategija: Optimizuotas skirstymas naudojant efektyvius algoritmus (std::partition).
+
+    Paruoštas pilnas README.md su tyrimo rezultatais, lentelėmis ir naudojimo instrukcija.
+    Pridėtas Makefile lengvam programos kompiliavimui.
+
+v0.4
+    
+    Patobulinta išvestis.
+    Pridėtas skirstymas į "galvočius" ir "vargšiukus".
+    Pridėtas failų generavimas.
+    Pridėtas failų pasirinkimas.
+
+v0.3
+
+    Kodas išskirstytas į daugiau dalių (.h ir .cpp failus).
+    Įterptas try-catch blokas failų egzistavimo tikrinimui, kitų klaidų gaudymui.
+    Panaudotas template rūšiavimo funkcijoje, kodo skaitomumui pagerinti.
+    Refaktoriaus metu apšvarintas main.cpp failas.
+
+v0.2
+
+    Pridėtas duomenų nuskaitymas iš išorinių failų.
+    Pridėti testavimo atvejai.
+
+v0.1
+
+    Pridėtas automatinis pažymių generavimas.
+    Įdiegtas „sąžiningas“ vidurkio skaičiavimas (atsižvelgiant į trūkstamus namų darbus).
+    Patobulintas įvesties valdymas (apsauga nuo neteisingos įvesties).
+
+V.pradinė
+
+    Sukurta studento struktūra.
+    Realizuotas vidurkio ir medianos skaičiavimas.
+    Pradinė įvesties apsauga.
+    Hardcoded reikšmės testavimui.
